@@ -3,6 +3,7 @@
          <div class="top-card-wrap">
         <div class="top-card-bg"></div>
         <div class="top-card">
+            <router-link to='/nodeswiper'>
             <div class="card-top-des">
                 <div class="card-tit1">
                     <div class="card-tit1-left">ETC Wallet</div>
@@ -13,6 +14,8 @@
                     <div class="card-tit1-right">￥2000</div>
                 </div>
             </div>
+            </router-link>
+            
 
             <div class="toal-money">总资产</div>
             <div class="money">20000 NOVA</div>

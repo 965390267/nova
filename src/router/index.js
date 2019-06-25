@@ -10,6 +10,23 @@ export default new Router({
       path: '/',
       name: 'index',
       component: ()=>import('@/view/index')
+    },
+    {
+      path: '/nodeswiper',
+      name: 'nodeswiper',
+      component: ()=>import('@/view/nodeswiper')
+    }
+    ,
+    {
+      path: '/ziya',
+      name: 'ziya',
+      component: ()=>import('@/view/ziya')
+    }
+    ,
+    {
+      path: '/suhui',
+      name: 'suhui',
+      component: ()=>import('@/view/suhui')
     }
   ]
 })

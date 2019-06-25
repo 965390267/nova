@@ -70,6 +70,7 @@ a {
 
 html, body {
   width: 100%;
+  height: 100%;
   font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", "微软雅黑", sans-serif; }
 
 body {
@@ -92,3 +93,7 @@ body {
 /*隐藏*/
 .dn {
   display: none; }
+
+  ::-webkit-input-placeholder{
+    font-size: 13px;
+  }
