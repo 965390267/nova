@@ -86,16 +86,17 @@ NodeList
 .top-card-wrap{
     position: relative;
    
-    height: 360px;
+    height: 360px;/*no*/
     overflow: hidden;
+    // min-height: 390px;
     .top-card-bg{
-        height: 280px;
+        height: 280px;/*no*/
         @include setbg('../assets/img/m-top-bg@2x.png');
     }
 
 .toal-money{
     text-align: center;
-    padding-top: 20px;
+    padding-top: 20px;/*no*/
     font-size: 11px;
     color: $main-text-color;
 }
@@ -107,14 +108,14 @@ NodeList
 }
 .rmb{
     text-align: center;
-    padding-top: 10px;
+    padding-top: 10px;/*no*/
     font-size: 11px;
     color: $second-text-color;
 }
 .card-mid{
    display: flex;
    flex-direction: row; 
-   padding:30px 15px 15px 15px;
+   padding:30px 15px 15px 15px;/*no*/
    border-bottom: 1px dotted  $main-text-color;
    .des{
        display: flex;
@@ -128,7 +129,7 @@ NodeList
         text-align: center;
        }
        .num{
-           padding-top: 10px;
+           padding-top: 10px;/*no*/
            text-align: center;
            font-size: 11px;
            color: $second-text-color;
@@ -143,9 +144,9 @@ NodeList
      background: #FDF9F4;
      width: 90%;
     margin-left: 5%;
-    margin-top: 8%;
-     border-radius: 10px;
-     box-shadow:0px 9px 10px rgba(0,0,0,0.2);
+    margin-top: 30px;/*no*/
+     border-radius: 10px;/*no*/
+     box-shadow:0px 9px 10px rgba(0,0,0,0.2);/*no*/
      .card-top-des{
          display: flex;
          flex-direction: column;
@@ -163,12 +164,12 @@ NodeList
              }
          }
      .card-tit1{
-         padding: 15px 15px 0 15px;
+         padding: 15px 15px 0 15px;/*no*/
          font-size: 16px;
          color: $main-text-color;
      }
      .card-tit2{
-         padding: 8px 15px 0 15px;
+         padding: 8px 15px 0 15px;/*no*/
          font-size: 11px;
          color: $second-text-color;
      }

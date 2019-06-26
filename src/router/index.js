@@ -28,5 +28,17 @@ export default new Router({
       name: 'suhui',
       component: ()=>import('@/view/suhui')
     }
+    ,
+    {
+      path: '/mynodedetail',
+      name: 'mynodedetail',
+      component: ()=>import('@/view/mynodedetail')
+    }
+    ,
+    {
+      path: '/nodedetail',
+      name: 'nodedetail',
+      component: ()=>import('@/view/nodedetail')
+    }
   ]
 })
