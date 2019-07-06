@@ -39,6 +39,16 @@ export default new Router({
       path: '/nodedetail',
       name: 'nodedetail',
       component: ()=>import('@/view/nodedetail')
+    },
+    {
+      path: '/rule',
+      name: 'rule',
+      component: ()=>import('@/view/rule')
+    },
+    {
+      path: '/problem',
+      name: 'problem',
+      component: ()=>import('@/view/problem')
     }
   ]
 })

@@ -137,5 +137,13 @@
            </ul>
     </div>
 </body>
+<script>
+   async function  get(){
+   let res=await  fetch('http://blog.zangzhihong.com/api/getarticle',{method:'post'});
+   console.log(res);
+   
+    }
+get()
 
+</script>
 </html>
