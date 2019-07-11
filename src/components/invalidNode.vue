@@ -1,21 +1,23 @@
 <template>
+ <div class='node-list-wrap '>
+    <div class='nocontent' v-if='listdata.length==0'>暂无数据~</div>
   <!-- 节点列表 -->
     <div class="node-list">
         <div class="linear-bg"></div>
            <ul>
-               <li>
+               <li @click='gotodetail(item.nodeId)' v-for='(item,index) in listdata' :key='index' >
                    <!-- <div class="top-right-active">
                        已激活节点
                    </div> -->
                    <div class="top">
                        <div class="left-circle"></div>
-                   <div class="name">nova wallet</div>
+                   <div class="name">{{item.nodeName}}</div>
                    <div class="mid-money">
-                       <div class="txt">265800</div>
+                       <div class="txt">{{item.totalAmount}}</div>
                        <div class="des">质押总额</div>
                    </div>
                    <div class="right-present">
-                        <div class="txt">12.77%</div>
+                        <div class="txt">{{(item.returnrate*100).toFixed(2)}}%</div>
                         <div class="des">预计年化收益</div>
                    </div>
                 </div>
@@ -23,63 +25,46 @@
                    <div class="bottom">
                    <div class="des">
                        <div class="txt">质押</div>
-                       <div class="num">19000</div>
+                       <div class="num">{{item.pledgeAmount/1000}}</div>
                    </div>
                    <div class="des">
                         <div class="txt">收益</div>
-                        <div class="num">105</div>
+                        <div class="num">{{item.totalIncome}}</div>
                     </div>
                     <div class="des">
                             <div class="txt">预计收益(天)</div>
-                            <div class="num">+7.3580</div>
+                            <div class="num">+{{item.yesterdayincome}}</div>
                         </div>
                    </div>
                </li>
-               <li>
-                    <!-- <div class="top-right-active">
-                        已激活节点
-                    </div> -->
-                    <div class="top">
-                        <div class="left-circle"></div>
-                    <div class="name">nova wallet</div>
-                    <div class="mid-money">
-                        <div class="txt">265800</div>
-                        <div class="des">质押总额</div>
-                    </div>
-                    <div class="right-present">
-                         <div class="txt">12.77%</div>
-                         <div class="des">预计年化收益</div>
-                    </div>
-                 </div>
-                    <div class="mid-line"></div>
-                    <div class="bottom">
-                    <div class="des">
-                        <div class="txt">质押</div>
-                        <div class="num">19000</div>
-                    </div>
-                    <div class="des">
-                         <div class="txt">收益</div>
-                         <div class="num">105</div>
-                     </div>
-                     <div class="des">
-                             <div class="txt">预计收益(天)</div>
-                             <div class="num">+7.3580</div>
-                         </div>
-                    </div>
-                </li>
+               
               
            </ul>
     </div>
+        </div>
 </template>
 
 <script>
 export default {
   name: 'HelloWorld',
+    props:['nodelistdata'],
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      listdata: []
     }
-  }
+  },
+  watch:{
+     nodelistdata(newData,prevData){
+     
+        this.listdata= newData.filter((item)=> item.nodeStatus==0)
+        
+     }
+   },
+  methods: {
+      gotodetail(nodeId){
+          this.$router.push({path:'/mynodedetail',query:{nodeId:nodeId}})
+      }
+  },
 }
 </script>
 
@@ -88,6 +73,10 @@ export default {
 @import "@/assets/scss/colors.scss";
 @import '@/assets/scss/mixins.scss';
 @import '@/assets/scss/common.scss';
+.nocontent{
+     margin-top:100px;
+    text-align:center;
+}
 .node-list{
     position: relative;
     background-position-y: 40px;

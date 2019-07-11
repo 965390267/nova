@@ -3,19 +3,22 @@
     <div class="node-list">
         <div class="linear-bg"></div>
            <ul>
-               <li>
-                   <div class="top-right-active">
-                       已激活节点
+               <li v-for='(item,index) in nodelistdata' :key='index' @click='gotodetail(item.nodeId)'>
+               <div class="top-right-active no" v-if='item.nodeStatus==0'>
+                          未激活节点 
+                   </div>
+                   <div class="top-right-active" v-else>
+                   已激活节点
                    </div>
                    <div class="top">
                        <div class="left-circle"></div>
-                   <div class="name">nova wallet</div>
+                   <div class="name">{{item.nodeName}}</div>
                    <div class="mid-money">
-                       <div class="txt">265800</div>
+                       <div class="txt">{{item.totalAmount}}</div>
                        <div class="des">质押总额</div>
                    </div>
                    <div class="right-present">
-                        <div class="txt">12.77%</div>
+                        <div class="txt">{{(item.returnrate*100).toFixed(2)}}%</div>
                         <div class="des">预计年化收益</div>
                    </div>
                 </div>
@@ -23,50 +26,19 @@
                    <div class="bottom">
                    <div class="des">
                        <div class="txt">质押</div>
-                       <div class="num">19000</div>
+                       <div class="num">{{item.pledgeAmount/1000}}</div>
                    </div>
                    <div class="des">
                         <div class="txt">收益</div>
-                        <div class="num">105</div>
+                        <div class="num">{{item.totalIncome}}</div>
                     </div>
                     <div class="des">
                             <div class="txt">预计收益(天)</div>
-                            <div class="num">+7.3580</div>
+                            <div class="num">+{{item.yesterdayincome}}</div>
                         </div>
                    </div>
                </li>
-               <li>
-                    <div class="top-right-active">
-                        已激活节点
-                    </div>
-                    <div class="top">
-                        <div class="left-circle"></div>
-                    <div class="name">nova wallet</div>
-                    <div class="mid-money">
-                        <div class="txt">265800</div>
-                        <div class="des">质押总额</div>
-                    </div>
-                    <div class="right-present">
-                         <div class="txt">12.77%</div>
-                         <div class="des">预计年化收益</div>
-                    </div>
-                 </div>
-                    <div class="mid-line"></div>
-                    <div class="bottom">
-                    <div class="des">
-                        <div class="txt">质押</div>
-                        <div class="num">19000</div>
-                    </div>
-                    <div class="des">
-                         <div class="txt">收益</div>
-                         <div class="num">105</div>
-                     </div>
-                     <div class="des">
-                             <div class="txt">预计收益(天)</div>
-                             <div class="num">+7.3580</div>
-                         </div>
-                    </div>
-                </li>
+               
               
            </ul>
     </div>
@@ -74,12 +46,21 @@
 
 <script>
 export default {
-  name: 'HelloWorld',
+
+  props:['nodelistdata'],
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'
     }
-  }
+  },
+  methods: {
+      gotodetail(nodeId){
+          this.$router.push({path:'/mynodedetail',query:{nodeId:nodeId}})
+      }
+  },
+  mounted() {
+      console.log(this.nodelistdata)
+  },
 }
 </script>
 
@@ -112,7 +93,7 @@ export default {
            overflow: hidden;
            .top-right-active{
            align-self: flex-end;
-           width: 70px;
+           padding:2px 5px;
            height: 18px;
            line-height: 18px;
             font-size: 10px;
@@ -120,6 +101,9 @@ export default {
               text-align: center;
                background: linear-gradient(90deg,#F08740,#F06B40);
                border-radius: 0px 0px 0px 12px;
+           }
+           .top-right-active.no{
+               background:#122F4D;
            }
            .top{
                display: flex;

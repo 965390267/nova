@@ -10,7 +10,20 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      'api':{
+        target:'http://106.15.52.35:8080/',
+        changeOrigin:true,
+        // pathRewrite:{
+        //   '^/api':''
+        // },
+        onProxyReq: function (proxyReq, req, res) {
+          //实在不知道代理后的路径，可以在这里打印出出来看看
+          console.log("原路径：" + req.originalUrl, "代理路径：" + req.path)
+        }
+ 
+      }
+    },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
@@ -43,13 +56,13 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsPublicPath: './',
 
     /**
      * Source Maps
      */
 
-    productionSourceMap: true,
+    productionSourceMap: false,
     // https://webpack.js.org/configuration/devtool/#production
     devtool: '#source-map',
 

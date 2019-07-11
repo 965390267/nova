@@ -4,21 +4,21 @@
           <div class="card-bg">
               <div class="card">
                   <div class="card-top">
-                       <div class="avtor"><div class="circle"></div>nova wallet</div>
+                       <div class="avtor"><div class="circle"></div>{{nodeMessage.nodeName}}</div>
                        <div class="title">
                            <div class="total">质押总额 (nova)</div>
                            <div class="present">预计年化收益</div>
                        </div>
                         <div class="txt">
-                           <div class="total">265800</div>
-                           <div class="present">12.77%</div>
+                           <div class="total">{{nodeMessage.totalAmount/1000}}</div>
+                           <div class="present">{{(nodeMessage.returnrate*100).toFixed(2)}}%</div>
                        </div>
                        </div>
                        <div class="mid-line"></div>
                  <div class="node-speak">
                      节点宣言
                      <p>
-                         dsffdsfgdsfgdsgdsgfdg
+                       {{nodeMessage.declaration}}  
                      </p>
                  </div>
               </div>
@@ -26,17 +26,17 @@
 <!-- 节点详情下的列表 -->
           <div class="nodedetail_list">
               <ul class="shuhui">
-                  <li>
-                      <div class="title"><div class="tit-left blodtxt">赎回</div><div class="tit-right">交易正在打包</div></div>
-                       <div class="title"><div class="tit-left">2019-06-01 00:01:55</div><div class="tit-right">+2355 NOVA</div></div>
+                  <li v-for='(item,index) in recentTransactionsList' :key='index' v-if='item.status==0'>
+                      <div class="title"><div class="tit-left blodtxt">{{item.type==1?'赎回':'质押'}}</div><div class="tit-right">交易正在打包</div></div>
+                       <div class="title"><div class="tit-left">{{item.date}}</div><div class="tit-right">{{item.amount/1000}} NOVA</div></div>
                   </li>
                  
               </ul>
             <h2>最近交易</h2>
               <ul class="latest">
-                  <li>
-                      <div class="title"><div class="tit-left">赎回</div><div class="tit-right"></div></div>
-                       <div class="title"><div class="tit-left">2019-06-01 00:01:55</div><div class="tit-right">+2355 NOVA</div></div>
+                  <li v-for='(item,index) in recentTransactionsList' :key='index' >
+                      <div class="title"><div class="tit-left">{{item.type==1?'赎回':'质押'}}</div><div class="tit-right"></div></div>
+                       <div class="title"><div class="tit-left">{{item.date}}</div><div class="tit-right">{{item.amount/1000}} NOVA</div></div>
                   </li>
                  
               </ul>
@@ -44,23 +44,40 @@
 
           <!-- 赎回和质押按钮 -->
           <div class="btn-wrap">
+          <router-link :to="{path:'/suhui',query:{address:nodeMessage.address}}">
               <div class="left-btn">赎回</div>
+              </router-link>
+               <router-link :to="{path:'/zhiya',query:{address:nodeMessage.address}}" >
               <div class="right-btn">质押</div>
+               </router-link>
           </div>
           </div>   
   </div>
 </template>
 
 <script>
-
+import {recentTransactions,myNodeDetail} from '@/config'
 export default {
 
-  name: 'HelloWorld',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      nodeMessage:{},
+      recentTransactionsList:[]
     }
-  }
+  },
+  mounted() {
+           myNodeDetail(this.$route.query.nodeId,this.imtokenAddress).then(res=>{
+         if(res.data.success){
+             this.nodeMessage=res.data.data;
+         }
+      })
+      recentTransactions(this.imtokenAddress).then(res=>{
+         if(res.data.success){
+             this.recentTransactionsList=res.data.data;
+         }
+      })
+      console.log(this.nodeMessage)
+  },
 }
 </script>
 
@@ -153,7 +170,7 @@ padding-right: 20px;
     p{
         font-size: 14px;
         color: #000;
-        padding: 2px 0;
+        padding: 4px 0;
         margin-bottom: 20px;
     }
 }
@@ -187,6 +204,7 @@ padding-right: 20px;
 .btn-wrap{
     display: flex;
     justify-content: space-around;
+    margin-bottom:40px;
     .left-btn,.right-btn{
         width: 80px;
         height: 35px;

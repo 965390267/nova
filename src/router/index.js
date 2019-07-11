@@ -18,8 +18,8 @@ export default new Router({
     }
     ,
     {
-      path: '/ziya',
-      name: 'ziya',
+      path: '/zhiya',
+      name: 'zhiya',
       component: ()=>import('@/view/ziya')
     }
     ,
@@ -35,11 +35,7 @@ export default new Router({
       component: ()=>import('@/view/mynodedetail')
     }
     ,
-    {
-      path: '/nodedetail',
-      name: 'nodedetail',
-      component: ()=>import('@/view/nodedetail')
-    },
+  
     {
       path: '/rule',
       name: 'rule',

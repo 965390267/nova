@@ -16,10 +16,10 @@
     <swiper :options="swiperOption" ref="mySwiper" @someSwiperEvent="callback">
       <!-- slides -->
       <div class="swiper-slide">
-        <effect-node-list></effect-node-list>
+        <effect-node-list :nodelistdata='nodelistdata'></effect-node-list>
       </div>
       <div class="swiper-slide">
-         <invalid-node-list></invalid-node-list>
+         <invalid-node-list :nodelistdata='nodelistdata'></invalid-node-list>
       </div>
       <!-- Optional controls -->
       <!-- <div class="swiper-pagination" slot="pagination"></div>
@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import {nodeList} from '@/config'
 import effectNodeList from "@/components/effectNode.vue";
 import invalidNodeList from "@/components/invalidNode.vue";
 import "swiper/dist/css/swiper.css";
@@ -42,7 +43,7 @@ export default {
     swiper,
     swiperSlide
   },
-  name: "HelloWorld",
+
   data() {
     return {
       active: 0,
@@ -68,7 +69,8 @@ export default {
             this.active=swiper.activeIndex;
           }
         }
-      }
+      },
+      nodelistdata:null
     };
   },
   created() {},
@@ -84,13 +86,22 @@ export default {
     toggle(index){
        this.$refs.mySwiper.swiper.slideTo(index)
     }
-  }
+  },mounted() {
+        nodeList(this.imtokenAddress).then(res=>{
+       if(res.data.success){
+         this.nodelistdata=res.data.data
+  // this.$router.push({path:'/nodeswiper',query:{}})
+       }
+       })
+        imToken.callAPI('native.hideLoading')
+  },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang='scss'>
 .changepage{
+  min-height:100%;
   background: #FDF9F4;
   overflow: hidden;
 }
@@ -121,6 +132,8 @@ export default {
 .navs p.active {
   background: linear-gradient(90deg, #f08740, #f06b40);
 }
-
+.swiper-container{
+  min-height: 70vh;
+}
 
 </style>

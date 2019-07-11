@@ -42,7 +42,7 @@
 <script>
 
 export default {
-  name: 'App',
+  name: 'rule',
   components:{
 
   }
@@ -54,7 +54,7 @@ export default {
     background: url('../assets/img/question-bg@2x.png') no-repeat;
     background-size: 100% 100%;
   .card{
-      width: 90%;
+      width: 76%;
       margin:  0 auto;
       padding: 25px;
       font-size: 18px;
@@ -77,7 +77,7 @@ export default {
   }
   .sm-card{
       position: relative;
-       width: 90%;
+       width: 76%;
       margin:  25px auto;
       padding: 25px;
       font-size: 18px;
