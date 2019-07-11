@@ -5,7 +5,7 @@
     <div class="node-list">
         <div class="linear-bg"></div>
            <ul>
-               <li @click='gotodetail(item.nodeId)' v-for='(item,index) in listdata' :key='index' >
+               <li @click='gotodetail(item.nodeId,item.address)' v-for='(item,index) in listdata' :key='index' >
                    <!-- <div class="top-right-active">
                        已激活节点
                    </div> -->
@@ -61,8 +61,8 @@ export default {
      }
    },
   methods: {
-      gotodetail(nodeId){
-          this.$router.push({path:'/mynodedetail',query:{nodeId:nodeId}})
+      gotodetail(nodeId,nodeAddress){
+          this.$router.push({path:'/mynodedetail',query:{nodeId:nodeId,nodeAddress:nodeAddress}})
       }
   },
 }

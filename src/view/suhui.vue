@@ -5,7 +5,7 @@
     </div>
     <div class="ziyaed">
       <em>已质押</em>
-      {{initDataObj.blance/1000}} NOVA
+      {{blance/1000}} NOVA
     </div>
     <div class="balance">
       <div class="canbalance" @click="setAll()">全部</div>
@@ -82,7 +82,7 @@ export default {
       personalAssest(this.imtokenAddress).then(res => {
         var res = res.data;
         if (res.success) {
-          this.initDataObj = res.data;
+          this.balance = res.data.balance
           this.amount = res.data.balance/1000;
         }
       });
@@ -93,7 +93,7 @@ export default {
       personalAssest(this.imtokenAddress).then(res => {
         var res = res.data;
         if (res.success) {
-          this.initDataObj = res.data;
+          this.balance = res.data.balance
         }
       });
     //   var eth = new Eth(web3.currentProvider);

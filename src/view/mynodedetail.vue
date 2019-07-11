@@ -84,7 +84,7 @@ export default {
         this.nodeMessage = res.data.data;
       }
     });
-    recentTransactions(this.imtokenAddress).then(res => {
+    recentTransactions(this.imtokenAddress,this.$route.query.nodeAddress).then(res => {
       if (res.data.success) {
         this.recentTransactionsList = res.data.data;
       }

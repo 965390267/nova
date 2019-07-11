@@ -3,7 +3,7 @@
     <div class="node-list">
         <div class="linear-bg"></div>
            <ul>
-               <li v-for='(item,index) in nodelistdata' :key='index' @click='gotodetail(item.nodeId)'>
+               <li v-for='(item,index) in nodelistdata' :key='index' @click='gotodetail(item.nodeId,item.address)'>
                <div class="top-right-active no" v-if='item.nodeStatus==0'>
                           未激活节点 
                    </div>
@@ -14,7 +14,7 @@
                        <div class="left-circle"></div>
                    <div class="name">{{item.nodeName}}</div>
                    <div class="mid-money">
-                       <div class="txt">{{item.totalAmount}}</div>
+                       <div class="txt">{{item.totalAmount/1000}}</div>
                        <div class="des">质押总额</div>
                    </div>
                    <div class="right-present">
@@ -54,8 +54,8 @@ export default {
     }
   },
   methods: {
-      gotodetail(nodeId){
-          this.$router.push({path:'/mynodedetail',query:{nodeId:nodeId}})
+      gotodetail(nodeId,nodeAddress){
+          this.$router.push({path:'/mynodedetail',query:{nodeId:nodeId,nodeAddress:nodeAddress}})
       }
   },
   mounted() {

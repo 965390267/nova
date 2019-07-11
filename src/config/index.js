@@ -73,8 +73,8 @@ export function nodeList(address){
  * @param {address}
  * //最近交易接口
 */
-export function recentTransactions(address){
-    return axios(`api/recentTransactions?address=${address}`);
+export function recentTransactions(userAddress,nodeAddress){
+    return axios(`api/recentTransactions?userAddress=${userAddress}&nodeAddress=${nodeAddress}`);
     }
    
 
