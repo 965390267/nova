@@ -3,13 +3,13 @@
     <div class="avtor">
         <div class="circle"></div>nova wallet
     </div>
-    <div class="ziyaed"><em>已质押</em>{{canuse}} NOVA</div>
+    <div class="ziyaed"><em>已质押</em>{{initDataObj.blance}} NOVA</div>
     <div class="balance">
-    <div class="canbalance" @click='amount=(balance/1000)'>全部</div>
+    <div class="canbalance" @click='setAll()'>全部</div>
 <input class="inputbalance" type="number" v-model="amount" placeholder="输入数量">
 </div>
 
-<!-- <div class="smtip">交易费：0.0005ETH</div> -->
+<div class="smtip">交易费：{{gasPrice}}ETH</div>
 <div class="ordinary top " :class='{active:index==0}' @click='choosetype(0)'>
     <div class="left-txt ">立即赎回</div>
     <div class="right"></div>
@@ -42,8 +42,9 @@ loading
 return {
 index:0,
 amount:'',
-canuse:0,
+initDataObj:{},
 blance:0,
+gasPrice:'',
 show:false
 }
     },
@@ -77,19 +78,33 @@ show:false
          }).catch(err=>{
              this.show=false;
          })
-        }
+        } ,
+        setAll(){
+ personalAssest(this.imtokenAddress).then(res => {
+      var res = res.data;
+      if (res.success) {
+       this.amount=res.data.balance;     
+      }
+    });
+        },
+         initData(){/* 初始的页面数据获取 */
+
+ personalAssest(this.imtokenAddress).then(res => {
+      var res = res.data;
+      if (res.success) {
+        this.initDataObj=res.data;
+       
+      }
+    });
+            this.gasPrice = web3.eth.estimateGas({
+    to: this.$route.query.address,
+    data: "0xb48b7e5bf6563b3e0a85055821a83deb8cfc12f6"
+});
+    }
     },
     mounted() {
-        console.log(this.$route.query.address);
-        
-          personalAssest(this.imtokenAddress).then(res=>{ 
-         var res=res.data;
-          console.log(res)
-          if(res.success){
-             this.blance=res.data.balance;   
-              this.canuse=res.data.totalAssets - res.data.balance;   
-          }
-      })
+      this.initData()/* 数据初始化 */
+   
     },
 }
 </script>

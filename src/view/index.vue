@@ -6,7 +6,7 @@
         <div class="card-top-des">
           <div class="card-tit1">
             <div class="card-tit1-left">ETH Wallet</div>
-            <div class="card-tit1-right">{{balance}} ETH</div>
+            <div class="card-tit1-right">{{eth}} ETH</div>
           </div>
           <div class="card-tit2">
             <div class="card-tit1-left">{{hiddenMid}}</div>
@@ -20,7 +20,7 @@
         <div class="card-mid">
           <div class="rest des">
             <div class="tit">可用余额</div>
-            <div class="num">{{nova}}</div>
+            <div class="num">{{balance/1000}}</div>
           </div>
           <div class="yestoday des">
             <div class="tit">昨日收益</div>
@@ -75,6 +75,7 @@ export default {
     return {
       nodeaddress: this.imtokenAddress,
       balance: "",
+      eth:'',
       pendingAmount: "",
       totalAssets: "",
       totalIncome: "",
@@ -102,7 +103,7 @@ export default {
       var res = res.data;
       console.log(res);
       if (res.success) {
-        this.nova = res.data.nova;
+        this.balance = res.data.balance;
         this.yesterdayIncome = res.data.yesterdayIncome;
         this.totalIncome = res.data.totalIncome;
         this.totalAssets = res.data.totalAssets;
@@ -129,8 +130,8 @@ export default {
     //   window.web3 = new Web3(web3.currentProvider);
     // }
 
-     this.balance= this.canUseMoney
-          alert(this.balance);
+     this.eth= this.canUseMoney
+          alert(this.eth);
     //   alert(JSON.stringify(this.balance));
   }
 };

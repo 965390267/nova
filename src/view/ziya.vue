@@ -4,7 +4,7 @@
       <div class="circle"></div>nova wallet
     </div>
     <div class="balance">
-      <div class="canbalance">{{canuse}}NOVA</div>
+      <div class="canbalance">{{initDataObj.balance}}NOVA</div>
       <div class="inputbalance">可用余额</div>
     </div>
     <div class="classinput">
@@ -13,7 +13,7 @@
         <input class="inputcount" type="number" v-model="amount" placeholder="输入数量" />
       </div>
     </div>
-    <!-- <div class="smtip">交易费：0.0005ETH</div> -->
+    <div class="smtip">交易费：{{gasPrice}}ETH</div>
     <div class="submit-btn" @click="get()">质&nbsp;&nbsp;&nbsp;&nbsp;押</div>
     <div class="note">
       <p>质押</p>
@@ -34,11 +34,10 @@ export default {
   components: {},
   data() {
     return {
-      money: "",
-      amount: "",
-      balance: "",
+      initDataObj:{},
+      amount: "",/* 用户输入的Nova数量，提交需要*1000 */
       show: false,
-      canuse: ""
+      gasPrice:''
     };
   },
   methods: {
@@ -345,10 +344,9 @@ export default {
         this.$route.query.address,
         this.amount * 1000,
         "0xb48b7e5bf6563b3e0a85055821a83deb8cfc12f6",
-        data => {
+        hash => {
               imToken.callAPI('native.hideLoading')
-          alert(`质押${data}`);
-          this.pay(data);
+          this.pay(hash);
         }
       );
       // 查询Nova余额触发这个 function balanceOfNova(provider, novaAbi, queryAddress, novaAddress, callBackBalance)
@@ -385,25 +383,25 @@ export default {
         });
     },
     getAll() {
-      personalAssest(this.imtokenAddress).then(res => {
-        var res = res.data;
+      this.initData()
+    },
+    initData(){/* 初始的页面数据获取 */
+ personalAssest(this.imtokenAddress).then(res => {
+      var res = res.data;
+      if (res.success) {
+        this.initDataObj=res.data;
        
-        if (res.success) {
-          this.amount = res.data.balance;
-        }
-      });
+      }
+    });
+           this.gasPrice = web3.eth.estimateGas({
+    to: this.$route.query.address,
+    data: "0xb48b7e5bf6563b3e0a85055821a83deb8cfc12f6"
+});
     }
   },
   mounted() {
+    this.initData()/* 数据初始化 */
    
-    personalAssest(this.imtokenAddress).then(res => {
-      var res = res.data;
-     
-      if (res.success) {
-        this.balance = res.data.balance;
-        this.canuse = res.data.totalAssets - res.data.balance;
-      }
-    });
   }
 };
 </script>
