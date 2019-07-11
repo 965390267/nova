@@ -80,9 +80,7 @@ export default {
       totalAssets: "",
       totalIncome: "",
       yesterdayIncome: "",
-      pendingAmount: "",
       nodelistdata: null,
-      nova: ""
     };
   },
   computed: {

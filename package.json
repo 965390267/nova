@@ -10,7 +10,6 @@
     "build": "node build/build.js"
   },
   "dependencies": {
-    "array-includes": "^3.0.3",
     "axios": "^0.19.0",
     "vue": "^2.5.2",
     "vue-awesome-swiper": "^3.1.3",
