@@ -6,10 +6,10 @@
         <div class="card-top-des">
           <div class="card-tit1">
             <div class="card-tit1-left">ETH Wallet</div>
-            <div class="card-tit1-right">{{eth}} ETH</div>
+            <div class="card-tit1-right">{{ETH}} ETH</div>
           </div>
           <div class="card-tit2">
-            <div class="card-tit1-left">{{hiddenMid}}</div>
+            <div class="card-tit1-left">{{hiddenMidAddress}}</div>
             <!-- <div class="card-tit1-right">￥{{totalAssets}}</div> 暂时去掉，后续开发-->
           </div>
         </div>
@@ -75,7 +75,7 @@ export default {
     return {
       nodeaddress: this.imtokenAddress,
       balance: "",
-      eth:'',
+      ETH: "",
       pendingAmount: "",
       totalAssets: "",
       totalIncome: "",
@@ -86,15 +86,15 @@ export default {
     };
   },
   computed: {
-    hiddenMid() {
+    hiddenMidAddress() {
       return this.nodeaddress.replace(/(.{10}).*(.{10})/, "$1******$2");
     }
   },
   methods: {
     gotoList() {
-         if (window.ethereum){
-           imToken.callAPI('native.showLoading', 'loading...');
-         }
+      if (window.ethereum) {
+        imToken.callAPI("native.showLoading", "loading...");
+      }
       this.$router.push({ path: "/nodeswiper" });
     }
   },
@@ -116,23 +116,16 @@ export default {
         this.nodelistdata = res.data.data;
       }
     });
-    //   this.$http.all([personalAssest(`0x6788bfcA39E1cb26C9aF9b71b9F28c78Ae58160B`),getMyNodeList(`0x6788bfcA39E1cb26C9aF9b71b9F28c78Ae58160B`)]).
-    //   then(this.$http.spread((assest,list)=>{
-    //          this.balance=assest.data.data.balance;
-    //           this.yesterdayIncome=assest.data.data.yesterdayIncome;
-    //           this.totalIncome=assest.data.data.totalIncome;
-    //           this.totalAssets=assest.data.data.totalAssets;
-    //           this.nodelistdata=list.data.data;
-    //   }))
-    // if (window.ethereum) {
-    //   window.web3 = new Web3(ethereum);
-    // } else if (window.web3) {
-    //   window.web3 = new Web3(web3.currentProvider);
-    // }
-
-     this.eth= this.canUseMoney
-          alert(this.eth);
-    //   alert(JSON.stringify(this.balance));
+var eth = new Eth(web3.currentProvider);
+eth.getBalance(this.imtokenAddress)/* 钱包以太币获取方法 */
+                  .then((info)=>{
+                     this.ETH =info/1000000000000000000;/* 1000000000000000000是eth的单位，和nova除以1000是一个道理 */
+                    // alert(info/1000000000000000000);
+                  })
+                  .catch(function(info){
+                    // alert(info);
+                  });
+  
   }
 };
 </script>

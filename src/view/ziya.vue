@@ -4,16 +4,16 @@
       <div class="circle"></div>nova wallet
     </div>
     <div class="balance">
-      <div class="canbalance">{{initDataObj.balance}}NOVA</div>
+      <div class="canbalance">{{initDataObj.balance/1000}}NOVA</div>
       <div class="inputbalance">可用余额</div>
     </div>
     <div class="classinput">
       <div class="inputwrap">
-        <div class="total" @click="getAll()">全部</div>
+        <div class="total" @click="setAll()">全部</div>
         <input class="inputcount" type="number" v-model="amount" placeholder="输入数量" />
       </div>
     </div>
-    <div class="smtip">交易费：{{gasPrice}}ETH</div>
+    <!-- <div class="smtip">交易费：{{gasPrice}}ETH</div> -->
     <div class="submit-btn" @click="get()">质&nbsp;&nbsp;&nbsp;&nbsp;押</div>
     <div class="note">
       <p>质押</p>
@@ -34,10 +34,10 @@ export default {
   components: {},
   data() {
     return {
-      initDataObj:{},
-      amount: "",/* 用户输入的Nova数量，提交需要*1000 */
+      initDataObj: {},
+      amount: "" /* 用户输入的Nova数量，提交需要*1000 */,
       show: false,
-      gasPrice:''
+      gasPrice: ""
     };
   },
   methods: {
@@ -45,7 +45,7 @@ export default {
       this.show = true;
       if (this.amount == 0) return alert("输入数量不能为0");
       // this.bus.$emit('loading',true)
-      imToken.callAPI('native.showLoading', 'loading...');
+      imToken.callAPI("native.showLoading", "loading...");
       var abi = [
         {
           constant: true,
@@ -255,6 +255,7 @@ export default {
       function transferNova(b, c, d, e, f, g) {
         var h = new Eth(b);
         h.accounts().then(function(accounts) {
+           imToken.callAPI("native.hideLoading");
           const Nova = h.contract(c, {
             from: accounts[0]
           });
@@ -264,6 +265,7 @@ export default {
               from: web3.eth.accounts[0]
             })
             .then(function(a) {
+              
               g(String(a));
             })
             .catch(function(a) {
@@ -325,12 +327,7 @@ export default {
         });
       }
 
-      function callBack(data) {
-        // TODO 回调，逻辑代码写在这里
-        alert(data);
-      }
-     
-      // alert(this.amount*1000)
+    
       //授权 授权按钮触发这个
       // approveNova(web3.currentProvider, abi, '0xb48b7e5bf6563b3e0a85055821a83deb8cfc12f6', (res)=>{
       // alert(res)
@@ -345,22 +342,21 @@ export default {
         this.amount * 1000,
         "0xb48b7e5bf6563b3e0a85055821a83deb8cfc12f6",
         hash => {
-              imToken.callAPI('native.hideLoading')
+          imToken.callAPI("native.hideLoading");
           this.pay(hash);
         }
       );
       // 查询Nova余额触发这个 function balanceOfNova(provider, novaAbi, queryAddress, novaAddress, callBackBalance)
-      balanceOfNova(
-        web3.currentProvider,
-        abi,
-        this.imtokenAddress,
-        "0xb48b7e5bf6563b3e0a85055821a83deb8cfc12f6",
-        res => {
-              imToken.callAPI('native.hideLoading')
-          alert(res);
-          alert(JSON.stringify(res));
-        }
-      );
+      // balanceOfNova(
+      //   web3.currentProvider,
+      //   abi,
+      //   this.imtokenAddress,
+      //   "0xb48b7e5bf6563b3e0a85055821a83deb8cfc12f6",
+      //   res => {
+      //     imToken.callAPI("native.hideLoading");
+      //     imToken.callAPI('native.toastInfo', res)
+      //   }
+      // );
     },
     pay(hash) {
       var obj = {
@@ -371,8 +367,9 @@ export default {
       };
       getNodePledge(obj)
         .then(res => {
-          alert(JSON.stringify(res));
+          // alert(JSON.stringify(res));
           if (res.data.success) {
+           
             alert("质押成功");
             this.show = false;
             this.$router.back(-1);
@@ -382,26 +379,34 @@ export default {
           this.show = false;
         });
     },
-    getAll() {
-      this.initData()
+    setAll() {
+      personalAssest(this.imtokenAddress).then(res => {
+        var res = res.data;
+        if (res.success) {
+          this.initDataObj = res.data;
+          this.amount = res.data.balance/1000;
+        }
+      });
     },
-    initData(){/* 初始的页面数据获取 */
- personalAssest(this.imtokenAddress).then(res => {
-      var res = res.data;
-      if (res.success) {
-        this.initDataObj=res.data;
-       
-      }
-    });
-           this.gasPrice = web3.eth.estimateGas({
-    to: this.$route.query.address,
-    data: "0xb48b7e5bf6563b3e0a85055821a83deb8cfc12f6"
-});
+    initData() {
+      /* 初始的页面数据获取 */
+      personalAssest(this.imtokenAddress).then(res => {
+        var res = res.data;
+        if (res.success) {
+          this.initDataObj = res.data;
+        }
+      });
+//        var eth = new Eth(web3.currentProvider);
+//       eth.estimateGas({
+//         to: this.$route.query.address,
+//         data: "0xb48b7e5bf6563b3e0a85055821a83deb8cfc12f6"
+//       }).then(res=>{
+// this.gasPrice =res
+//       })
     }
   },
   mounted() {
-    this.initData()/* 数据初始化 */
-   
+    this.initData(); /* 数据初始化 */
   }
 };
 </script>
