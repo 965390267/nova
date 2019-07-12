@@ -5,7 +5,7 @@
     </div>
     <div class="ziyaed">
       <em>已质押</em>
-      {{$route.query.nodeMessage.pledgeAmount/1000}} NOVA
+      {{$route.query.pledgeAmount/1000}} NOVA
     </div>
     <div class="balance">
       <div class="canbalance" @click="setAll()">全部</div>
@@ -55,7 +55,7 @@ export default {
       this.show = true;
       imToken.callAPI("native.showLoading", "loading...");
       if (this.amount == 0) return alert("输入数量不能为0");
-      if(!this.$route.query.nodeMessage.address){
+      if(!this.$route.query.address){
              alert("未取到服务器节点地址");
              return this.$router.back(-1);
       } 
@@ -65,7 +65,7 @@ export default {
       } 
       // this.bus.$emit('loading',true)
       var obj = {
-        fromAddress: this.$route.query.nodeMessage.address, //服务器地址
+        fromAddress: this.$route.query.address, //服务器地址
         toAddress: this.imtokenAddress, //钱包地址
         amount: this.amount*1000,
         type: this.index
@@ -91,7 +91,7 @@ export default {
       //   var res = res.data;
       //   if (res.success) {
           //this.balance = this.$route.query.nodeMessage.pledgeAmount
-          this.amount = this.$route.query.nodeMessage.pledgeAmount/1000;
+          this.amount = this.$route.query.pledgeAmount/1000;
       //   }
       // });
     },

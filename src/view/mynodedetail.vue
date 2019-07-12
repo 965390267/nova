@@ -27,45 +27,44 @@
       <!-- 节点详情下的列表 -->
       <div class="nodedetail_list">
         <ul class="shuhui">
-          <li v-for="(item,index) in recentTransactionsList" :key="index" >
+          <li v-for="(item,index) in recentTransactionsList" :key="index">
             <template v-if="item.status==0">
-            <div class="title">
-              <div class="tit-left blodtxt">{{item.type==1?'赎回中':'质押中'}}</div>
-              <div class="tit-right">交易正在打包</div>
-            </div>
-            <div class="title">
-              <div class="tit-left">{{item.date}}</div>
-              <div class="tit-right">{{item.amount/1000}} NOVA</div>
-            </div>
+              <div class="title">
+                <div class="tit-left blodtxt">{{item.type==1?'赎回中':'质押中'}}</div>
+                <div class="tit-right">交易正在打包</div>
+              </div>
+              <div class="title">
+                <div class="tit-left">{{item.date}}</div>
+                <div class="tit-right">{{item.amount/1000}} NOVA</div>
+              </div>
             </template>
-          
           </li>
         </ul>
         <h2>最近交易</h2>
         <ul class="latest">
-          <li v-for="(item,index) in recentTransactionsList" :key="index">      
-         <!-- /* 
+          <li v-for="(item,index) in recentTransactionsList" :key="index">
+            <!-- /* 
    @status 0(转账中) 1(转账完成) 2(转账失败)
-   */ -->
-               <template v-if="item.status==1">
-            <div class="title">
-              <div class="tit-left">{{item.type==1?'赎回':'质押'}}</div>
-              <div class="tit-right">{{item.type==1?'赎回成功':'质押成功'}}</div>
-            </div>
-            <div class="title">
-              <div class="tit-left">{{item.date}}</div>
-              <div class="tit-right">{{item.amount/1000}} NOVA</div>
-            </div>
+            */-->
+            <template v-if="item.status==1">
+              <div class="title">
+                <div class="tit-left">{{item.type==1?'赎回':'质押'}}</div>
+                <div class="tit-right">{{item.type==1?'赎回成功':'质押成功'}}</div>
+              </div>
+              <div class="title">
+                <div class="tit-left">{{item.date}}</div>
+                <div class="tit-right">{{item.amount/1000}} NOVA</div>
+              </div>
             </template>
             <template v-else-if="item.status==2">
-            <div class="title">
-              <div class="tit-left">{{item.type==1?'赎回':'质押'}}</div>
-              <div class="tit-right">{{item.type==1?'赎回失败':'质押失败'}}</div>
-            </div>
-            <div class="title">
-              <div class="tit-left">{{item.date}}</div>
-              <div class="tit-right">{{item.amount/1000}} NOVA</div>
-            </div>
+              <div class="title">
+                <div class="tit-left">{{item.type==1?'赎回':'质押'}}</div>
+                <div class="tit-right">{{item.type==1?'赎回失败':'质押失败'}}</div>
+              </div>
+              <div class="title">
+                <div class="tit-left">{{item.date}}</div>
+                <div class="tit-right">{{item.amount/1000}} NOVA</div>
+              </div>
             </template>
           </li>
         </ul>
@@ -73,12 +72,9 @@
 
       <!-- 赎回和质押按钮 -->
       <div class="btn-wrap">
-        <router-link :to="{path:'/suhui',query:{nodeMessage:nodeMessage}}">
-          <div class="left-btn">赎回</div>
-        </router-link>
-        <router-link :to="{path:'/zhiya',query:{nodeMessage:nodeMessage}}">
-          <div class="right-btn">质押</div>
-        </router-link>
+        <div class="left-btn" @click="shuihui(nodeMessage.address,nodeMessage.pledgeAmount)">赎回</div>
+
+        <div class="right-btn" @click="zhiya(nodeMessage.address,nodeMessage.pledgeAmount)">质押</div>
       </div>
     </div>
   </div>
@@ -89,29 +85,67 @@ import { recentTransactions, myNodeDetail } from "@/config";
 export default {
   data() {
     return {
-      nodeMessage: {pledgeAmount:'',returnrate:''},
-      recentTransactionsList: []
+      nodeMessage: { pledgeAmount: "", returnrate: "" },
+      recentTransactionsList: [],
+      isLoad:false
     };
   },
-  computed: {
-
-  },
-  methods:{
-
+  computed: {},
+  methods: {
+    shuihui(address, pledgeAmount) {
+      /* 
+@{params} address节点地址
+*/
+   if(!this.isLoad)return  alert('数据加载中');
+      if (address) {
+        this.$router.push({
+          path: "/suhui",
+          query: { address: address, pledgeAmount: pledgeAmount }
+        });
+      } else {
+        alert("未取到服务器节点");
+      }
+    },
+    zhiya(address, pledgeAmount) {
+       if(!this.isLoad)return alert('数据加载中');
+      if (address) {
+        this.$router.push({
+          path: "/zhiya",
+          query: { address: address, pledgeAmount: pledgeAmount }
+        });
+      } else {
+        alert("未取到服务器节点");
+      }
+    }
   },
   mounted() {
-    
+     if (window.ethereum) {
+        imToken.callAPI("native.showLoading", "loading...");
+      }
     myNodeDetail(this.$route.query.nodeId, this.imtokenAddress).then(res => {
+      if (window.ethereum) {
+         imToken.callAPI('native.hideLoading')
+      }
       if (res.data.success) {
+        this.isLoad=true;
         this.nodeMessage = res.data.data;
+        console.log(this.nodeMessage);
       }
-    });
-    recentTransactions(this.imtokenAddress,this.$route.query.nodeAddress).then(res => {
-      if (res.data.success) {
-        this.recentTransactionsList = res.data.data;
+    }).catch(err=>{
+      if (window.ethereum) {
+         imToken.callAPI('native.hideLoading')
       }
-    });
-    console.log(this.nodeMessage);
+    })
+    recentTransactions(this.imtokenAddress, this.$route.query.nodeAddress).then(
+      res => {
+        if (window.ethereum) {
+         imToken.callAPI('native.hideLoading')
+      }
+        if (res.data.success) {
+          this.recentTransactionsList = res.data.data;
+        }
+      }
+    );
   }
 };
 </script>
@@ -121,9 +155,9 @@ export default {
 @import "@/assets/scss/colors.scss";
 @import "@/assets/scss/mixins.scss";
 @import "@/assets/scss/common.scss";
-[v-cloak]{
-            display: none;
-        }
+[v-cloak] {
+  display: none;
+}
 .card-bg {
   position: relative;
   background: #122f4d;

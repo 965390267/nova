@@ -44,7 +44,7 @@ export default {
     get() {
       this.show = true;
       if (this.amount == 0) return alert("输入数量不能为0");
-          if(!this.$route.query.nodeMessage.address){
+          if(!this.$route.query.address){
              alert("未取到服务器节点地址");
              return this.$router.back(-1);
       } 
@@ -346,7 +346,7 @@ export default {
       transferNova(
         web3.currentProvider,
         abi,
-        this.$route.query.nodeMessage.address,
+        this.$route.query.address,
         this.amount * 1000,
         "0xb48b7e5bf6563b3e0a85055821a83deb8cfc12f6",
         hash => {
@@ -369,7 +369,7 @@ export default {
     pay(hash) {
       var obj = {
         fromAddress: this.imtokenAddress, //转入方是自己的地址
-        toAddress: this.$route.query.nodeMessage.address, //转入方
+        toAddress: this.$route.query.address, //转入方
         amount: this.amount * 1000,
         txnHash: hash
       };

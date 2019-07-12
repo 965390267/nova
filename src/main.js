@@ -78,7 +78,7 @@ if (!!window.imToken) {/* imtoken环境下 */
   if (env() == 'production') {
     Vue.prototype.imtokenAddress = ''
   } else {
-    Vue.prototype.imtokenAddress = '0x7822c4C757A61cEA3F2C21d6502515F60D6898d7'
+    Vue.prototype.imtokenAddress = '0x872bb39F5794BECa1C84a4d340288350188AE9dA'
   }
   function env() {
     if (process.env.NODE_ENV === "development") return "development";   //开发环境
