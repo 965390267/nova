@@ -30,7 +30,7 @@
                    </div>
                    <div class="des">
                         <div class="txt">收益</div>
-                        <div class="num">{{item.totalIncome}}</div>
+                        <div class="num">{{item.totalIncome/1000}}</div>
                     </div>
                     <div class="des">
                             <div class="txt">预计收益(天)</div>

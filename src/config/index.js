@@ -1,7 +1,16 @@
 import axios from 'axios'
 
 // export const baseurl='http://106.15.52.35:8080/' 
-axios.defaults.baseURL = 'https://novastaking.com/';/* 7-12-10-14更改 */
+
+
+if(env()=='production'){
+  axios.defaults.baseURL = 'https://novastaking.com/';/* 7-12-10-14更改 */
+}
+function env() {
+  if (process.env.NODE_ENV === "development") return "development";   //开发环境
+  if (window.location.href.includes('192.168')) return 'test';        //测试环境，"192.168"根据实际情况而定
+  return 'production'                                                 //线上环境
+}
 
 // 添加请求拦截器
 axios.interceptors.request.use( (config)=> {
@@ -116,7 +125,7 @@ export function myNodeDetail(nodeId,address){
  * //个人总资产接口
 */
 export function personalAssest(address){
-  alert(`api/personalAssest?address=${address}`)
+
     return axios(`api/personalAssest?address=${address}`);
     }
    

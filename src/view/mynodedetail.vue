@@ -44,14 +44,9 @@
         <h2>最近交易</h2>
         <ul class="latest">
           <li v-for="(item,index) in recentTransactionsList" :key="index">      
-            <!-- <div class="title">
-              <div class="tit-left">{{payStatus(item)}}</div>
-              <div class="tit-right"></div>
-            </div>
-            <div class="title">
-              <div class="tit-left">{{item.date}}</div>
-              <div class="tit-right">{{item.amount/1000}} NOVA</div>
-            </div> -->
+         <!-- /* 
+   @status 0(转账中) 1(转账完成) 2(转账失败)
+   */ -->
                <template v-if="item.status==1">
             <div class="title">
               <div class="tit-left">{{item.type==1?'赎回':'质押'}}</div>
@@ -78,10 +73,10 @@
 
       <!-- 赎回和质押按钮 -->
       <div class="btn-wrap">
-        <router-link :to="{path:'/suhui',query:{address:nodeMessage.address}}">
+        <router-link :to="{path:'/suhui',query:{nodeMessage:nodeMessage}}">
           <div class="left-btn">赎回</div>
         </router-link>
-        <router-link :to="{path:'/zhiya',query:{address:nodeMessage.address}}">
+        <router-link :to="{path:'/zhiya',query:{nodeMessage:nodeMessage}}">
           <div class="right-btn">质押</div>
         </router-link>
       </div>
@@ -102,31 +97,7 @@ export default {
 
   },
   methods:{
- payStatus(item){
-   /* 
-   @status 0(转账中) 1(转账完成) 2(转账失败)
-   */
-   if(item.status==0&&item.type==1)return '赎回中'
-    if(item.status==0&&item.type==0)return '质押中'
-   if(item.status==1&&item.type==1)return '赎回成功'
-   if(item.status==1&&item.type==0)return '质押成功'
-     if(item.status==2&&item.type==1)return '赎回失败'
-   if(item.status==2&&item.type==0)return '质押失败'
-//    item.status==1?'赎回':'质押'
-//    if(item.status==1){
-//       if(item.type==1){
-//     return '赎回成功'
-//       }else{
-//  return '赎回失败'
-//       }
-//    }else if(item.status==2){
-//    if(item.type==1){
-//     return '赎回成功'
-//       }else{
-//  return '赎回失败'
-//       }
-//    }
- }
+
   },
   mounted() {
     

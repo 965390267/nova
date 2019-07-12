@@ -11,9 +11,10 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      'api':{
-        target:'http://106.15.52.35:8080/',
+      '*':{
+        target:'https://novastaking.com/',
         changeOrigin:true,
+        secure: true,
         // pathRewrite:{
         //   '^/api':''
         // },

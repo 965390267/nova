@@ -29,7 +29,7 @@
                    </div>
                    <div class="des">
                         <div class="txt">收益</div>
-                        <div class="num">{{item.totalIncome}}</div>
+                        <div class="num">{{item.totalIncome/1000}}</div>
                     </div>
                     <div class="des">
                             <div class="txt">预计收益(天)</div>
@@ -122,15 +122,17 @@ export default {
             font-size: 10px;
             color: $second-text-color;
               text-align: center;
-               background: linear-gradient(90deg,#F08740,#F06B40);
-               border-radius: 0px 0px 0px 12px;
+            //    background: linear-gradient(90deg,#F08740,#F06B40);
+            //    border-radius: 0px 0px 0px 12px;
+            margin-top: 20px;
+    padding-right: 30px;
            }
            .top{
                display: flex;
                flex-direction: row;
             align-items: stretch;
-            margin-top: 20px;
-            padding: 5px 0 5px 10px;
+            // margin-top: 20px;
+            padding: 2px 0 5px 10px;
                .left-circle{
                    width: 30px;height: 30px;
                    background: linear-gradient(90deg,#F08740,#F06B40);
@@ -158,7 +160,7 @@ export default {
                    }
                }
                .right-present{
-                padding-top: 7px;
+                // padding-top: 7px;
                    text-align: center;
                 .txt{
                     font-size: 20px;

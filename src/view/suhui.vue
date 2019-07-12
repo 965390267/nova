@@ -5,7 +5,7 @@
     </div>
     <div class="ziyaed">
       <em>已质押</em>
-      {{blance/1000}} NOVA
+      {{$route.query.nodeMessage.pledgeAmount/1000}} NOVA
     </div>
     <div class="balance">
       <div class="canbalance" @click="setAll()">全部</div>
@@ -55,8 +55,8 @@ export default {
       this.show = true;
       imToken.callAPI("native.showLoading", "loading...");
       if (this.amount == 0) return alert("输入数量不能为0");
-      if(!this.$route.query.address){
-             alert("未取到服务器地址");
+      if(!this.$route.query.nodeMessage.address){
+             alert("未取到服务器节点地址");
              return this.$router.back(-1);
       } 
       if(!this.imtokenAddress){
@@ -65,7 +65,7 @@ export default {
       } 
       // this.bus.$emit('loading',true)
       var obj = {
-        fromAddress: this.$route.query.address, //服务器地址
+        fromAddress: this.$route.query.nodeMessage.address, //服务器地址
         toAddress: this.imtokenAddress, //钱包地址
         amount: this.amount*1000,
         type: this.index
@@ -87,23 +87,23 @@ export default {
         });
     },
     setAll() {
-      personalAssest(this.imtokenAddress).then(res => {
-        var res = res.data;
-        if (res.success) {
-          this.balance = res.data.balance
-          this.amount = res.data.balance/1000;
-        }
-      });
+      // personalAssest(this.imtokenAddress).then(res => {
+      //   var res = res.data;
+      //   if (res.success) {
+          //this.balance = this.$route.query.nodeMessage.pledgeAmount
+          this.amount = this.$route.query.nodeMessage.pledgeAmount/1000;
+      //   }
+      // });
     },
     initData() {
       /* 初始的页面数据获取 */
 
-      personalAssest(this.imtokenAddress).then(res => {
-        var res = res.data;
-        if (res.success) {
-          this.balance = res.data.balance
-        }
-      });
+      // personalAssest(this.imtokenAddress).then(res => {
+      //   var res = res.data;
+      //   if (res.success) {
+      //     this.balance = res.data.pendingAmount
+      //   }
+      // });
     //   var eth = new Eth(web3.currentProvider);
 // eth.getBalance(this.imtokenAddress)
 //                   .then((info)=>{
@@ -122,7 +122,7 @@ export default {
     }
   },
   mounted() {
-    this.initData(); /* 数据初始化 */
+    //this.initData(); /* 数据初始化 */
   }
 };
 </script>
@@ -173,8 +173,12 @@ export default {
   position: relative;
   .canbalance {
     position: absolute;
-    right: 15px;
-    top: 14px;
+    right: 0;
+    // top: 14px;
+    height: 40px;
+    line-height: 40px;
+    width: 50px;
+    text-align: center;
     color: #f08a40;
     font-size: 13px;
   }

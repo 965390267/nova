@@ -88,6 +88,9 @@ export default {
       return this.nodeaddress.replace(/(.{10}).*(.{10})/, "$1******$2");
     }
   },
+  beforeCreate() {
+
+  },
   methods: {
     gotoList() {
       if (window.ethereum) {
@@ -97,25 +100,43 @@ export default {
     }
   },
   mounted() {
-    
+        if (window.ethereum) {
+        imToken.callAPI("native.showLoading", "loading...");
+      }
     personalAssest(this.imtokenAddress).then(res => {
       var res = res.data;
-      console.log(res);
+      if (window.ethereum) {
+         imToken.callAPI('native.hideLoading')
+      }
       if (res.success) {
+       
         this.balance = res.data.balance/1000;
         this.yesterdayIncome = res.data.yesterdayIncome/1000;
         this.totalIncome = res.data.totalIncome/1000;
         this.totalAssets = res.data.totalAssets/1000;
         this.pendingAmount = res.data.pendingAmount/1000;
       }
-    });
+    }).catch(err=>{
+      if (window.ethereum) {
+         imToken.callAPI('native.hideLoading')
+      }
+    })
+    
     getMyNodeList(this.imtokenAddress).then(res => {
       console.log(res);
+       if (window.ethereum) {
+         imToken.callAPI('native.hideLoading')
+      }
       if (res.data.success) {
         this.nodelistdata = res.data.data;
       }
-    });
-var eth = new Eth(web3.currentProvider);
+    }).catch(err=>{
+      if (window.ethereum) {
+         imToken.callAPI('native.hideLoading')
+      }
+    })
+    try {
+      var eth = new Eth(web3.currentProvider);
 eth.getBalance(this.imtokenAddress)/* 钱包以太币获取方法 */
                   .then((info)=>{
                      this.ETH =info/1000000000000000000;/* 1000000000000000000是eth的单位，和nova除以1000是一个道理 */
@@ -124,6 +145,10 @@ eth.getBalance(this.imtokenAddress)/* 钱包以太币获取方法 */
                   .catch(function(info){
                     // alert(info);
                   });
+    } catch (error) {
+      
+    }
+
   
   }
 };
@@ -137,14 +162,25 @@ eth.getBalance(this.imtokenAddress)/* 钱包以太币获取方法 */
 .top-card-wrap {
   position: relative;
 
-  height: 326px; /*no*/
+  height: 300px; /*no*/
   overflow: hidden;
   // min-height: 390px;
   .top-card-bg {
     height: 280px; /*no*/
-    @include setbg("../assets/img/m-top-bg@2x.png");
+    //@include setbg("../assets/img/m-top-bg@2x.png");
+    background-color: #122F4D;
   }
-
+.top-card-bg::after {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    width: 150%;
+    height: 100%;
+    background: linear-gradient(90deg, #f08740, #f06b40);
+    -webkit-transform: translate(0rem, 2rem) rotateZ(-20deg);
+    transform: translate(0rem, 2rem) rotateZ(-20deg);
+}
   .toal-money {
     text-align: center;
     padding-top: 20px; /*no*/
@@ -153,7 +189,7 @@ eth.getBalance(this.imtokenAddress)/* 钱包以太币获取方法 */
   }
   .money {
     text-align: center;
-    // padding-top: 10px;
+     padding-top: 5px;
     font-size: 18px;
     color: $orange-text-color;
   }
@@ -166,7 +202,7 @@ eth.getBalance(this.imtokenAddress)/* 钱包以太币获取方法 */
   .card-mid {
     display: flex;
     flex-direction: row;
-    padding: 30px 15px 15px 15px; /*no*/
+    padding: 20px 15px 15px 15px; /*no*/
     border-bottom: 1px dotted $main-text-color;
     .des {
       display: flex;
