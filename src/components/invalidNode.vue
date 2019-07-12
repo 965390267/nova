@@ -33,7 +33,7 @@
                     </div>
                     <div class="des">
                             <div class="txt">预计收益(天)</div>
-                            <div class="num">+{{item.yesterdayincome}}</div>
+                            <div class="num">0</div>
                         </div>
                    </div>
                </li>
