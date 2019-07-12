@@ -27,28 +27,51 @@
       <!-- 节点详情下的列表 -->
       <div class="nodedetail_list">
         <ul class="shuhui">
-          <li v-for="(item,index) in recentTransactionsList" :key="index" v-if="item.status==0">
+          <li v-for="(item,index) in recentTransactionsList" :key="index" >
+            <template v-if="item.status==0">
             <div class="title">
-              <div class="tit-left blodtxt">{{item.type==1?'赎回':'质押'}}</div>
+              <div class="tit-left blodtxt">{{item.type==1?'赎回中':'质押中'}}</div>
               <div class="tit-right">交易正在打包</div>
             </div>
             <div class="title">
               <div class="tit-left">{{item.date}}</div>
               <div class="tit-right">{{item.amount/1000}} NOVA</div>
             </div>
+            </template>
+          
           </li>
         </ul>
         <h2>最近交易</h2>
         <ul class="latest">
-          <li v-for="(item,index) in recentTransactionsList" :key="index">
-            <div class="title">
-              <div class="tit-left">{{item.type==1?'赎回':'质押'}}</div>
+          <li v-for="(item,index) in recentTransactionsList" :key="index">      
+            <!-- <div class="title">
+              <div class="tit-left">{{payStatus(item)}}</div>
               <div class="tit-right"></div>
             </div>
             <div class="title">
               <div class="tit-left">{{item.date}}</div>
               <div class="tit-right">{{item.amount/1000}} NOVA</div>
+            </div> -->
+               <template v-if="item.status==1">
+            <div class="title">
+              <div class="tit-left">{{item.type==1?'赎回':'质押'}}</div>
+              <div class="tit-right">{{item.type==1?'赎回成功':'质押成功'}}</div>
             </div>
+            <div class="title">
+              <div class="tit-left">{{item.date}}</div>
+              <div class="tit-right">{{item.amount/1000}} NOVA</div>
+            </div>
+            </template>
+            <template v-else-if="item.status==2">
+            <div class="title">
+              <div class="tit-left">{{item.type==1?'赎回':'质押'}}</div>
+              <div class="tit-right">{{item.type==1?'赎回失败':'质押失败'}}</div>
+            </div>
+            <div class="title">
+              <div class="tit-left">{{item.date}}</div>
+              <div class="tit-right">{{item.amount/1000}} NOVA</div>
+            </div>
+            </template>
           </li>
         </ul>
       </div>
@@ -78,7 +101,35 @@ export default {
   computed: {
 
   },
+  methods:{
+ payStatus(item){
+   /* 
+   @status 0(转账中) 1(转账完成) 2(转账失败)
+   */
+   if(item.status==0&&item.type==1)return '赎回中'
+    if(item.status==0&&item.type==0)return '质押中'
+   if(item.status==1&&item.type==1)return '赎回成功'
+   if(item.status==1&&item.type==0)return '质押成功'
+     if(item.status==2&&item.type==1)return '赎回失败'
+   if(item.status==2&&item.type==0)return '质押失败'
+//    item.status==1?'赎回':'质押'
+//    if(item.status==1){
+//       if(item.type==1){
+//     return '赎回成功'
+//       }else{
+//  return '赎回失败'
+//       }
+//    }else if(item.status==2){
+//    if(item.type==1){
+//     return '赎回成功'
+//       }else{
+//  return '赎回失败'
+//       }
+//    }
+ }
+  },
   mounted() {
+    
     myNodeDetail(this.$route.query.nodeId, this.imtokenAddress).then(res => {
       if (res.data.success) {
         this.nodeMessage = res.data.data;

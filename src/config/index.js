@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 // export const baseurl='http://106.15.52.35:8080/' 
-axios.defaults.baseURL = 'https://novastaking.com:8080/';
+axios.defaults.baseURL = 'https://novastaking.com/';/* 7-12-10-14更改 */
 
 // 添加请求拦截器
 axios.interceptors.request.use( (config)=> {
@@ -23,8 +23,27 @@ axios.interceptors.response.use(function (response) {
     return response;
   }, function (error) {
     // 对响应错误做点什么
-    alert(error)
-    return Promise.reject(error);
+    if (error && error.response) {
+      alert('请求错误')
+      // switch (err.response.status) {
+      //   case 400:
+      //       console.log('错误请求')
+      //     break;
+      //   case 401:
+      //       console.log('未授权，请重新登录')
+      //     break;
+      //   case 403:
+      //     console.log('拒绝访问')
+      //     break;
+      //   case 404:
+      //     console.log('请求错误,未找到该资源')
+      //     break;
+      //   case 405:
+      //     console.log('请求方法未允许')
+      //     break;
+      //   }
+      }
+    return Promise.reject(error.response);
   });
 /** 
  * @request {POST}
@@ -97,6 +116,7 @@ export function myNodeDetail(nodeId,address){
  * //个人总资产接口
 */
 export function personalAssest(address){
+  alert(`api/personalAssest?address=${address}`)
     return axios(`api/personalAssest?address=${address}`);
     }
    

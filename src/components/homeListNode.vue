@@ -5,10 +5,10 @@
            <ul>
                <li v-for='(item,index) in nodelistdata' :key='index' @click='gotodetail(item.nodeId,item.address)'>
                <div class="top-right-active no" v-if='item.nodeStatus==0'>
-                          未激活节点 
+                         待生效节点
                    </div>
                    <div class="top-right-active" v-else>
-                   已激活节点
+                   生效节点  
                    </div>
                    <div class="top">
                        <div class="left-circle"></div>

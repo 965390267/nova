@@ -6,7 +6,7 @@
         <div class="card-top-des">
           <div class="card-tit1">
             <div class="card-tit1-left">ETH Wallet</div>
-            <div class="card-tit1-right">{{ETH}} ETH</div>
+            <div class="card-tit1-right">{{ETH.toFixed(6)}} ETH</div>
           </div>
           <div class="card-tit2">
             <div class="card-tit1-left">{{hiddenMidAddress}}</div>
@@ -15,12 +15,12 @@
         </div>
 
         <div class="toal-money">总资产</div>
-        <div class="money">{{totalAssets/1000}} NOVA</div>
+        <div class="money">{{totalAssets}} NOVA</div>
         <!-- <div class="rmb">￥{{totalAssets}}</div> 暂时去掉，后续开发-->
         <div class="card-mid">
           <div class="rest des">
             <div class="tit">可用余额</div>
-            <div class="num">{{balance/1000}}</div>
+            <div class="num">{{balance}}</div>
           </div>
           <div class="yestoday des">
             <div class="tit">昨日收益</div>
@@ -75,7 +75,7 @@ export default {
     return {
       nodeaddress: this.imtokenAddress,
       balance: "",
-      ETH: "",
+      ETH: 0,
       pendingAmount: "",
       totalAssets: "",
       totalIncome: "",
@@ -97,15 +97,16 @@ export default {
     }
   },
   mounted() {
+    
     personalAssest(this.imtokenAddress).then(res => {
       var res = res.data;
       console.log(res);
       if (res.success) {
-        this.balance = res.data.balance;
-        this.yesterdayIncome = res.data.yesterdayIncome;
-        this.totalIncome = res.data.totalIncome;
-        this.totalAssets = res.data.totalAssets;
-        this.pendingAmount = res.data.pendingAmount;
+        this.balance = res.data.balance/1000;
+        this.yesterdayIncome = res.data.yesterdayIncome/1000;
+        this.totalIncome = res.data.totalIncome/1000;
+        this.totalAssets = res.data.totalAssets/1000;
+        this.pendingAmount = res.data.pendingAmount/1000;
       }
     });
     getMyNodeList(this.imtokenAddress).then(res => {

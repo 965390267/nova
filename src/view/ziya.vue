@@ -44,6 +44,14 @@ export default {
     get() {
       this.show = true;
       if (this.amount == 0) return alert("输入数量不能为0");
+          if(!this.$route.query.address){
+             alert("未取到服务器地址");
+             return this.$router.back(-1);
+      } 
+      if(!this.imtokenAddress){
+             alert("未授权成功");
+             return this.$router.back(-1);
+      } 
       // this.bus.$emit('loading',true)
       imToken.callAPI("native.showLoading", "loading...");
       var abi = [

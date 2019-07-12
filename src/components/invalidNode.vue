@@ -6,14 +6,14 @@
         <div class="linear-bg"></div>
            <ul>
                <li @click='gotodetail(item.nodeId,item.address)' v-for='(item,index) in listdata' :key='index' >
-                   <!-- <div class="top-right-active">
-                       已激活节点
-                   </div> -->
+                 <div class="top-right-active">
+                       不产生收益
+                   </div>
                    <div class="top">
                        <div class="left-circle"></div>
                    <div class="name">{{item.nodeName}}</div>
                    <div class="mid-money">
-                       <div class="txt">{{item.totalAmount}}</div>
+                       <div class="txt">{{item.totalAmount/1000}}</div>
                        <div class="des">质押总额</div>
                    </div>
                    <div class="right-present">
@@ -120,7 +120,7 @@ export default {
            height: 18px;
            line-height: 18px;
             font-size: 10px;
-            color: #FDF9F4;
+            color: $second-text-color;
               text-align: center;
                background: linear-gradient(90deg,#F08740,#F06B40);
                border-radius: 0px 0px 0px 12px;
