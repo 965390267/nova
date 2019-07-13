@@ -8,7 +8,7 @@
                          待生效节点
                    </div>
                    <div class="top-right-active" v-else>
-                   生效节点  
+                   有效节点  
                    </div>
                    <div class="top">
                        <div class="left-circle"></div>
@@ -34,7 +34,7 @@
                     </div>
                     <div class="des">
                             <div class="txt">预计收益(天)</div>
-                            <div class="num">+{{item.nodeStatus==0?0:item.yesterdayincome}}</div>
+                            <div class="num">+{{item.nodeStatus==0?0:(item.yesterdayincome)/1000}}</div>
                         </div>
                    </div>
                </li>

@@ -47,7 +47,8 @@ export default {
   data() {
     return {
       active: 0,
-      swiperOption: {
+      swiperOption: {   
+        //  initialSlide : localStorage.getItem('swiperIndex')||0,
         slidesPerView: 1,
         spaceBetween: 30,
         autoplay: false,
@@ -64,9 +65,11 @@ export default {
           // 使用es6的箭头函数，使this指向vue对象
           slideChangeTransitionStart: () => {
             // 通过$refs获取对应的swiper对象
-            let swiper = this.$refs.mySwiper.swiper;
+             let swiper = this.$refs.mySwiper.swiper;
             // let i = swiper.activeIndex;
-            this.active=swiper.activeIndex;
+           console.log(swiper)
+             this.active=swiper.activeIndex;
+              localStorage.setItem('swiperIndex',this.active)
           }
         }
       },
@@ -93,7 +96,10 @@ export default {
   // this.$router.push({path:'/nodeswiper',query:{}})
        }
        })
-        imToken.callAPI('native.hideLoading')
+       // imToken.callAPI('native.hideLoading');
+        // this.$refs.mySwiper.swiper.initialSlide=1;
+       // localStorage.setItem('swiperIndex',swiperOption)
+
   },
 };
 </script>

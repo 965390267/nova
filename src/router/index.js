@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import '@/assets/css/reset.css'
-import nodeswiper from '@/view/nodeswiper'
+// import nodeswiper from '@/view/nodeswiper'
 Vue.use(Router)
 
 export default new Router({
@@ -14,7 +14,7 @@ export default new Router({
     {
       path: '/nodeswiper',
       name: 'nodeswiper',
-      component: nodeswiper
+      component:  ()=>import('@/view/nodeswiper')
     }
     ,
     {

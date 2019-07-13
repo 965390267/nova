@@ -98,10 +98,10 @@ export default {
     height: 45px;
     line-height: 45px;
     box-shadow: 0 0 16px 0 #F08A40;
-    margin-left: 45px;
+    margin-left: 35px;
     margin-top: 40px;
      background: #F08A40;
-     font-size: 15px;
+     font-size: 13px;
      font-weight: bold;
   
 text-overflow:ellipsis;
@@ -111,11 +111,11 @@ white-space: nowrap;
     content: '';
     position: absolute;
     top: 0;
-    left: -67px;
+    left: -55px;
     width: 0;
     height: 0;
-    border: 22px solid transparent;
-    border-right: 45px solid #F08A40;
+    border: 23px solid transparent;
+    border-right: 35px solid #F08A40;
     
 }
 .left-question::after{

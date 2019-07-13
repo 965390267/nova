@@ -9,7 +9,7 @@
               {{nodeMessage.nodeName}}
             </div>
             <div class="title">
-              <div class="total">质押总额 (nova)</div>
+              <div class="total">我的质押金额 (nova)</div>
               <div class="present">预计年化收益</div>
             </div>
             <div class="txt">
