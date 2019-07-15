@@ -4,101 +4,78 @@
       <nav>
         <p @click="toggle(0)" :class="{active:0==active}">有效节点</p>
         <p @click="toggle(1)" :class="{active:1==active}">待生效节点</p>
-        <!-- <p
-            v-for="(item,$index) in arrs" :key='$index'
-            @click="toggle($index)"
-            :class="{active:$index==active}"
-        >{{item}}</p>-->
       </nav>
     </div>
 
-    <!-- Swiper -->
-    <swiper :options="swiperOption" ref="mySwiper" @someSwiperEvent="callback">
-      <!-- slides -->
-      <div class="swiper-slide">
-        <effect-node-list :nodelistdata='nodelistdata'></effect-node-list>
-      </div>
-      <div class="swiper-slide">
-         <invalid-node-list :nodelistdata='nodelistdata'></invalid-node-list>
-      </div>
-      <!-- Optional controls -->
-      <!-- <div class="swiper-pagination" slot="pagination"></div>
-      <div class="swiper-button-prev" slot="button-prev"></div>
-      <div class="swiper-button-next" slot="button-next"></div> -->
-      <!-- <div class="swiper-scrollbar"   slot="scrollbar"></div> -->
-    </swiper>
+
+    <div class="light-swiper">
+  <div class="swiper-wrap">
+    <div class="swipe-item">
+       <effect-node-list :nodelistdata='nodelistdata'></effect-node-list>
+    </div>
+    <div class="swipe-item">
+       <invalid-node-list :nodelistdata='nodelistdata'></invalid-node-list>
+    </div>
+
+  </div>
+</div>
   </div>
 </template>
 
 <script>
+import Swiper from 'light-swiper'/* c超级轻量的swiper地址https://my.oschina.net/keysITer/blog/3013447 */
 import {nodeList} from '@/config'
 import effectNodeList from "@/components/effectNode.vue";
 import invalidNodeList from "@/components/invalidNode.vue";
-import "swiper/dist/css/swiper.css";
-import { swiper, swiperSlide } from "vue-awesome-swiper";
+
 export default {
   components: {
     effectNodeList,
     invalidNodeList,
-    swiper,
-    swiperSlide
+
   },
 
   data() {
     return {
-      active: 0,
-      swiperOption: {   
-        //  initialSlide : localStorage.getItem('swiperIndex')||0,
-        slidesPerView: 1,
-        spaceBetween: 30,
-        autoplay: false,
-        loop: false,
-        pagination: {
-          el: ".swiper-pagination",
-          clickable: true
-        },
-        navigation: {
-          nextEl: ".swiper-button-next",
-          prevEl: ".swiper-button-prev"
-        },
-        on: {
-          // 使用es6的箭头函数，使this指向vue对象
-          slideChangeTransitionStart: () => {
-            // 通过$refs获取对应的swiper对象
-             let swiper = this.$refs.mySwiper.swiper;
-            // let i = swiper.activeIndex;
-           console.log(swiper)
-             this.active=swiper.activeIndex;
-              localStorage.setItem('swiperIndex',this.active)
-          }
-        }
-      },
+      active: sessionStorage.getItem('swiperIndex')||0,
+      mySwiper:null,
       nodelistdata:null
     };
   },
-  created() {},
-  computed: {
-    swiper() {
-      return this.$refs.mySwiper.swiper;
-    }
+  created() {
+
   },
   methods: {
     callback(index) {
       console.log(this);
     },
     toggle(index){
-       this.$refs.mySwiper.swiper.slideTo(index)
+      this.active=index
+      if(index){
+         this.mySwiper.next()
+
+      }else{
+ this.mySwiper.prev()
+      }
+     
     }
   },mounted() {
+     this.mySwiper = new Swiper(document.querySelector('.light-swiper'),{
+      startSlide: sessionStorage.getItem('swiperIndex')||0,
+       callback: (index, elem) =>{
+         console.log(index);
+         this.active=index;
+         sessionStorage.setItem('swiperIndex',index)
+       },
+    });
         nodeList(this.imtokenAddress).then(res=>{
        if(res.data.success){
          this.nodelistdata=res.data.data
-  // this.$router.push({path:'/nodeswiper',query:{}})
+
        }
        })
-       // imToken.callAPI('native.hideLoading');
-        // this.$refs.mySwiper.swiper.initialSlide=1;
-       // localStorage.setItem('swiperIndex',swiperOption)
+        imToken.callAPI('native.hideLoading');
+    
 
   },
 };
@@ -106,14 +83,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang='scss'>
-.changepage{
-  min-height:100%;
-  background: #FDF9F4;
-  overflow: hidden;
-}
-.swiper-container{
-  margin-top: 50px;
-}
+
 .navs {
   width: 100%;
   margin-top: 40px;
@@ -138,8 +108,40 @@ export default {
 .navs p.active {
   background: linear-gradient(90deg, #f08740, #f06b40);
 }
-.swiper-container{
-  min-height: 70vh;
+/* swiper样式 */
+.light-swiper {
+   margin-top: 40px;
+  overflow: hidden;
+  position: relative;
+}
+
+.swiper-wrap {
+  overflow: hidden;
+  position: relative;
+}
+// .swiper-wrap::before{
+//   content: '';
+//   position: absolute;
+//   left: 0;
+//   top: 0;
+//   width: 100%;
+//   height: 30px;
+//   z-index: 999;
+//   background: linear-gradient(rgba(255,255,255,.8),transparent);
+// }
+.swipe-item {
+  float: left;
+  width: 100%;
+  position: relative;
+  height: 70vh;/*写给不支持calc()的浏览器*/ 
+  height:calc(100vh - 120px);
+  overflow-y: scroll;
+}
+
+.changepage{
+  min-height:100%;
+  background: #FDF9F4;
+  overflow: hidden;
 }
 
 </style>

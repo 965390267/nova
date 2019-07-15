@@ -35,7 +35,7 @@ export default {
   data() {
     return {
       initDataObj: {},
-      amount: "" /* 用户输入的Nova数量，提交需要*1000 */,
+      amount: '' /* 用户输入的Nova数量，提交需要*1000 */,
       show: false,
       gasPrice: ""
     };
@@ -43,6 +43,10 @@ export default {
   methods: {
     get() {
       this.show = true;
+    
+      this.amount=Number(this.amount);
+      console.log(this.amount);
+      
       if (this.amount == 0) return alert("输入数量不能为0");
           if(!this.$route.query.address){
              alert("未取到服务器节点地址");
@@ -343,11 +347,12 @@ export default {
       // })
       // 20000000是20Nova，要乘6个0
       // 质押 质押按钮触发这个 function transferNova(provider, novaAbi, toAddress, amountOfNova, gasPrice, novaAddress, callBackTransfer)
-      transferNova(
+
+   transferNova(
         web3.currentProvider,
         abi,
         this.$route.query.address,
-        this.amount * 1000,
+        Number(this.amount)  * 1000,
         "0xb48b7e5bf6563b3e0a85055821a83deb8cfc12f6",
         hash => {
           imToken.callAPI("native.hideLoading");
@@ -370,7 +375,7 @@ export default {
       var obj = {
         fromAddress: this.imtokenAddress, //转入方是自己的地址
         toAddress: this.$route.query.address, //转入方
-        amount: this.amount * 1000,
+        amount: Number(this.amount) * 1000,
         txnHash: hash
       };
       getNodePledge(obj)
@@ -384,6 +389,7 @@ export default {
           }
         })
         .catch(err => {
+          alert(err)
           this.show = false;
         });
     },
@@ -392,7 +398,7 @@ export default {
         var res = res.data;
         if (res.success) {
           this.initDataObj = res.data;
-          this.amount = res.data.balance/1000;
+          this.amount =Number(res.data.balance) /1000;
         }
       });
     },

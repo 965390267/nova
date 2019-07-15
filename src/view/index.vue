@@ -103,6 +103,9 @@ export default {
         if (window.ethereum) {
         imToken.callAPI("native.showLoading", "loading...");
       }
+         if(!this.imtokenAddress){
+             alert("未授权成功,请退出重新授权");       
+      } 
     personalAssest(this.imtokenAddress).then(res => {
       var res = res.data;
       if (window.ethereum) {
@@ -117,6 +120,7 @@ export default {
         this.pendingAmount = res.data.pendingAmount/1000;
       }
     }).catch(err=>{
+      alert(err)
       if (window.ethereum) {
          imToken.callAPI('native.hideLoading')
       }
@@ -131,6 +135,7 @@ export default {
         this.nodelistdata = res.data.data;
       }
     }).catch(err=>{
+       alert(err)
       if (window.ethereum) {
          imToken.callAPI('native.hideLoading')
       }

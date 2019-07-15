@@ -53,6 +53,7 @@ export default {
     },
     get() {
       this.show = true;
+       this.amount=Number(this.amount);
       imToken.callAPI("native.showLoading", "loading...");
       if (this.amount == 0) return alert("输入数量不能为0");
       if(!this.$route.query.address){
@@ -72,7 +73,6 @@ export default {
       };
       getNodeRedeem(obj)
         .then(res => {
-          console.log(res);
           imToken.callAPI("native.hideLoading");
           if (res.data.success) {
             this.show = false;
@@ -83,6 +83,8 @@ export default {
           }
         })
         .catch(err => {
+           imToken.callAPI("native.hideLoading");
+           alert(err)
           this.show = false;
         });
     },
