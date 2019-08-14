@@ -32,8 +32,8 @@ axios.interceptors.response.use(function (response) {
     return response;
   }, function (error) {
     // 对响应错误做点什么
+    alert(error)
     if (error && error.response) {
-      alert('请求错误')
       // switch (err.response.status) {
       //   case 400:
       //       console.log('错误请求')

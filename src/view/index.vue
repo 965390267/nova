@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="home">
     <div class="top-card-wrap">
       <div class="top-card-bg"></div>
       <div class="top-card">
@@ -13,7 +13,6 @@
             <!-- <div class="card-tit1-right">￥{{totalAssets}}</div> 暂时去掉，后续开发-->
           </div>
         </div>
-
         <div class="toal-money">总资产</div>
         <div class="money">{{totalAssets}} NOVA</div>
         <!-- <div class="rmb">￥{{totalAssets}}</div> 暂时去掉，后续开发-->
@@ -36,29 +35,27 @@
           </div>
         </div>
         <div class="card-choose-btn">
-          <div class="card-choose-sub-btn" @click="gotoList()">选择节点质押</div>
+         <mu-button class="card-choose-sub-btn"  @click="gotoList()" round full-width>选择节点质押</mu-button>
+          
         </div>
       </div>
     </div>
     <!-- card部分 -->
     <!-- 使用教程，常见问题 -->
     <div class="mid-problem">
-      <router-link to="/problem">
-        <div class="leftbg">
+
+        <mu-button to="/rule" class="btn">
+          <div class="txt">使用说明</div>
+          <div class="icon"></div>
+        </mu-button>
+        <mu-button to="/problem" class="btn">
           <div class="txt">常见问题</div>
           <div class="icon"></div>
-        </div>
-      </router-link>
+        </mu-button>
+  
     </div>
-    <router-link to="/rule">
-      <div class="use-lesson">
-        <div class="rightbg">
-          <div class="txt">使用教程</div>
-          <div class="icon"></div>
-        </div>
-      </div>
-    </router-link>
-    <h2 class="mynode">我的节点</h2>
+
+    <h2 class="mynode">我的质押节点</h2>
     <node-list :nodelistdata="nodelistdata"></node-list>
   </div>
 </template>
@@ -164,14 +161,17 @@ eth.getBalance(this.imtokenAddress)/* 钱包以太币获取方法 */
 @import "@/assets/scss/colors.scss";
 @import "@/assets/scss/mixins.scss";
 @import "@/assets/scss/common.scss";
+.home{
+  background: #FDF9F4;
+}
 .top-card-wrap {
   position: relative;
 
-  height: 300px; /*no*/
+  height: 340px; /*no*/
   overflow: hidden;
   // min-height: 390px;
   .top-card-bg {
-    height: 280px; /*no*/
+    height: 340px; /*no*/
     //@include setbg("../assets/img/m-top-bg@2x.png");
     background-color: #122F4D;
   }
@@ -179,7 +179,7 @@ eth.getBalance(this.imtokenAddress)/* 钱包以太币获取方法 */
     position: absolute;
     content: "";
     top: 0;
-    left: 0;
+    left: -30px;
     width: 150%;
     height: 100%;
     background: linear-gradient(90deg, #f08740, #f06b40);
@@ -273,7 +273,7 @@ eth.getBalance(this.imtokenAddress)/* 钱包以太币获取方法 */
   justify-content: flex-end;
   padding: 20px 0 10px 0;
   .card-choose-sub-btn {
-    width: 100px;
+    width: 120px;
     height: 34px;
     font-size: 11px;
     line-height: 34px;
@@ -286,30 +286,26 @@ eth.getBalance(this.imtokenAddress)/* 钱包以太币获取方法 */
 }
 
 .mid-problem {
-  .leftbg {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  .btn {
     position: relative;
-    width: 82%;
-    height: 40px;
+    width: 130px;
+    height: 55px;
     margin-top: 14px;
-
-    @include setbg("../assets/img/tit1@2x.png");
-    .txt {
-      position: absolute;
-      right: 76px;
-      top: 11px;
-      color: #fdf9f4;
-      font-size: 16px;
+    background: #F08740;
+    
+    .txt{
+    color: #122F4D;
+    font-size: 15px;
+    font-weight: bold;
     }
-    .icon {
-      position: absolute;
-      right: 10px;
-      top: 12px;
-      color: #fdf9f4;
-      font-size: 16px;
-      width: 20px;
-      height: 20px;
-      @include setbg("../assets/img/book@2x.png");
-    }
+ .icon{
+   width: 14px;
+   height: 24px;
+ }
   }
 }
 
@@ -345,6 +341,7 @@ eth.getBalance(this.imtokenAddress)/* 钱包以太币获取方法 */
   font-size: 16px;
   color: $orange-text-color;
   font-weight: bold;
-  margin: 20px 0 15px 10px;
+  margin: 20px 0 15px 16px;
+  letter-spacing: 2px;
 }
 </style>

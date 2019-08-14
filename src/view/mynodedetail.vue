@@ -72,9 +72,10 @@
 
       <!-- 赎回和质押按钮 -->
       <div class="btn-wrap">
-        <div class="left-btn" @click="shuihui(nodeMessage.address,nodeMessage.pledgeAmount)">赎回</div>
+         <mu-button class="left-btn" @click="shuihui(nodeMessage.address,nodeMessage.pledgeAmount)">赎回</mu-button>
+        <!-- <div class="left-btn" @click="shuihui(nodeMessage.address,nodeMessage.pledgeAmount)">赎回</div> -->
 
-        <div class="right-btn" @click="zhiya(nodeMessage.address,nodeMessage.pledgeAmount)">质押</div>
+        <mu-button class="right-btn" @click="zhiya(nodeMessage.address,nodeMessage.pledgeAmount)">质押</mu-button>
       </div>
     </div>
   </div>

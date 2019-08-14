@@ -79,6 +79,7 @@ export default {
             alert("赎回成功");
             this.$router.back(-1);
           } else {
+            Promise.reject(ret)
             this.show = false;
           }
         })

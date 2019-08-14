@@ -399,8 +399,14 @@ export default {
         if (res.success) {
           this.initDataObj = res.data;
           this.amount =Number(res.data.balance) /1000;
+        }else{
+          Promise.reject(ret)
         }
-      });
+      }).catch(err => {
+           imToken.callAPI("native.hideLoading");
+           alert(err)
+          this.show = false;
+        });
     },
     initData() {
       /* 初始的页面数据获取 */

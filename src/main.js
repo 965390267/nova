@@ -4,6 +4,11 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 Vue.prototype.bus = new Vue;
+import 'muse-ui/lib/styles/base.less';
+import { Button, Select } from 'muse-ui';
+import 'muse-ui/lib/styles/theme.less';
+
+Vue.use(Button);
 
 Vue.config.productionTip = false
 if (!!window.imToken) {/* imtoken环境下 */

@@ -2,11 +2,8 @@
 <div class="inputwrap">
     <div class="total">全部</div>
 <input class="inputcount" type="text" placeholder="输入数量">
-</div>
-    
+</div> 
 </template>
-
-
 <style lang="scss" scoped>
 .inputwrap{
     width: 100%;

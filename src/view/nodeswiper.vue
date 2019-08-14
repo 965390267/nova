@@ -3,7 +3,7 @@
     <div class="navs">
       <nav>
         <p @click="toggle(0)" :class="{active:0==active}">有效节点</p>
-        <p @click="toggle(1)" :class="{active:1==active}">待生效节点</p>
+        <p class="line" @click="toggle(1)" :class="{active:1==active}">待生效节点</p>
       </nav>
     </div>
 
@@ -94,9 +94,10 @@ export default {
   width: 70%;
   margin: 0 auto;
   border-radius: 20px;
-  border: 1px solid #ee7b42;
+  border: 1px solid #707070;
   overflow: hidden;
 }
+
 .navs p {
   width: 50%;
   height: 35px;
@@ -104,6 +105,9 @@ export default {
   text-align: center;
   font-size: 13px;
   font-weight: 400;
+}
+.navs .line{
+  border-left: 1px solid #707070;
 }
 .navs p.active {
   background: linear-gradient(90deg, #f08740, #f06b40);

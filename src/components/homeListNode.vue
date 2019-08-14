@@ -11,10 +11,10 @@
         <div class="top-right-active no" v-if="item.nodeStatus==0">待生效节点</div>
         <div class="top-right-active" v-else>有效节点</div>
         <div class="top">
-          <div class="left-circle"></div>
-          <div class="name">{{item.nodeName}}</div>
+          <!-- <div class="left-circle"></div> -->
+          <div class="name"><div class="bigtxt">{{item.nodeName}}</div><div class="spacewhite"></div></div>
           <div class="mid-money">
-            <div class="txt">{{item.totalAmount/1000}}</div>
+            <div class="txt">{{item.totalAmount/1000}}NOVA</div>
             <div class="des">质押总额</div>
           </div>
           <div class="right-present">
@@ -83,30 +83,33 @@ export default {
     top: 40px;
     height: 100%;
     width: 100%;
-    z-index: -1;
+    z-index:5;
     background: linear-gradient(90deg, #f08740, #f06b40);
   }
   ul {
     width: 90%;
     margin: 0 auto;
     li {
+      position: relative;
       display: flex;
       flex-direction: column;
-      background: #fff;
-      border: 1px solid #f06b40;
+      background: #FDF9F4;
+      // border: 1px solid #f06b40;
       border-radius: 10px;
       margin-bottom: 24px;
+      box-shadow:0px 3px 24px rgba(0,0,0,0.27);
       overflow: hidden;
+      z-index: 10;
       .top-right-active {
         align-self: flex-end;
-        padding: 2px 5px;
+        padding: 2px 8px;
         height: 18px;
         line-height: 18px;
         font-size: 10px;
         color: #fdf9f4;
         text-align: center;
         background: linear-gradient(90deg, #f08740, #f06b40);
-        border-radius: 0px 0px 0px 12px;
+        // border-radius: 0px 0px 0px 12px;
       }
       .top-right-active.no {
         background: #122f4d;
@@ -114,18 +117,23 @@ export default {
       .top {
         display: flex;
         flex-direction: row;
-        align-items: stretch;
+        align-items: center;
         padding: 5px 0 5px 10px;
-        .left-circle {
-          width: 30px;
-          height: 30px;
-          background: linear-gradient(90deg, #f08740, #f06b40);
-          border-radius: 50%;
-        }
+        // .left-circle {
+        //   width: 30px;
+        //   height: 30px;
+        //   background: linear-gradient(90deg, #f08740, #f06b40);
+        //   border-radius: 50%;
+        // }
         .name {
           padding-top: 7px;
-          font-size: 14px;
+          padding-left: 6px;
+          font-size: 18px;
+          font-weight:400;
           color: $main-text-color;
+          .spacewhite{
+            height: 20px;
+          }
         }
         .mid-money,
         .right-present {
@@ -136,6 +144,7 @@ export default {
           text-align: center;
           .txt {
             font-size: 12px;
+             font-weight:400;
             color: $main-text-color;
           }
           .des {
@@ -163,7 +172,7 @@ export default {
         width: 92%;
         margin: 0 auto;
         height: 1px;
-        background: #f06b40;
+        background: #707070;
       }
       .bottom {
         display: flex;
@@ -174,6 +183,7 @@ export default {
           .txt {
             font-size: 13px;
             color: $main-text-color;
+            font-weight: 400;
             text-align: center;
           }
           .num {
