@@ -1,7 +1,10 @@
 <template>
   <div class="home">
     <div class="top-card-wrap">
-      <div class="top-card-bg"></div>
+      <div class="top-card-bg">
+        <div class="switch-cn-en">中文</div>
+        <div class="switch-wrap"><div class="switch-wrap-blur"></div> english</div>
+      </div>
       <div class="top-card">
         <div class="card-top-des">
           <div class="card-tit1">
@@ -13,29 +16,29 @@
             <!-- <div class="card-tit1-right">￥{{totalAssets}}</div> 暂时去掉，后续开发-->
           </div>
         </div>
-        <div class="toal-money">总资产</div>
+        <div class="toal-money" >{{switchlanguage.total}}</div>
         <div class="money">{{totalAssets}} NOVA</div>
         <!-- <div class="rmb">￥{{totalAssets}}</div> 暂时去掉，后续开发-->
         <div class="card-mid">
           <div class="rest des">
-            <div class="tit">可用余额</div>
+            <div class="tit" >{{switchlanguage.balance}}</div>
             <div class="num">{{balance}}</div>
           </div>
           <div class="yestoday des">
-            <div class="tit">昨日收益</div>
+            <div class="tit" >{{switchlanguage.yesterdayIncome}}</div>
             <div class="num">{{yesterdayIncome}}</div>
           </div>
           <div class="total des">
-            <div class="tit">累计收益</div>
+            <div class="tit" >{{switchlanguage.totalIncome}}</div>
             <div class="num">{{totalIncome}}</div>
           </div>
           <div class="backing des">
-            <div class="tit">赎回中</div>
+            <div class="tit" >{{switchlanguage.pendingAmount}}</div>
             <div class="num">{{pendingAmount}}</div>
           </div>
         </div>
         <div class="card-choose-btn">
-         <mu-button class="card-choose-sub-btn"  @click="gotoList()" round full-width>选择节点质押</mu-button>
+         <mu-button class="card-choose-sub-btn"  @click="gotoList()" round full-width>{{switchlanguage.choosenode}}</mu-button>
           
         </div>
       </div>
@@ -45,17 +48,17 @@
     <div class="mid-problem">
 
         <mu-button to="/rule" class="btn">
-          <div class="txt">使用说明</div>
+          <div class="txt">{{switchlanguage.usenote}}</div>
           <div class="icon"></div>
         </mu-button>
         <mu-button to="/problem" class="btn">
-          <div class="txt">常见问题</div>
+          <div class="txt">{{switchlanguage.problem}}</div>
           <div class="icon"></div>
         </mu-button>
   
     </div>
 
-    <h2 class="mynode">我的质押节点</h2>
+    <h2 class="mynode">{{switchlanguage.mynode}}</h2>
     <node-list :nodelistdata="nodelistdata"></node-list>
   </div>
 </template>
@@ -63,6 +66,7 @@
 <script>
 import NodeList from "@/components/homeListNode.vue";
 import { personalAssest, getMyNodeList } from "@/config";
+import {index} from '@/config/language.js'
 export default {
   components: {
     NodeList
@@ -70,6 +74,7 @@ export default {
   name: "index",
   data() {
     return {
+      switchlanguage:index.chinese,
       nodeaddress: this.imtokenAddress,
       balance: "",
       ETH: 0,
@@ -171,9 +176,30 @@ eth.getBalance(this.imtokenAddress)/* 钱包以太币获取方法 */
   overflow: hidden;
   // min-height: 390px;
   .top-card-bg {
+    position: relative;
     height: 340px; /*no*/
     //@include setbg("../assets/img/m-top-bg@2x.png");
     background-color: #122F4D;
+    .switch-cn-en{ 
+      position: absolute;
+      right:10px;
+      top:2px;
+        color: #fff;
+    }
+    .switch-wrap{
+       position: absolute;
+      right:10px;
+      top:20px;
+      width: 60px;
+      height: 30px;
+      line-height: 30px;
+      border-radius: 4px;
+      text-align: center;
+      color: #fff;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 999;
+   
+    }
   }
 .top-card-bg::after {
     position: absolute;
@@ -185,6 +211,7 @@ eth.getBalance(this.imtokenAddress)/* 钱包以太币获取方法 */
     background: linear-gradient(90deg, #f08740, #f06b40);
     -webkit-transform: translate(0rem, 2rem) rotateZ(-20deg);
     transform: translate(0rem, 2rem) rotateZ(-20deg);
+    
 }
   .toal-money {
     text-align: center;

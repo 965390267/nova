@@ -65,6 +65,14 @@ Vue.use(Router)
       meta:{
         title:'Nova 质变'
       }
+    },
+    {
+      path: '/moneyrecord',
+      name: 'moneyrecord',
+      component:()=>import('@/view/moneyrecord'),
+      meta:{
+        title:'Nova 质变'
+      }
     }
   ]
 })

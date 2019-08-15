@@ -1,11 +1,10 @@
 <template>
-  <div v-cloak>
-    <div class="nodedetail">
+    <div class="nodedetail" v-cloak>
       <div class="card-bg">
         <div class="card">
           <div class="card-top">
             <div class="avtor">
-              <div class="circle"></div>
+              <!-- <div class="circle"></div> -->
               {{nodeMessage.nodeName}}
             </div>
             <div class="title">
@@ -24,23 +23,39 @@
           </div>
         </div>
       </div>
+      <div class="nodedetail-mid">
+       <div class="nodedetail-mid-note">
+         <div class="leftnot">我的质押金额（NOVA)</div>
+       <mu-button class="left-btn">收益纪录</mu-button>
+       </div>
+         <div>  <mu-text-field full-width color='rgba(240,113,64,1)' v-model="totalmoney" placeholder="Please input......"></mu-text-field><br/></div>
+     <div class="btn-list">
+        <mu-button class="shuihui-btn">赎回</mu-button> 
+        <mu-button class="zhiya-btn">质押</mu-button> 
+        <mu-button class="change-btn">更换节点质押</mu-button>
+     </div>
+      </div>
       <!-- 节点详情下的列表 -->
       <div class="nodedetail_list">
         <ul class="shuhui">
-          <li v-for="(item,index) in recentTransactionsList" :key="index">
-            <template v-if="item.status==0">
+          <li v-for="(item,index) in 5" :key="index">
+            <!-- <template v-if="item.status==0"> -->
               <div class="title">
                 <div class="tit-left blodtxt">{{item.type==1?'赎回中':'质押中'}}</div>
                 <div class="tit-right">交易正在打包</div>
               </div>
               <div class="title">
                 <div class="tit-left">{{item.date}}</div>
+                 <div class="tit-mid">{{item.date}}</div>
                 <div class="tit-right">{{item.amount/1000}} NOVA</div>
               </div>
-            </template>
+              <div class="cancel-btn-wrap">
+                <mu-button class="cancel-btn">取消赎回</mu-button>
+              </div>
+            <!-- </template> -->
           </li>
         </ul>
-        <h2>最近交易</h2>
+        <h2 class="big-title">最近交易</h2>
         <ul class="latest">
           <li v-for="(item,index) in recentTransactionsList" :key="index">
             <!-- /* 
@@ -51,7 +66,7 @@
                 <div class="tit-left">{{item.type==1?'赎回':'质押'}}</div>
                 <div class="tit-right">{{item.type==1?'赎回成功':'质押成功'}}</div>
               </div>
-              <div class="title">
+              <div class="content">
                 <div class="tit-left">{{item.date}}</div>
                 <div class="tit-right">{{item.amount/1000}} NOVA</div>
               </div>
@@ -61,7 +76,7 @@
                 <div class="tit-left">{{item.type==1?'赎回':'质押'}}</div>
                 <div class="tit-right">{{item.type==1?'赎回失败':'质押失败'}}</div>
               </div>
-              <div class="title">
+              <div class="content">
                 <div class="tit-left">{{item.date}}</div>
                 <div class="tit-right">{{item.amount/1000}} NOVA</div>
               </div>
@@ -78,7 +93,7 @@
         <mu-button class="right-btn" @click="zhiya(nodeMessage.address,nodeMessage.pledgeAmount)">质押</mu-button>
       </div>
     </div>
-  </div>
+
 </template>
 
 <script>
@@ -88,7 +103,8 @@ export default {
     return {
       nodeMessage: { pledgeAmount: "", returnrate: "" },
       recentTransactionsList: [],
-      isLoad:false
+      isLoad:false,
+      totalmoney:0
     };
   },
   computed: {},
@@ -156,6 +172,10 @@ export default {
 @import "@/assets/scss/colors.scss";
 @import "@/assets/scss/mixins.scss";
 @import "@/assets/scss/common.scss";
+.nodedetail{
+  height: 100%;
+  background: #FDF9F4;
+}
 [v-cloak] {
   display: none;
 }
@@ -180,8 +200,8 @@ export default {
       display: flex;
       align-items: center;
       padding: 5px 0 0 10px;
-      font-size: 16px;
-      color: #122f4d;
+      font-size: 23px;
+      color: #122F4D;
       .circle {
         width: 45px;
         height: 45px;
@@ -195,9 +215,9 @@ export default {
       flex-direction: row;
       justify-content: space-between;
       padding: 10px 10px;
-      color: #fdf9f4;
-      font-size: 14px;
-      font-weight: bold;
+      color: #FDF9F4;
+      font-size: 15px;
+      font-weight: 600;
     }
     .txt {
       display: flex;
@@ -223,7 +243,7 @@ export default {
   left: 0;
   width: 150%;
   height: 100%;
-  background: #fff;
+  background: #FDF9F4;
   transform: translate(0rem, 2rem) rotateZ(-20deg);
 }
 .mid-line {
@@ -234,6 +254,7 @@ export default {
 .node-speak {
   font-size: 16px;
   color: #fdf9f4;
+  font-weight: 600;
   padding-left: 10px;
   margin-top: 30px;
   p {
@@ -243,32 +264,118 @@ export default {
     margin-bottom: 20px;
   }
 }
+
+//节点详情中间
+.nodedetail-mid{
+  width: 90%;
+  margin: 10px auto;
+.nodedetail-mid-note{
+  display: flex;
+ justify-content: space-between;
+
+ .leftnote{
+   font-size:14px;
+font-weight:400;
+color:rgba(17,46,75,1);
+ }
+ .left-btn{
+   width: 95px;
+   height: 24px;
+   border:1px solid rgba(112,112,112,1);
+   border-radius:30px;
+   color: #112E4B;
+    background: transparent;
+ }
+}
+.btn-list{
+ display: flex;
+ justify-content: space-between;
+ margin-top: 15px;
+  .shuihui-btn{
+    border:1px solid rgba(240,113,64,1);
+    background: transparent;
+    border-radius: 6px;
+    color: #505355;
+  }
+.zhiya-btn,.change-btn{
+   background:linear-gradient(90deg,rgba(240,138,64,1) 0%,rgba(240,104,64,1) 100%);
+color: #FDF9F4;
+    border-radius: 6px;
+ }
+}
+}
+.nodedetail_list{
+  margin-top: 35px;
+}
 //节点详情下的列表
-.nodedetail_list {
-  padding: 10px 20px;
+.shuhui {
+
   li {
+   background:rgba(199,198,197,0.6);
     margin: 25px 0;
+      padding: 10px 20px;
   }
-  h2 {
-    color: #122f4d;
-    font-weight: bold;
+  .title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 8px 0;
+    color: #696A6B;
+    font-size: 14px;
+    font-weight:400;
   }
+   .cancel-btn-wrap{
+    display: flex;
+     justify-content:flex-end;
+    .cancel-btn{
+      width:95px;
+     height:22px;
+     color: #122F4D;
+     font-size: 14px;
+     border-radius: 50px;
+     background: transparent;
+    border:1px solid rgba(240,107,64,1);
+    }
+    
+  }
+}
+//最近交易下的列表
+.big-title{
+  padding-left: 5%;
+    color: #F06B40;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 2px;
+}
+//节点详情下的列表
+.latest {
+  li {
+
+    margin: 25px 0;
+      padding: 10px 20px;
+  }
+
 
   .title {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     padding: 8px 0;
-    color: #858b8e;
-    font-size: 14px;
-    .tit-left.blodtxt {
-      color: #122f4d;
-      font-size: 16px;
-      font-weight: bold;
-    }
+    color: #122F4D;
+    font-size: 15px;
+    font-weight:400;
   }
+ .content{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 8px 0;
+   color: #696A6B;
+   font-size:12px;
+font-family:Microsoft YaHei;
+font-weight:400;
+ }
 }
-
 .btn-wrap {
   display: flex;
   justify-content: space-around;
@@ -285,5 +392,6 @@ export default {
     font-size: 13px;
     box-shadow: 2px 2px 0 0px #ccc;
   }
+ 
 }
 </style>
