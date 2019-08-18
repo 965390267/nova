@@ -1,11 +1,13 @@
 <template>
   <diV class="ziya">
     <div class="avtor">
-      <div class="circle"></div>nova wallet
+      <!-- <div class="circle"></div>nova wallet -->
+       {{$route.query.nodeName}}
     </div>
     <div class="ziyaed">
       <em>已质押</em>
-      {{$route.query.pledgeAmount/1000}} NOVA
+      <em class="txt"> {{$route.query.pledgeAmount/1000}} NOVA</em>
+     
     </div>
     <div class="balance">
       <div class="canbalance" @click="setAll()">全部</div>
@@ -23,9 +25,9 @@
     </div>
     <div class="submit-btn" @click="get()">赎&nbsp;&nbsp;&nbsp;&nbsp;回</div>
     <div class="note">
-      <p>说明</p>
-      <p>普通赎回质押需等待7天，同时赎回期间的质押不会产生交易</p>
-      <p>立即赎回质押可立即到账，同时扣除总额10%的手续费并永久销毁</p>
+      <p>赎回说明：</p>
+      <p>普通赎回：需要等待21天后，赎回将转入到您的钱包地址，同时赎回期间的质押不产生收益，并将扣除1%的手续费销毁。立即赎回：赎回质押可立即到达您的钱包地址，但同时扣除总额10%的手续费并永久销毁。</p>
+
     </div>
     <loading v-if="show"></loading>
   </diV>
@@ -159,12 +161,18 @@ export default {
   }
 }
 .ziyaed {
-  width: 80%;
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
   margin: 0 auto;
   em {
     font-size: 14px;
     color: #122f4d;
+    font-weight:400;
     padding-right: 15px;
+  }
+  .txt{
+    color: #979FA5;
   }
   font-size: 13px;
   color: #979fa5;
@@ -258,6 +266,8 @@ export default {
   font-size: 12px;
   text-align: left;
   padding: 2px 0;
+      line-height: 20px;
+          letter-spacing: 2px;
 }
 </style>
 

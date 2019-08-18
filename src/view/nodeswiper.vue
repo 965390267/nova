@@ -2,8 +2,8 @@
   <div class="changepage">
     <div class="navs">
       <nav>
-        <p @click="toggle(0)" :class="{active:0==active}">有效节点</p>
-        <p class="line" @click="toggle(1)" :class="{active:1==active}">待生效节点</p>
+        <p @click="toggle(0)" :class="{active:0==active}">提案节点</p>
+        <p class="line" @click="toggle(1)" :class="{active:1==active}">普通节点</p>
       </nav>
     </div>
 

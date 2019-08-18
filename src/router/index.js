@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import '@/assets/css/reset.css'
 // import nodeswiper from '@/view/nodeswiper'
 Vue.use(Router)
 
@@ -70,6 +69,14 @@ Vue.use(Router)
       path: '/moneyrecord',
       name: 'moneyrecord',
       component:()=>import('@/view/moneyrecord'),
+      meta:{
+        title:'Nova 质变'
+      }
+    },
+    {
+      path: '/changenodeziya',
+      name: 'changenodeziya',
+      component:()=>import('@/view/changenodeziya'),
       meta:{
         title:'Nova 质变'
       }

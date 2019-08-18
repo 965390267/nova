@@ -3,12 +3,23 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import '@/assets/css/reset.css'
 Vue.prototype.bus = new Vue;
 import 'muse-ui/lib/styles/base.less';
 import { Button, TextField } from 'muse-ui';
 import 'muse-ui/lib/styles/theme.less';
 
 Vue.use(Button).use(TextField);
+
+import VueI18n from 'vue-i18n';
+Vue.use(VueI18n);
+const i18n = new VueI18n({
+  locale: localStorage.getItem('language') || 'en', //使用localStorage缓存到本地，当下次使用时可默认当前使用语言
+  messages: {
+    'zh': require('@/config/zh'),
+    'en': require('@/config/en')
+  }
+})
 
 Vue.config.productionTip = false
 if (!!window.imToken) {/* imtoken环境下 */
@@ -60,20 +71,21 @@ if (!!window.imToken) {/* imtoken环境下 */
     })
     alert('请在imtoken浏览器打开')
   }
-} 
+}
 else {/* 浏览器环境下 */
   if (env() != 'production') {
     Vue.prototype.imtokenAddress = '0x7822c4C757A61cEA3F2C21d6502515F60D6898d7'
-  } 
+  }
   function env() {
     if (process.env.NODE_ENV === "development") return "development";   //开发环境
     if (window.location.href.includes('192.168')) return 'test';        //测试环境，"192.168"根据实际情况而定
     return 'production'                                                 //线上环境
   }
-  Vue.prototype.imtokenAddress = '0x7822c4C757A61cEA3F2C21d6502515F60D6898d7'
+  Vue.prototype.imtokenAddress = '0x6E746901b6675a9AE97e3458D9F45d424bFCd908'
   /* eslint-disable no-new */
   new Vue({
     el: '#app',
+    i18n,
     router,
     components: { App },
     template: '<App/>'

@@ -10,7 +10,7 @@
           v-for="(item,index) in listdata"
           :key="index"
         >
-          <div class="top-right-active">不产生收益</div>
+          <div class="top-right-active"></div>
           <div class="top">
             <!-- <div class="left-circle"></div> -->
             <div class="name">{{item.nodeName}}</div>

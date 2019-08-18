@@ -8,8 +8,8 @@
         :key="index"
         @click="gotodetail(item.nodeId,item.address)"
       >
-        <div class="top-right-active no" v-if="item.nodeStatus==0">待生效节点</div>
-        <div class="top-right-active" v-else>有效节点</div>
+        <div class="top-right-active no" v-if="item.nodeStatus==0">普通节点</div>
+        <div class="top-right-active" v-else>提案节点</div>
         <div class="top">
           <!-- <div class="left-circle"></div> -->
           <div class="name"><div class="bigtxt">{{item.nodeName}}</div><div class="spacewhite"></div></div>
@@ -34,7 +34,7 @@
           </div>
           <div class="des">
             <div class="txt">预计收益（天）</div>
-            <div class="num">+{{item.nodeStatus==0?0:plainEveryDayMoney(item)}}</div>
+            <div class="num">+{{plainEveryDayMoney(item)}}</div>
           </div>
         </div>
       </li>

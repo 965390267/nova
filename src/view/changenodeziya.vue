@@ -1,8 +1,8 @@
 <template>
   <diV class="ziya">
     <div class="avtor">
-      <!-- <div class="circle"></div> -->
-      {{$route.query.nodeName}}
+      <!-- <div class="circle"></div>nova wallet -->
+       {{$route.query.nodeName}}
     </div>
     <div class="balance">
       <div class="canbalance">{{initDataObj.balance/1000}}NOVA</div>
@@ -14,11 +14,11 @@
         <input class="inputcount" type="number" v-model="amount" placeholder="输入数量" />
       </div>
     </div>
-    <div class="smtip">预计交易费：{{gasPrice.toFixed(7)}}ETH</div>
-    <div class="submit-btn" @click="get()">质&nbsp;&nbsp;&nbsp;&nbsp;押</div>
+    <!-- <div class="smtip">交易费：{{gasPrice}}ETH</div> -->
+    <div class="submit-btn" @click="get()">更&nbsp;换&nbsp;节&nbsp;点&nbsp;质&nbsp;押</div>
     <div class="note">
-      <p>质押说明:</p>
-      <p>将您的NOVA选择一个节点进行质押。在质押期间，可以享受质押带来的收益，也可以进行赎回，立即赎回需要扣取10%的手续费，普通赎回质押需要等待21天后转入钱包。</p>
+      <p>更换节点说明：</p>
+      <p>将您的NOVA选择一个新的节点进行质押。更换时间为21天，21天后更换至新的节点并开始产生收益。</p>
       <!-- <p>收益</p>
       <p>质押收益来自出块奖励和交易手续风险</p>
       <p>如果有效节点行为不端将可能会被罚没部分质押代币，比如有效节</p>
@@ -29,8 +29,10 @@
   </diV>
 </template>
 <script>
+
+
 import loading from "@/components/loading";
-import { getNodePledge, personalAssest,getGas } from "@/config";
+import { getNodePledge, personalAssest } from "@/config";
 export default {
   components: {},
   data() {
@@ -428,9 +430,6 @@ export default {
   },
   mounted() {
     this.initData(); /* 数据初始化 */
-    getGas().then(res=>{
-      this.gasPrice=res.data.data.gas;
-    })
   }
 };
 </script>
@@ -479,8 +478,7 @@ export default {
   .inputbalance {
     width: 100%;
     margin: 0 auto;
-    // height: 40px;
-    // line-height: 40px;
+  
     // border: 1px solid #F07440;
     background: transparent;
     outline: none;
@@ -546,8 +544,8 @@ export default {
   font-size: 12px;
   text-align: left;
   padding: 2px 0;
-     line-height: 20px;
-         letter-spacing: 2px;
+      line-height: 20px;
+          letter-spacing: 2px;
 }
 </style>
 

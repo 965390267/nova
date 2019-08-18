@@ -12,7 +12,11 @@ export default {
   name: 'App',
   components:{
 Alert
-  },mounted() {
+  },
+  methods:{
+
+  },
+  mounted() {
 //  this.bus.$emit('loading',true)
   },
 }

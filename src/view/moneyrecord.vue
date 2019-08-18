@@ -7,11 +7,21 @@
       </div>
       <div class="bottom">
         <div class="time">2019-02-01</div>
-        <div class="amount">4854564848Nova</div>
+        <div class="amount">{{totalAmount}}Nova</div>
       </div>
     </div>
     <ul class="recordlist">
-      <li>
+      <li v-for="(item,index) in recordList" :key='index'>
+        <div class="top">
+          <div class="shoyyi">收益</div>
+          <div class="jine">+{{item.incomeAmount}}</div>
+        </div>
+        <div class="bottom">
+          <div class="time">{{item.createDate}}</div>
+          <div class="amount">{{item.pledgeAmount}}Nova</div>
+        </div>
+      </li>
+       <!-- <li>
         <div class="top">
           <div class="shoyyi">收益</div>
           <div class="jine">+6564.05</div>
@@ -20,20 +30,31 @@
           <div class="time">2019-02-01</div>
           <div class="amount">4854564848Nova</div>
         </div>
-      </li>
-       <li>
-        <div class="top">
-          <div class="shoyyi">收益</div>
-          <div class="jine">+6564.05</div>
-        </div>
-        <div class="bottom">
-          <div class="time">2019-02-01</div>
-          <div class="amount">4854564848Nova</div>
-        </div>
-      </li>
+      </li> -->
     </ul>
   </div>
 </template>
+<script>
+import { myIncomeRecode} from "@/config";
+export default {
+  data(){
+    return{
+     recordList:[],
+     time:'',
+     totalAmount:"",
+     totalIncome:''
+    }
+  },
+  mounted(){
+let {nodeId,nodeAddress}=this.$route.query
+myIncomeRecode(nodeId,nodeAddress).then(res=>{
+   this.recordList=res.data.data.incomeRecodes
+   this.totalAmount=res.data.data.totalAmount
+    this.totalIncome=res.data.data.totalIncome
+})
+  }
+}
+</script>
 <style lang="scss" scoped>
 .recorddetail {
     height: 100%;
@@ -76,8 +97,9 @@
   flex-direction: column;
   padding: 16px 0;
   li{
-      margin: 4px 0;
-      padding: 4px 0;
+    width: 96%;
+      margin: 4px auto;
+
       border-bottom: 1px solid rgba(188,191,193,1);
   }
   .top,

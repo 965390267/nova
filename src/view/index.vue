@@ -2,8 +2,8 @@
   <div class="home">
     <div class="top-card-wrap">
       <div class="top-card-bg">
-        <div class="switch-cn-en">中文</div>
-        <div class="switch-wrap"><div class="switch-wrap-blur"></div> english</div>
+        <div class="switch-cn-en" @click="changeLang()">中文</div>
+        <div class="switch-wrap" ><div class="switch-wrap-blur"></div> english</div>
       </div>
       <div class="top-card">
         <div class="card-top-des">
@@ -16,29 +16,30 @@
             <!-- <div class="card-tit1-right">￥{{totalAssets}}</div> 暂时去掉，后续开发-->
           </div>
         </div>
-        <div class="toal-money" >{{switchlanguage.total}}</div>
+        <div class="toal-money" >{{ $t('index.total')}}</div>
         <div class="money">{{totalAssets}} NOVA</div>
-        <!-- <div class="rmb">￥{{totalAssets}}</div> 暂时去掉，后续开发-->
+        <div class="rmb">￥{{(totalAssets*CNY).toFixed(6)}}</div> 
+        <!-- 暂时去掉，后续开发 -->
         <div class="card-mid">
           <div class="rest des">
-            <div class="tit" >{{switchlanguage.balance}}</div>
+            <div class="tit" >{{$t('index.balance')}}</div>
             <div class="num">{{balance}}</div>
           </div>
           <div class="yestoday des">
-            <div class="tit" >{{switchlanguage.yesterdayIncome}}</div>
+            <div class="tit" >{{$t('index.yesterdayIncome')}}</div>
             <div class="num">{{yesterdayIncome}}</div>
           </div>
           <div class="total des">
-            <div class="tit" >{{switchlanguage.totalIncome}}</div>
+            <div class="tit" >{{$t('index.totalIncome')}}</div>
             <div class="num">{{totalIncome}}</div>
           </div>
           <div class="backing des">
-            <div class="tit" >{{switchlanguage.pendingAmount}}</div>
+            <div class="tit" >{{$t('index.pendingAmount')}}</div>
             <div class="num">{{pendingAmount}}</div>
           </div>
         </div>
         <div class="card-choose-btn">
-         <mu-button class="card-choose-sub-btn"  @click="gotoList()" round full-width>{{switchlanguage.choosenode}}</mu-button>
+         <mu-button class="card-choose-sub-btn"  @click="gotoList()" round full-width>{{$t('index.choosenode')}}</mu-button>
           
         </div>
       </div>
@@ -48,25 +49,24 @@
     <div class="mid-problem">
 
         <mu-button to="/rule" class="btn">
-          <div class="txt">{{switchlanguage.usenote}}</div>
+          <div class="txt">{{$t('index.usenote')}}</div>
           <div class="icon"></div>
         </mu-button>
         <mu-button to="/problem" class="btn">
-          <div class="txt">{{switchlanguage.problem}}</div>
+          <div class="txt">{{$t('index.problem')}}</div>
           <div class="icon"></div>
         </mu-button>
   
     </div>
 
-    <h2 class="mynode">{{switchlanguage.mynode}}</h2>
+    <h2 class="mynode">{{$t('index.mynode')}}</h2>
     <node-list :nodelistdata="nodelistdata"></node-list>
   </div>
 </template>
 
 <script>
 import NodeList from "@/components/homeListNode.vue";
-import { personalAssest, getMyNodeList } from "@/config";
-import {index} from '@/config/language.js'
+import { personalAssest, getMyNodeList ,getNovaCNY} from "@/config";
 export default {
   components: {
     NodeList
@@ -74,7 +74,6 @@ export default {
   name: "index",
   data() {
     return {
-      switchlanguage:index.chinese,
       nodeaddress: this.imtokenAddress,
       balance: "",
       ETH: 0,
@@ -83,6 +82,7 @@ export default {
       totalIncome: "",
       yesterdayIncome: "",
       nodelistdata: null,
+      CNY:0
     };
   },
   computed: {
@@ -94,6 +94,12 @@ export default {
 
   },
   methods: {
+    changeLang() {
+　　　let locale = localStorage.getItem('language')||'zh';
+　　　let temp=locale === 'zh' ? 'en' : 'zh';
+　　　this.$i18n.locale=temp;//改变当前语言
+　　　　localStorage.language=temp;
+　},
     gotoList() {
       if (window.ethereum) {
         imToken.callAPI("native.showLoading", "loading...");
@@ -129,7 +135,7 @@ export default {
     })
     
     getMyNodeList(this.imtokenAddress).then(res => {
-      console.log(res);
+
        if (window.ethereum) {
          imToken.callAPI('native.hideLoading')
       }
@@ -142,6 +148,9 @@ export default {
          imToken.callAPI('native.hideLoading')
       }
     })
+    getNovaCNY().then(res=>{/* nova转人民币汇率 */
+       this.CNY=res.data.data.cny;
+    });
     try {
       var eth = new Eth(web3.currentProvider);
 eth.getBalance(this.imtokenAddress)/* 钱包以太币获取方法 */
@@ -182,13 +191,13 @@ eth.getBalance(this.imtokenAddress)/* 钱包以太币获取方法 */
     background-color: #122F4D;
     .switch-cn-en{ 
       position: absolute;
-      right:10px;
+      right:40px;
       top:2px;
         color: #fff;
     }
     .switch-wrap{
        position: absolute;
-      right:10px;
+      right:20px;
       top:20px;
       width: 60px;
       height: 30px;
@@ -234,8 +243,8 @@ eth.getBalance(this.imtokenAddress)/* 钱包以太币获取方法 */
   .card-mid {
     display: flex;
     flex-direction: row;
-    padding: 20px 15px 15px 15px; /*no*/
-    border-bottom: 1px dotted $main-text-color;
+    padding: 8px 15px 15px 15px; /*no*/
+    // border-bottom: 1px dotted $main-text-color;
     .des {
       display: flex;
       flex-direction: column;
