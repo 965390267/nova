@@ -15,9 +15,10 @@ module.exports = {
         jine: '累计收益'
     },
     mynodedetail: {
-        zyje: '我的质押金额',
+        zyje: '节点质押金额',
         yeargetmoney: '预计年化收益',
         nodespeak: '节点宣言',
+        myziyaje:'我的质押金额',
         moneyrecord: '收益纪录',
         shuhui: '赎回',
         zhiya: '质押',
@@ -31,11 +32,11 @@ module.exports = {
         zhiyasuccess: '质押成功',
         shuihuifailed: '赎回失败',
         zhiyafailed: '质押失败',
-
+         zhuanchu:'转出'
     },
     nodeswiper: {
-        effectnode: '有效节点',
-        invalidnode: '待生效节点'
+        effectnode: '提案节点',
+        invalidnode: '普通节点'
     },
     problem: {
         problem: '常见问题',
@@ -76,22 +77,19 @@ module.exports = {
         atonceshuhui: '立即赎回',
         normalshuhui: '普通赎回',
         shuhui: '赎&nbsp;&nbsp;&nbsp;&nbsp;回',
-        note: '说明',
-        note1: '普通赎回质押需等待7天，同时赎回期间的质押不会产生交易',
-        note2: '立即赎回质押可立即到账，同时扣除总额10%的手续费并永久销毁'
+        note: '赎回说明：',
+        note1: '普通赎回：需要等待21天后，赎回将转入到您的钱包地址，同时赎回期间的质押不产生收益，并将扣除1%的手续费销毁。立即赎回：赎回质押可立即到达您的钱包地址，但同时扣除总额10%的手续费并永久销毁。',
+
     },
     zhiya: {
         canusemoney: '可用余额',
         total: '全部',
         placeholder: '输入数量',
+        gasprice:'预计交易费：',
         zhiya: '质&nbsp;&nbsp;&nbsp;&nbsp;押',
-        note1: '质押',
-        note2: '质押NOVA给有效节点可以随时赎回，但赎回质押需要等待7天',
-        note3: '收益',
-        note4: '质押收益来自出块奖励和交易手续风险',
-        note5: '如果有效节点行为不端将可能会被罚没部分质押代币，比如有效节',
-        note6: '点双重签名，经常性离线。为了规避风险，请认真选择合格的验证',
-        note7: '节点'
+        note1: '质押说明:',
+        note2: '将您的NOVA选择一个节点进行质押。在质押期间，可以享受质押带来的收益，也可以进行赎回，立即赎回需要扣取10%的手续费，普通赎回质押需要等待21天后转入钱包。',
+
     },
     components: {
         alert: {

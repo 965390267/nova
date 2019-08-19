@@ -67,8 +67,8 @@
                 <div class="tit-right">{{item.type==1?'赎回成功':'质押成功'}}</div>
               </div>
               <div class="content">
-                <div class="tit-left">{{item.date}}</div>
-                <div class="tit-time">{{item.date}}</div>
+                <div class="tit-left">{{formatDateToYear(item.date)}}</div>
+                <div class="tit-time">{{formatDateToHour(item.date)}}</div>
                 <div class="tit-right">{{item.amount/1000}} NOVA</div>
               </div>
             </template>
@@ -78,8 +78,8 @@
                 <div class="tit-right">{{item.type==1?'赎回失败':'质押失败'}}</div>
               </div>
               <div class="content">
-                <div class="tit-left">{{item.date}}</div>
-                 <div class="tit-time">{{item.date}}</div>
+                <div class="tit-left">{{formatDateToYear(item.date)}}</div>
+                 <div class="tit-time">{{formatDateToHour(item.date)}}</div>
                 <div class="tit-right">{{item.amount/1000}} NOVA</div>
               </div>
             </template>
@@ -89,8 +89,8 @@
                 <div class="tit-right">{{item.type==1?'转出':'转出'}}</div>
               </div>
               <div class="content">
-                <div class="tit-left">{{item.date}}</div>
-                 <div class="tit-time">{{item.date}}</div>
+                <div class="tit-left">{{formatDateToYear(item.date)}}</div>
+                 <div class="tit-time">{{formatDateToHour(item.date)}}</div>
                 <div class="tit-right">{{item.amount/1000}} NOVA</div>
               </div>
             </template>
@@ -121,6 +121,21 @@ export default {
   },
   computed: {},
   methods: {
+    formatDateToYear(date){
+ 
+    try {
+      return  date.split(' ')[0]
+    } catch (error) {
+      return date
+    }
+    },
+    formatDateToHour(date){
+ try {
+      return  date.split(' ')[1]
+    } catch (error) {
+      return date
+    }
+    },
     shuihui(address, pledgeAmount,nodeName) {
       /* 
 @{params} address节点地址

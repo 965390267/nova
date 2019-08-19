@@ -79,7 +79,7 @@ else {/* 浏览器环境下 */
   function env() {
     if (process.env.NODE_ENV === "development") return "development";   //开发环境
     if (window.location.href.includes('192.168')) return 'test';        //测试环境，"192.168"根据实际情况而定
-    return 'production'                                                 //线上环境
+    return 'production'                                                 //线上环境0x6E746901b6675a9AE97e3458D9F45d424bFCd908
   }
   Vue.prototype.imtokenAddress = '0x6E746901b6675a9AE97e3458D9F45d424bFCd908'
   /* eslint-disable no-new */
