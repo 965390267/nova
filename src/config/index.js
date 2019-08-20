@@ -5,7 +5,7 @@ import axios from 'axios'
 
    axios.defaults.baseURL ="https://106.15.52.35:443/"
 if (env() == 'production') {
-  axios.defaults.baseURL = 'https://novastaking.com/';/* 7-12-10-14更改 */
+  axios.defaults.baseURL = 'https://106.15.52.35:443/';/* 7-12-10-14更改 */
 }
 function env() {
   if (process.env.NODE_ENV === "development") return "development";   //开发环境
@@ -29,11 +29,10 @@ axios.interceptors.request.use((config) => {
 axios.interceptors.response.use(function (response) {
   // 对响应数据做点什么
 
-  //  !response.data.success&&alert(response.data.msg)
   return response;
 }, function (error) {
   // 对响应错误做点什么
-  alert(error)
+  !response.data.success&&alert(response.data.msg)
   if (error && error.response) {
     // switch (err.response.status) {
     //   case 400:
@@ -151,8 +150,8 @@ export function myIncomeRecode(nodeId, address) {
 * 
 * //撤销普通赎回/质押转换
 */
-export function cancelNodeRedeem() {
-  return axios(`api/cancelNodeRedeem`);
+export function cancelNodeRedeem(data) {
+  return axios.post(`api/cancelNodeRedeem`,data);
 }
 
 
@@ -190,7 +189,7 @@ export function getGas() {
 }
 * //质押转换
 */
-export function changePledge() {
+export function changePledge(data) {
 
-  return axios(`api/changePledge`);
+  return axios.post(`api/changePledge`,data);
 }

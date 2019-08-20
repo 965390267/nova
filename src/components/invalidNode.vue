@@ -6,7 +6,7 @@
       <div class="linear-bg"></div>
       <ul>
         <li
-          @click="gotodetail(item.nodeId,item.address)"
+          @click="gotodetail(item.nodeId,item.address,item.nodeName)"
           v-for="(item,index) in listdata"
           :key="index"
         >
@@ -46,8 +46,11 @@
 
 <script>
 export default {
-  name: "HelloWorld",
-  props: ["nodelistdata"],
+
+props:{
+nodelistdata:Array,
+useParmsGetFrom:Object
+},
   data() {
     return {
       listdata: []
@@ -59,11 +62,20 @@ export default {
     }
   },
   methods: {
-    gotodetail(nodeId, nodeAddress) {
-      this.$router.push({
-        path: "/mynodedetail",
-        query: { nodeId: nodeId, nodeAddress: nodeAddress }
+       gotodetail(nodeId, nodeAddress,nodeName) {
+      if(this.useParmsGetFrom&&this.useParmsGetFrom.from&&this.useParmsGetFrom.from==="changenode"){/* 判断如果是从更换节点过来的，则点击后跳到更换节点质押页面 */
+  if(nodeAddress==this.useParmsGetFrom.address){alert('不能选择和旧节点相同的地址质押'); return;}
+  this.$router.push({
+        path: "/changenodeziya",
+        query: { nodeId: nodeId, newAddress: nodeAddress,oldAddress:this.useParmsGetFrom.address , nodeName:nodeName }
       });
+      }else{
+    this.$router.push({
+        path: "/mynodedetail",
+        query: { nodeId: nodeId, nodeAddress: nodeAddress,nodeName:nodeName }
+      });
+      }
+  
     }
   }
 };

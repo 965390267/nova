@@ -2,8 +2,8 @@
   <div class="home">
     <div class="top-card-wrap">
       <div class="top-card-bg">
-        <div class="switch-cn-en" @click="changeLang()">中文</div>
-        <div class="switch-wrap" ><div class="switch-wrap-blur"></div> english</div>
+        <div class="switch-cn-en" @click="changeLang('zh')">中文</div>
+        <div class="switch-wrap"  @click="changeLang('en')"><div class="switch-wrap-blur"></div> english</div>
       </div>
       <div class="top-card">
         <div class="card-top-des">
@@ -94,9 +94,9 @@ export default {
 
   },
   methods: {
-    changeLang() {
-　　　let locale = localStorage.getItem('language')||'zh';
-　　　let temp=locale === 'zh' ? 'en' : 'zh';
+    changeLang(temp) {
+// 　　　let locale = localStorage.getItem('language')||'zh';
+// 　　　let temp=locale === 'zh' ? 'en' : 'zh';
 　　　this.$i18n.locale=temp;//改变当前语言
 　　　　localStorage.language=temp;
 　},

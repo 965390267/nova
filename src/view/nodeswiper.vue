@@ -2,8 +2,8 @@
   <div class="changepage">
     <div class="navs">
       <nav>
-        <p @click="toggle(0)" :class="{active:0==active}">提案节点</p>
-        <p class="line" @click="toggle(1)" :class="{active:1==active}">普通节点</p>
+        <p @click="toggle(0)" :class="{active:0==active}">{{$t('nodeswiper.effectnode')}}</p>
+        <p class="line" @click="toggle(1)" :class="{active:1==active}">{{$t('nodeswiper.invalidnode')}}</p>
       </nav>
     </div>
 
@@ -11,10 +11,10 @@
     <div class="light-swiper">
   <div class="swiper-wrap">
     <div class="swipe-item">
-       <effect-node-list :nodelistdata='nodelistdata'></effect-node-list>
+       <effect-node-list :useParmsGetFrom='$route.query' :nodelistdata='nodelistdata'></effect-node-list>
     </div>
     <div class="swipe-item">
-       <invalid-node-list :nodelistdata='nodelistdata'></invalid-node-list>
+       <invalid-node-list :useParmsGetFrom='$route.query' :nodelistdata='nodelistdata'></invalid-node-list>
     </div>
 
   </div>
@@ -37,7 +37,7 @@ export default {
 
   data() {
     return {
-      active: sessionStorage.getItem('swiperIndex')||0,
+      active: 0,
       mySwiper:null,
       nodelistdata:null
     };
@@ -60,23 +60,22 @@ export default {
      
     }
   },mounted() {
-     this.mySwiper = new Swiper(document.querySelector('.light-swiper'),{
-      startSlide: sessionStorage.getItem('swiperIndex')||0,
+     this.mySwiper = new Swiper(document.querySelector('.light-swiper'),{/* swiper切换 */
+      // startSlide: sessionStorage.getItem('swiperIndex')||0,
        callback: (index, elem) =>{
          console.log(index);
          this.active=index;
-         sessionStorage.setItem('swiperIndex',index)
+        //  sessionStorage.setItem('swiperIndex',index)
        },
     });
-        nodeList(this.imtokenAddress).then(res=>{
+        nodeList(this.imtokenAddress).then(res=>{/* 提案节点和普通节点列表数据 */
        if(res.data.success){
          this.nodelistdata=res.data.data
-
        }
        })
         imToken.callAPI('native.hideLoading');
     
-
+    
   },
 };
 </script>

@@ -32,7 +32,7 @@
 
 
 import loading from "@/components/loading";
-import { getNodePledge, personalAssest } from "@/config";
+import { changePledge ,personalAssest} from "@/config";
 export default {
   components: {},
   data() {
@@ -46,347 +46,30 @@ export default {
   methods: {
     get() {
       this.show = true;
-    
-      this.amount=Number(this.amount);
-      console.log(this.amount);
-      
+      this.amount=Number(this.amount); 
       if (this.amount == 0) return alert("输入数量不能为0");
-          if(!this.$route.query.address){
-             alert("未取到服务器节点地址");
+          if(!this.$route.query.newAddress||!this.$route.query.oldAddress){
+             alert("未取到列表节点地址，请返回重试");
              return this.$router.back(-1);
       } 
       if(!this.imtokenAddress){
              alert("未授权成功");
              return this.$router.back(-1);
       } 
-      // this.bus.$emit('loading',true)
-      imToken.callAPI("native.showLoading", "loading...");
-      var abi = [
-        {
-          constant: true,
-          inputs: [],
-          name: "name",
-          outputs: [{ name: "", type: "string" }],
-          payable: false,
-          stateMutability: "view",
-          type: "function"
-        },
-        {
-          constant: false,
-          inputs: [
-            { name: "_spender", type: "address" },
-            { name: "_value", type: "uint256" }
-          ],
-          name: "approve",
-          outputs: [{ name: "success", type: "bool" }],
-          payable: false,
-          stateMutability: "nonpayable",
-          type: "function"
-        },
-        {
-          constant: true,
-          inputs: [],
-          name: "totalSupply",
-          outputs: [{ name: "", type: "uint256" }],
-          payable: false,
-          stateMutability: "view",
-          type: "function"
-        },
-        {
-          constant: false,
-          inputs: [
-            { name: "_from", type: "address" },
-            { name: "_to", type: "address" },
-            { name: "_value", type: "uint256" }
-          ],
-          name: "transferFrom",
-          outputs: [{ name: "success", type: "bool" }],
-          payable: false,
-          stateMutability: "nonpayable",
-          type: "function"
-        },
-        {
-          constant: true,
-          inputs: [],
-          name: "decimals",
-          outputs: [{ name: "", type: "uint8" }],
-          payable: false,
-          stateMutability: "view",
-          type: "function"
-        },
-        {
-          constant: false,
-          inputs: [{ name: "amount", type: "uint256" }],
-          name: "withdrawEther",
-          outputs: [],
-          payable: false,
-          stateMutability: "nonpayable",
-          type: "function"
-        },
-        {
-          constant: false,
-          inputs: [{ name: "_value", type: "uint256" }],
-          name: "burn",
-          outputs: [{ name: "success", type: "bool" }],
-          payable: false,
-          stateMutability: "nonpayable",
-          type: "function"
-        },
-        {
-          constant: false,
-          inputs: [{ name: "_value", type: "uint256" }],
-          name: "unfreeze",
-          outputs: [{ name: "success", type: "bool" }],
-          payable: false,
-          stateMutability: "nonpayable",
-          type: "function"
-        },
-        {
-          constant: true,
-          inputs: [{ name: "", type: "address" }],
-          name: "balanceOf",
-          outputs: [{ name: "", type: "uint256" }],
-          payable: false,
-          stateMutability: "view",
-          type: "function"
-        },
-        {
-          constant: true,
-          inputs: [],
-          name: "owner",
-          outputs: [{ name: "", type: "address" }],
-          payable: false,
-          stateMutability: "view",
-          type: "function"
-        },
-        {
-          constant: true,
-          inputs: [],
-          name: "symbol",
-          outputs: [{ name: "", type: "string" }],
-          payable: false,
-          stateMutability: "view",
-          type: "function"
-        },
-        {
-          constant: false,
-          inputs: [
-            { name: "_to", type: "address" },
-            { name: "_value", type: "uint256" }
-          ],
-          name: "transfer",
-          outputs: [],
-          payable: false,
-          stateMutability: "nonpayable",
-          type: "function"
-        },
-        {
-          constant: true,
-          inputs: [{ name: "", type: "address" }],
-          name: "freezeOf",
-          outputs: [{ name: "", type: "uint256" }],
-          payable: false,
-          stateMutability: "view",
-          type: "function"
-        },
-        {
-          constant: false,
-          inputs: [{ name: "_value", type: "uint256" }],
-          name: "freeze",
-          outputs: [{ name: "success", type: "bool" }],
-          payable: false,
-          stateMutability: "nonpayable",
-          type: "function"
-        },
-        {
-          constant: true,
-          inputs: [
-            { name: "", type: "address" },
-            { name: "", type: "address" }
-          ],
-          name: "allowance",
-          outputs: [{ name: "", type: "uint256" }],
-          payable: false,
-          stateMutability: "view",
-          type: "function"
-        },
-        {
-          inputs: [
-            { name: "initialSupply", type: "uint256" },
-            { name: "tokenName", type: "string" },
-            { name: "decimalUnits", type: "uint8" },
-            { name: "tokenSymbol", type: "string" }
-          ],
-          payable: false,
-          stateMutability: "nonpayable",
-          type: "constructor"
-        },
-        { payable: true, stateMutability: "payable", type: "fallback" },
-        {
-          anonymous: false,
-          inputs: [
-            { indexed: true, name: "from", type: "address" },
-            { indexed: true, name: "to", type: "address" },
-            { indexed: false, name: "value", type: "uint256" }
-          ],
-          name: "Transfer",
-          type: "event"
-        },
-        {
-          anonymous: false,
-          inputs: [
-            { indexed: true, name: "from", type: "address" },
-            { indexed: false, name: "value", type: "uint256" }
-          ],
-          name: "Burn",
-          type: "event"
-        },
-        {
-          anonymous: false,
-          inputs: [
-            { indexed: true, name: "from", type: "address" },
-            { indexed: false, name: "value", type: "uint256" }
-          ],
-          name: "Freeze",
-          type: "event"
-        },
-        {
-          anonymous: false,
-          inputs: [
-            { indexed: true, name: "from", type: "address" },
-            { indexed: false, name: "value", type: "uint256" }
-          ],
-          name: "Unfreeze",
-          type: "event"
-        }
-      ];
-
-      if (typeof web3 !== "undefined") {
-        console.debug(web3.currentProvider);
-        web3 = new Web3(web3.currentProvider);
-      } else {
-        alert("No currentProvider for web3");
-      }
-      function transferNova(b, c, d, e, f, g) {
-        var h = new Eth(b);
-        h.accounts().then(function(accounts) {
-           imToken.callAPI("native.hideLoading");
-          const Nova = h.contract(c, {
-            from: accounts[0]
-          });
-          const nova = Nova.at(f);
-          nova
-            .transfer(d, e, {
-              from: web3.eth.accounts[0]
-            })
-            .then(function(a) {
-              
-              g(String(a));
-            })
-            .catch(function(a) {
-              g(String(a));
-            });
-        });
-      }
-      function balanceOfNova(b, c, d, e, f) {
-        var g = new Eth(b);
-        g.accounts().then(function(accounts) {
-          const Nova = g.contract(c, {
-            from: accounts[0]
-          });
-          var h = Nova.at(e);
-          h.balanceOf(d)
-            .then(function(a) {
-              f(a[0].toNumber(10));
-            })
-            .catch(function(a) {
-              f(String(a));
-            });
-        });
-      }
-
-      function approveNova(b, c, d, e, f) {
-        var g = new Eth(b);
-        g.accounts().then(function(accounts) {
-          const Nova = g.contract(c, {
-            from: accounts[0]
-          });
-          var h = Nova.at(e);
-          h.balanceOf(d)
-            .then(function(a) {
-              f(a[0].toNumber(10));
-            })
-            .catch(function(a) {
-              f(String(a));
-            });
-        });
-      }
-
-      function approveNova(provider, novaAbi, novaAddress, callBackBalance) {
-        var eth = new Eth(provider);
-        eth.accounts().then(accounts => {
-          const Nova = eth.contract(novaAbi, {
-            from: accounts[0]
-          });
-          var nova = Nova.at(novaAddress);
-          nova
-            .approve(novaAddress, 10000000000000, {
-              from: web3.eth.accounts[0]
-            })
-            .then(function(info) {
-              alert(info);
-            })
-            .catch(function(info) {
-              alert(info);
-            });
-        });
-      }
-
-    
-      //授权 授权按钮触发这个
-      // approveNova(web3.currentProvider, abi, '0xb48b7e5bf6563b3e0a85055821a83deb8cfc12f6', (res)=>{
-      // alert(res)
-      //  alert(JSON.stringify(res))
-      // })
-      // 20000000是20Nova，要乘6个0
-      // 质押 质押按钮触发这个 function transferNova(provider, novaAbi, toAddress, amountOfNova, gasPrice, novaAddress, callBackTransfer)
-
-   transferNova(
-        web3.currentProvider,
-        abi,
-        this.$route.query.address,
-        Number(this.amount)  * 1000,
-        "0xb48b7e5bf6563b3e0a85055821a83deb8cfc12f6",
-        hash => {
-          imToken.callAPI("native.hideLoading");
-          this.pay(hash);
-        }
-      );
-      // 查询Nova余额触发这个 function balanceOfNova(provider, novaAbi, queryAddress, novaAddress, callBackBalance)
-      // balanceOfNova(
-      //   web3.currentProvider,
-      //   abi,
-      //   this.imtokenAddress,
-      //   "0xb48b7e5bf6563b3e0a85055821a83deb8cfc12f6",
-      //   res => {
-      //     imToken.callAPI("native.hideLoading");
-      //     imToken.callAPI('native.toastInfo', res)
-      //   }
-      // );
+      //imToken.callAPI("native.showLoading", "loading...");
+      this.pay();
     },
-    pay(hash) {
+    pay() {
       var obj = {
-        fromAddress: this.imtokenAddress, //转入方是自己的地址
-        toAddress: this.$route.query.address, //转入方
+        userAddress: this.imtokenAddress, //转入方是自己的地址
+        oldAddress: this.$route.query.oldAddress, //原来的老地址
+        newAddress:this.$route.query.newAddress,//更换节点后的新地址
         amount: Number(this.amount) * 1000,
-        txnHash: hash
       };
-      getNodePledge(obj)
+      changePledge(obj)
         .then(res => {
-          // alert(JSON.stringify(res));
-          if (res.data.success) {
-           
-            alert("质押成功");
+          if (res.data.success) {      
+            alert("更换节点质押成功");
             this.show = false;
             this.$router.back(-1);
           }
@@ -396,7 +79,7 @@ export default {
           this.show = false;
         });
     },
-    setAll() {
+    setAll() {/* 质押全部 */
       personalAssest(this.imtokenAddress).then(res => {
         var res = res.data;
         if (res.success) {
@@ -419,13 +102,6 @@ export default {
           this.initDataObj = res.data;
         }
       });
-//        var eth = new Eth(web3.currentProvider);
-//       eth.estimateGas({
-//         to: this.$route.query.address,
-//         data: "0xb48b7e5bf6563b3e0a85055821a83deb8cfc12f6"
-//       }).then(res=>{
-// this.gasPrice =res
-//       })
     }
   },
   mounted() {

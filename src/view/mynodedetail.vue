@@ -1,111 +1,146 @@
 <template>
-    <div class="nodedetail" v-cloak>
-      <div class="card-bg">
-        <div class="card">
-          <div class="card-top">
-            <div class="avtor">
-              <!-- <div class="circle"></div> -->
-              {{nodeMessage.nodeName}}
-            </div>
-            <div class="title">
-              <div class="total">节点质押金额 (nova)</div>
-              <div class="present">预计年化收益</div>
-            </div>
-            <div class="txt">
-              <div class="total">{{nodeMessage.pledgeAmount/1000}}</div>
-              <div class="present">{{(nodeMessage.returnrate*100).toFixed(2)}}%</div>
-            </div>
+  <div class="nodedetail" v-cloak>
+    <div class="card-bg">
+      <div class="card">
+        <div class="card-top">
+          <div class="avtor">
+            <!-- <div class="circle"></div> -->
+            {{nodeMessage.nodeName}}
           </div>
-          <div class="mid-line"></div>
-          <div class="node-speak">
-            节点宣言
-            <p>{{nodeMessage.declaration}}</p>
+          <div class="title">
+            <div class="total">{{$t('mynodedetail.zyje')}} (nova)</div>
+            <div class="present">{{$t('mynodedetail.yeargetmoney')}}</div>
+          </div>
+          <div class="txt">
+            <div class="total">{{nodeMessage.pledgeAmount/1000}}</div>
+            <div class="present">{{(nodeMessage.returnrate*100).toFixed(2)}}%</div>
           </div>
         </div>
+        <div class="mid-line"></div>
+        <div class="node-speak">
+          {{$t('mynodedetail.nodespeak')}}
+          <p>{{nodeMessage.declaration}}</p>
+        </div>
       </div>
-      <div class="nodedetail-mid">
-       <div class="nodedetail-mid-note">
-         <div class="leftnot">我的质押金额（NOVA)</div>
-       <mu-button class="left-btn" :to='{path:"/moneyrecord",query:{nodeId:$route.query.nodeId,nodeAddress:imtokenAddress}}'>收益纪录</mu-button>
-       </div>
-         <div>  <mu-text-field full-width disabled  color='rgba(240,113,64,1)' v-model="totalmoney" :placeholder="nodeMessage.totalAmount/1000"></mu-text-field><br/></div>
-     <div class="btn-list">
-        <mu-button class="shuihui-btn" @click="shuihui(nodeMessage.address,nodeMessage.pledgeAmount,nodeMessage.nodeName)">赎回</mu-button> 
-        <mu-button class="zhiya-btn" @click="zhiya(nodeMessage.address,nodeMessage.pledgeAmount,nodeMessage.nodeName)">质押</mu-button> 
-        <mu-button class="change-btn" @click="changenode(nodeMessage.address,nodeMessage.pledgeAmount,nodeMessage.nodeName)">更换节点质押</mu-button>
-     </div>
+    </div>
+    <div class="nodedetail-mid">
+      <div class="nodedetail-mid-note">
+        <div class="leftnot"> {{$t('mynodedetail.myziyaje')}}(NOVA)</div>
+        <mu-button  class="left-btn" :to='{path:"/moneyrecord",query:{nodeId:$route.query.nodeId,nodeAddress:imtokenAddress}}'>{{$t('mynodedetail.moneyrecord')}}</mu-button>
       </div>
-      <!-- 节点详情下的列表 -->
-      <div class="nodedetail_list">
-        <ul class="shuhui">
-          <li v-for="(item,index) in recentTransactionsList" :key="index">
-            <template v-if="item.status==0">
-              <div class="title">
-                <div class="tit-left blodtxt">{{item.type==1?'赎回中':'质押中'}}</div>
-                <div class="tit-right">交易正在打包</div>
-              </div>
-              <div class="title">
-                <div class="tit-left">{{item.date}}</div>
-                 <div class="tit-mid">{{item.date}}</div>
-                <div class="tit-right">{{item.amount/1000}} NOVA</div>
-              </div>
-              <div class="cancel-btn-wrap">
-                <mu-button class="cancel-btn">取消赎回</mu-button>
-              </div>
-            </template>
-          </li>
-        </ul>
-        <h2 class="big-title">最近交易</h2>
-        <ul class="latest">
-          <li v-for="(item,index) in recentTransactionsList" :key="index">
-            <!-- /* 
-   @status 0(转账中) 1(转账完成) 2(转账失败)
-            */-->
-            <template v-if="item.status==1">
-              <div class="title">
-                <div class="tit-left">{{item.type==1?'赎回':'质押'}}</div>
-                <div class="tit-right">{{item.type==1?'赎回成功':'质押成功'}}</div>
-              </div>
-              <div class="content">
-                <div class="tit-left">{{formatDateToYear(item.date)}}</div>
-                <div class="tit-time">{{formatDateToHour(item.date)}}</div>
-                <div class="tit-right">{{item.amount/1000}} NOVA</div>
-              </div>
-            </template>
-            <template v-else-if="item.status==2">
-              <div class="title">
-                <div class="tit-left">{{item.type==1?'赎回':'质押'}}</div>
-                <div class="tit-right">{{item.type==1?'赎回失败':'质押失败'}}</div>
-              </div>
-              <div class="content">
-                <div class="tit-left">{{formatDateToYear(item.date)}}</div>
-                 <div class="tit-time">{{formatDateToHour(item.date)}}</div>
-                <div class="tit-right">{{item.amount/1000}} NOVA</div>
-              </div>
-            </template>
-              <template v-else-if="item.status==3">
-              <div class="title">
-                <div class="tit-left">{{item.type==1?'转出':'转出'}}</div>
-                <div class="tit-right">{{item.type==1?'转出':'转出'}}</div>
-              </div>
-              <div class="content">
-                <div class="tit-left">{{formatDateToYear(item.date)}}</div>
-                 <div class="tit-time">{{formatDateToHour(item.date)}}</div>
-                <div class="tit-right">{{item.amount/1000}} NOVA</div>
-              </div>
-            </template>
-          </li>
-        </ul>
+      <div>
+        <mu-text-field
+          full-width
+          disabled
+          color="rgba(240,113,64,1)"
+          v-model="totalmoney"
+          :placeholder="nodeMessage.totalAmount/1000"
+        ></mu-text-field>
+        <br />
       </div>
+      <div class="btn-list">
+        <mu-button
+          class="shuihui-btn"
+          @click="shuihui(nodeMessage.address,nodeMessage.pledgeAmount,nodeMessage.nodeName)"
+        >{{$t('mynodedetail.shuhui')}}</mu-button>
+        <mu-button
+          class="zhiya-btn"
+          @click="zhiya(nodeMessage.address,nodeMessage.pledgeAmount,nodeMessage.nodeName)"
+        >{{$t('mynodedetail.zhiya')}}</mu-button>
+        <mu-button
+          class="change-btn"
+          @click="changenode(nodeMessage.address)"
+        >{{$t('mynodedetail.changenodezy')}}</mu-button>
+      </div>
+    </div>
+    <!-- 节点详情下的列表 -->
+    <div class="nodedetail_list">
+      <ul class="shuhui">
+        <li v-for="(item,index) in recentTransactionsList" :key="index">
+          <template v-if="item.status==0">
+            <div class="title">
+              <div class="tit-left blodtxt">{{item.type==1?'赎回中':'质押中'}}</div>
+              <div class="tit-right">{{$t('mynodedetail.packageing')}}</div>
+            </div>
+            <div class="title">
+              <div class="tit-left">{{item.date}}</div>
+              <div class="tit-mid">{{item.date}}</div>
+              <div class="tit-right">{{item.amount/1000}} NOVA</div>
+            </div>
+            <div class="cancel-btn-wrap">
+              <mu-button class="cancel-btn" v-if='item.status==3'>取消更换</mu-button>
+              <mu-button class="cancel-btn">取消赎回</mu-button>
+            </div>
+          </template>
+        </li>
+      </ul>
+      <h2 class="big-title">{{$t('mynodedetail.nearamount')}}</h2>
+      <ul class="latest">
+        <li v-for="(item,index) in recentTransactionsList" :key="index">
+          <!-- /* 
+            *@status 0(转账中) 1(转账完成) 2(转账失败) 3(转账撤销) 4(转账等待)
+            *@type   0(质押)  1(赎回)   2(手续费) 3(质押转换)
+            @note 每一个type对应着所有的status，比如，质押有，转账中，转账完成，转账失败，转账撤销以及转账等待
+          */-->
+          <template v-if="item.type==0">
+            <div class="title">
+              <div class="tit-left">{{$t('mynodedetail.zhiya')}}</div>
 
-      <!-- 赎回和质押按钮 -->
-      <!-- <div class="btn-wrap">
+              <div class="tit-right" v-if="item.status==0">质押中</div>
+              <div class="tit-right" v-else-if="item.status==1">{{$t('mynodedetail.zhiyasuccess')}}</div>
+              <div class="tit-right" v-else-if="item.status==2">质押失败</div>
+              <div class="tit-right" v-else-if="item.status==3">质押撤销</div>
+              <div class="tit-right" v-else>转账等待</div>
+            </div>
+            <div class="content">
+              <div class="tit-left">{{formatDateToYear(item.date)}}</div>
+              <div class="tit-time">{{formatDateToHour(item.date)}}</div>
+              <div class="tit-right">{{item.amount/1000}} NOVA</div>
+            </div>
+          </template>
+          <template v-else-if="item.type==1">
+            <div class="title">
+             <div class="tit-left">{{$t('mynodedetail.shuhui')}}</div>
+
+              <div class="tit-right" v-if="item.status==0">赎回中</div>
+              <div class="tit-right" v-else-if="item.status==1">赎回成功</div>
+              <div class="tit-right" v-else-if="item.status==2">赎回失败</div>
+              <div class="tit-right" v-else-if="item.status==3">赎回撤销</div>
+              <div class="tit-right" v-else>转账等待</div>
+            </div>
+            <div class="content">
+              <div class="tit-left">{{formatDateToYear(item.date)}}</div>
+              <div class="tit-time">{{formatDateToHour(item.date)}}</div>
+              <div class="tit-right">{{item.amount/1000}} NOVA</div>
+            </div>
+          </template>
+          <template v-else-if="item.type==3">
+            <div class="title">
+              <div class="tit-left">转出</div>
+
+              <div class="tit-right" v-if="item.status==0">转出中</div>
+              <div class="tit-right" v-else-if="item.status==1">转出成功</div>
+              <div class="tit-right" v-else-if="item.status==2">转出失败</div>
+              <div class="tit-right" v-else-if="item.status==3">转出撤销</div>
+              <div class="tit-right" v-else>转账等待</div>
+            </div>
+            <div class="content">
+              <div class="tit-left">{{formatDateToYear(item.date)}}</div>
+              <div class="tit-time">{{formatDateToHour(item.date)}}</div>
+              <div class="tit-right">{{item.amount/1000}} NOVA</div>
+            </div>
+          </template>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 赎回和质押按钮 -->
+    <!-- <div class="btn-wrap">
          <mu-button class="left-btn" @click="shuihui(nodeMessage.address,nodeMessage.pledgeAmount)">赎回</mu-button>
 
         <mu-button class="right-btn" @click="zhiya(nodeMessage.address,nodeMessage.pledgeAmount)">质押</mu-button>
-      </div> -->
-    </div>
-
+    </div>-->
+  </div>
 </template>
 
 <script>
@@ -113,61 +148,77 @@ import { recentTransactions, myNodeDetail } from "@/config";
 export default {
   data() {
     return {
-      nodeMessage: { pledgeAmount: "", returnrate: "",nodeName:"" },
+      nodeMessage: { pledgeAmount: "", returnrate: "", nodeName: "" },
       recentTransactionsList: [],
-      isLoad:false,
-      totalmoney:''
+      isLoad: false,
+      totalmoney: ""
     };
   },
   computed: {},
   methods: {
-    formatDateToYear(date){
- 
-    try {
-      return  date.split(' ')[0]
-    } catch (error) {
-      return date
-    }
+    formatDateToYear(date) {
+      /* 格式化时间根据空格左边为年月日，右边为时分秒 */
+
+      try {
+        return date.split(" ")[0];
+      } catch (error) {
+        return date;
+      }
     },
-    formatDateToHour(date){
- try {
-      return  date.split(' ')[1]
-    } catch (error) {
-      return date
-    }
+    formatDateToHour(date) {
+      /* 格式化时间根据空格左边为年月日，右边为时分秒 */
+      try {
+        return date.split(" ")[1];
+      } catch (error) {
+        return date;
+      }
     },
-    shuihui(address, pledgeAmount,nodeName) {
+    shuihui(address, pledgeAmount, nodeName) {
+      /* 赎回 */
       /* 
 @{params} address节点地址
 */
-   if(!this.isLoad)return  alert('数据加载中');
+      if (!this.isLoad) return alert("数据加载中");
       if (address) {
         this.$router.push({
           path: "/suhui",
-          query: { address: address, pledgeAmount: pledgeAmount,nodeName:nodeName }
+          query: {
+            address: address,
+            pledgeAmount: pledgeAmount,
+            nodeName: nodeName
+          }
         });
       } else {
         alert("未取到服务器节点");
       }
     },
-    zhiya(address, pledgeAmount,nodeName) {
-       if(!this.isLoad)return alert('数据加载中');
+    zhiya(address, pledgeAmount, nodeName) {
+      /* 节点质押 */
+      if (!this.isLoad) return alert("数据加载中");
       if (address) {
         this.$router.push({
           path: "/zhiya",
-          query: { address: address, pledgeAmount: pledgeAmount ,nodeName:nodeName}
+          query: {
+            address: address,
+            pledgeAmount: pledgeAmount,
+            nodeName: nodeName
+          }
         });
       } else {
         alert("未取到服务器节点");
       }
     },
-    changenode(address, pledgeAmount,nodeName){
-      
-            if(!this.isLoad)return alert('数据加载中');
+    changenode(address) {
+      /* 更换节点质押 */
+
+      if (!this.isLoad) return alert("数据加载中");
       if (address) {
         this.$router.push({
-          path: "/changenodeziya",
-          query: { address: address, pledgeAmount: pledgeAmount ,nodeName:nodeName}
+          path: "/nodeswiper",
+          query: {
+            address: address,
+            from: "changenode",
+          }
         });
       } else {
         alert("未取到服务器节点");
@@ -175,28 +226,30 @@ export default {
     }
   },
   mounted() {
-     if (window.ethereum) {
-        imToken.callAPI("native.showLoading", "loading...");
-      }
-    myNodeDetail(this.$route.query.nodeId, this.imtokenAddress).then(res => {
-      if (window.ethereum) {
-         imToken.callAPI('native.hideLoading')
-      }
-      if (res.data.success) {
-        this.isLoad=true;
-        this.nodeMessage = res.data.data;
-        console.log(this.nodeMessage);
-      }
-    }).catch(err=>{
-      if (window.ethereum) {
-         imToken.callAPI('native.hideLoading')
-      }
-    })
+    if (window.ethereum) {
+      imToken.callAPI("native.showLoading", "loading...");
+    }
+    myNodeDetail(this.$route.query.nodeId, this.imtokenAddress)
+      .then(res => {
+        if (window.ethereum) {
+          imToken.callAPI("native.hideLoading");
+        }
+        if (res.data.success) {
+          this.isLoad = true;
+          this.nodeMessage = res.data.data;
+          console.log(this.nodeMessage);
+        }
+      })
+      .catch(err => {
+        if (window.ethereum) {
+          imToken.callAPI("native.hideLoading");
+        }
+      });
     recentTransactions(this.imtokenAddress, this.$route.query.nodeAddress).then(
       res => {
         if (window.ethereum) {
-         imToken.callAPI('native.hideLoading')
-      }
+          imToken.callAPI("native.hideLoading");
+        }
         if (res.data.success) {
           this.recentTransactionsList = res.data.data;
         }
@@ -211,9 +264,9 @@ export default {
 @import "@/assets/scss/colors.scss";
 @import "@/assets/scss/mixins.scss";
 @import "@/assets/scss/common.scss";
-.nodedetail{
+.nodedetail {
   height: 100%;
-  background: #FDF9F4;
+  background: #fdf9f4;
   overflow-y: auto;
 }
 [v-cloak] {
@@ -241,7 +294,7 @@ export default {
       align-items: center;
       padding: 5px 0 0 10px;
       font-size: 23px;
-      color: #122F4D;
+      color: #122f4d;
       .circle {
         width: 45px;
         height: 45px;
@@ -255,7 +308,7 @@ export default {
       flex-direction: row;
       justify-content: space-between;
       padding: 10px 10px;
-      color: #FDF9F4;
+      color: #fdf9f4;
       font-size: 15px;
       font-weight: 600;
     }
@@ -283,7 +336,7 @@ export default {
   left: 0;
   width: 150%;
   height: 100%;
-  background: #FDF9F4;
+  background: #fdf9f4;
   transform: translate(0rem, 2rem) rotateZ(-20deg);
 }
 .mid-line {
@@ -306,96 +359,97 @@ export default {
 }
 
 //节点详情中间
-.nodedetail-mid{
+.nodedetail-mid {
   width: 90%;
   margin: 10px auto;
-.nodedetail-mid-note{
-  display: flex;
- justify-content: space-between;
+  .nodedetail-mid-note {
+    display: flex;
+    justify-content: space-between;
 
- .leftnote{
-   font-size:14px;
-font-weight:400;
-color:rgba(17,46,75,1);
- }
- .left-btn{
-   width: 100px;
-   height: 24px;
-   border:1px solid rgba(112,112,112,1);
-   border-radius:30px;
-   color: #112E4B;
-    background: transparent;
- }
-}
-.btn-list{
- display: flex;
- justify-content: space-between;
- margin-top: 15px;
-  .shuihui-btn{
-    border:1px solid rgba(240,113,64,1);
-    background: transparent;
-    border-radius: 6px;
-    color: #505355;
+    .leftnote {
+      font-size: 14px;
+      font-weight: 400;
+      color: rgba(17, 46, 75, 1);
+    }
+    .left-btn {
+      width: 100px;
+      height: 24px;
+      border: 1px solid rgba(112, 112, 112, 1);
+      border-radius: 30px;
+      color: #112e4b;
+      background: transparent;
+    }
   }
-.zhiya-btn,.change-btn{
-   background:linear-gradient(90deg,rgba(240,138,64,1) 0%,rgba(240,104,64,1) 100%);
-color: #FDF9F4;
-    border-radius: 6px;
- }
+  .btn-list {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+    .shuihui-btn {
+      border: 1px solid rgba(240, 113, 64, 1);
+      background: transparent;
+      border-radius: 6px;
+      color: #505355;
+    }
+    .zhiya-btn,
+    .change-btn {
+      background: linear-gradient(
+        90deg,
+        rgba(240, 138, 64, 1) 0%,
+        rgba(240, 104, 64, 1) 100%
+      );
+      color: #fdf9f4;
+      border-radius: 6px;
+    }
+  }
 }
-}
-.nodedetail_list{
+.nodedetail_list {
   margin-top: 35px;
 }
 //节点详情下的列表
 .shuhui {
-
   li {
- 
-   width: 90%;
+    width: 90%;
     margin: 20px auto;
-  background:rgba(199,198,197,0.6);
+    background: rgba(199, 198, 197, 0.6);
   }
   .title {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     padding: 8px 0;
-    color: #696A6B;
+    color: #696a6b;
     font-size: 14px;
-    font-weight:400;
+    font-weight: 400;
   }
-   .cancel-btn-wrap{
+  .cancel-btn-wrap {
     display: flex;
-     justify-content:flex-end;
-    .cancel-btn{
-      width:95px;
-     height:22px;
-     color: #122F4D;
-     font-size: 14px;
-     border-radius: 50px;
-     background: transparent;
-    border:1px solid rgba(240,107,64,1);
+    justify-content: flex-end;
+    .cancel-btn {
+      width: 95px;
+      height: 22px;
+      color: #122f4d;
+      font-size: 14px;
+      border-radius: 50px;
+      background: transparent;
+      border: 1px solid rgba(240, 107, 64, 1);
     }
-    
   }
 }
 //最近交易下的列表
-.big-title{
+.big-title {
   padding-left: 5%;
-    color: #F06B40;
-    font-size: 20px;
-    font-weight: 600;
-    letter-spacing: 2px;
+  color: #f06b40;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 2px;
 }
 //节点详情下的列表
 .latest {
   li {
-   width: 90%;
+    width: 90%;
     margin: 20px auto;
- 
   }
-  li:nth-child(1){
+  li:nth-child(1) {
     margin-top: 0;
   }
 
@@ -404,20 +458,20 @@ color: #FDF9F4;
     flex-direction: row;
     justify-content: space-between;
     padding: 8px 0;
-    color: #122F4D;
+    color: #122f4d;
     font-size: 15px;
-    font-weight:400;
+    font-weight: 400;
   }
- .content{
+  .content {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     padding: 8px 0;
-   color: #696A6B;
-   font-size:12px;
-font-family:Microsoft YaHei;
-font-weight:400;
- }
+    color: #696a6b;
+    font-size: 12px;
+    font-family: Microsoft YaHei;
+    font-weight: 400;
+  }
 }
 // .btn-wrap {
 //   display: flex;
@@ -435,6 +489,6 @@ font-weight:400;
 //     font-size: 13px;
 //     box-shadow: 2px 2px 0 0px #ccc;
 //   }
- 
+
 // }
 </style>
