@@ -6,7 +6,7 @@ module.exports = {
         totalIncome: 'Accumulated income',
         pendingAmount: 'Redemption',
         choosenode: 'Node Pledge',
-        usenote: 'Instructions',
+        usenote: 'Note',
         problem: 'problem',
         mynode: 'My pledge node'
     },

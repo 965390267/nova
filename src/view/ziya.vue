@@ -6,19 +6,19 @@
     </div>
     <div class="balance">
       <div class="canbalance">{{initDataObj.balance/1000}}NOVA</div>
-      <div class="inputbalance">可用余额</div>
+      <div class="inputbalance">{{$t('zhiya.canusemoney')}}</div>
     </div>
     <div class="classinput">
       <div class="inputwrap">
-        <div class="total" @click="setAll()">全部</div>
-        <input class="inputcount" type="number" v-model="amount" placeholder="输入数量" />
+        <div class="total" @click="setAll()">{{$t('zhiya.total')}}</div>
+        <input class="inputcount" type="number" v-model="amount" :placeholder="$t('zhiya.placeholder')" />
       </div>
     </div>
-    <div class="smtip">预计交易费：{{gasPrice.toFixed(7)}}ETH</div>
-    <div class="submit-btn" @click="get()">质&nbsp;&nbsp;&nbsp;&nbsp;押</div>
+    <div class="smtip">{{$t('zhiya.gasprice')}}{{gasPrice.toFixed(7)}}ETH</div>
+    <div class="submit-btn" @click="get()" v-html="$t('zhiya.zhiya')"></div>
     <div class="note">
-      <p>质押说明:</p>
-      <p>将您的NOVA选择一个节点进行质押。在质押期间，可以享受质押带来的收益，也可以进行赎回，立即赎回需要扣取10%的手续费，普通赎回质押需要等待21天后转入钱包。</p>
+      <p>{{$t('zhiya.note1')}}</p>
+      <p>{{$t('zhiya.note2')}}</p>
       <!-- <p>收益</p>
       <p>质押收益来自出块奖励和交易手续风险</p>
       <p>如果有效节点行为不端将可能会被罚没部分质押代币，比如有效节</p>

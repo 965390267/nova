@@ -5,28 +5,28 @@
        {{$route.query.nodeName}}
     </div>
     <div class="ziyaed">
-      <em>已质押</em>
+      <em>{{$t('shuhui.zhiyaed')}}</em>
       <em class="txt"> {{$route.query.pledgeAmount/1000}} NOVA</em>
      
     </div>
     <div class="balance">
-      <div class="canbalance" @click="setAll()">全部</div>
-      <input class="inputbalance" type="number" v-model="amount" placeholder="输入数量" />
+      <div class="canbalance" @click="setAll()">{{$t('shuhui.total')}}</div>
+      <input class="inputbalance" type="number" v-model="amount" :placeholder="$t('shuhui.placeholder')" />
     </div>
 
     <!-- <div class="smtip">交易费：{{gasPrice}}ETH</div> -->
     <div class="ordinary top" :class="{active:index==0}" @click="choosetype(0)">
-      <div class="left-txt">立即赎回</div>
+      <div class="left-txt">{{$t('shuhui.atonceshuhui')}}</div>
       <div class="right"></div>
     </div>
     <div class="ordinary bottom" :class="{active:index==1}" @click="choosetype(1)">
-      <div class="left-txt">普通赎回</div>
+      <div class="left-txt">{{$t('shuhui.normalshuhui')}}</div>
       <div class="right"></div>
     </div>
-    <div class="submit-btn" @click="get()">赎&nbsp;&nbsp;&nbsp;&nbsp;回</div>
+    <div class="submit-btn" @click="get()" v-html="$t('shuhui.shuhui')"></div>
     <div class="note">
-      <p>赎回说明：</p>
-      <p>普通赎回：需要等待21天后，赎回将转入到您的钱包地址，同时赎回期间的质押不产生收益，并将扣除1%的手续费销毁。立即赎回：赎回质押可立即到达您的钱包地址，但同时扣除总额10%的手续费并永久销毁。</p>
+      <p>{{$t('shuhui.note')}}</p>
+      <p>{{$t('shuhui.note1')}}</p>
 
     </div>
     <loading v-if="show"></loading>

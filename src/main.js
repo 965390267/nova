@@ -14,7 +14,7 @@ Vue.use(Button).use(TextField);
 import VueI18n from 'vue-i18n';
 Vue.use(VueI18n);
 const i18n = new VueI18n({
-  locale: localStorage.getItem('language') || 'en', //使用localStorage缓存到本地，当下次使用时可默认当前使用语言
+  locale: 'zh', //使用localStorage缓存到本地，当下次使用时可默认当前使用语言 localStorage.getItem('language') || 'en'
   messages: {
     'zh': require('@/config/zh'),
     'en': require('@/config/en')

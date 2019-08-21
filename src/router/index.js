@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-// import nodeswiper from '@/view/nodeswiper'
+ import nodeswiper from '@/view/nodeswiper'
 Vue.use(Router)
 
  const router= new Router({

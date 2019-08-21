@@ -74,6 +74,7 @@ module.exports = {
     shuhui: {
         zhiyaed: '已质押',
         total: '全部',
+        placeholder: '输入数量',
         atonceshuhui: '立即赎回',
         normalshuhui: '普通赎回',
         shuhui: '赎&nbsp;&nbsp;&nbsp;&nbsp;回',
@@ -117,7 +118,6 @@ module.exports = {
         },
         invalidnode: {
             nodata: '暂无数据~',
-            nomoney: '不产生收益',
             zhiyatotalmoney: '质押总额',
             yujiyearmoney: '预计年化收益',
             zhiya: '质押',

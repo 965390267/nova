@@ -2,7 +2,7 @@
   <!-- 节点列表 -->
 
   <div class="node-list-wrap">
-    <div class="nocontent" v-if="listdata.length==0">暂无数据~</div>
+    <div class="nocontent" v-if="listdata.length==0">{{$t('components.effectnode.nodata')}}</div>
     <div class="node-list">
       <div class="linear-bg"></div>
       <ul>
@@ -19,25 +19,25 @@
             <div class="name">{{item.nodeName}}</div>
             <div class="mid-money">
               <div class="txt">{{item.totalAmount/1000}}</div>
-              <div class="des">质押总额</div>
+              <div class="des">{{$t('components.effectnode.zhiyatotalmoney')}}</div>
             </div>
             <div class="right-present">
               <div class="txt">{{(item.returnrate*100).toFixed(2)}}%</div>
-              <div class="des">预计年化收益</div>
+              <div class="des">{{$t('components.effectnode.yujiyearmoney')}}</div>
             </div>
           </div>
           <div class="mid-line"></div>
           <div class="bottom">
             <div class="des">
-              <div class="txt">质押</div>
+              <div class="txt">{{$t('components.effectnode.zhiya')}}</div>
               <div class="num">{{item.pledgeAmount/1000}}</div>
             </div>
             <div class="des">
-              <div class="txt">收益</div>
+              <div class="txt">{{$t('components.effectnode.shouyi')}}</div>
               <div class="num">{{item.totalIncome/1000}}</div>
             </div>
             <div class="des">
-              <div class="txt">预计收益(天)</div>
+              <div class="txt">{{$t('components.effectnode.moneyday')}}</div>
               <div class="num">+{{plainEveryDayMoney(item)}}</div>
             </div>
           </div>

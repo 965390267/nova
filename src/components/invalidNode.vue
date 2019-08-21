@@ -1,6 +1,6 @@
 <template>
   <div class="node-list-wrap">
-    <div class="nocontent" v-if="listdata.length==0">暂无数据~</div>
+    <div class="nocontent" v-if="listdata.length==0">{{$t('components.invalidnode.nodata')}}</div>
     <!-- 节点列表 -->
     <div class="node-list">
       <div class="linear-bg"></div>
@@ -16,26 +16,26 @@
             <div class="name">{{item.nodeName}}</div>
             <div class="mid-money">
               <div class="txt">{{item.totalAmount/1000}}</div>
-              <div class="des">质押总额</div>
+              <div class="des">{{$t('components.invalidnode.zhiyatotalmoney')}}</div>
             </div>
             <div class="right-present">
               <div class="txt">{{(item.returnrate*100).toFixed(2)}}%</div>
-              <div class="des">预计年化收益</div>
+              <div class="des">{{$t('components.invalidnode.yujiyearmoney')}}</div>
             </div>
           </div>
           <div class="mid-line"></div>
           <div class="bottom">
             <div class="des">
-              <div class="txt">质押</div>
+              <div class="txt">{{$t('components.invalidnode.zhiya')}}</div>
               <div class="num">{{item.pledgeAmount/1000}}</div>
             </div>
             <div class="des">
-              <div class="txt">收益</div>
+              <div class="txt">{{$t('components.invalidnode.shouyi')}}</div>
               <div class="num">{{item.totalIncome/1000}}</div>
             </div>
             <div class="des">
-              <div class="txt">预计收益(天)</div>
-              <div class="num">0</div>
+              <div class="txt">{{$t('components.invalidnode.moneyday')}}</div>
+              <div class="num">+{{plainEveryDayMoney(item)}}</div>
             </div>
           </div>
         </li>
@@ -62,6 +62,9 @@ useParmsGetFrom:Object
     }
   },
   methods: {
+    plainEveryDayMoney(item) {
+      return (((item.pledgeAmount / 1000) * item.returnrate) / 365).toFixed(3);
+    },
        gotodetail(nodeId, nodeAddress,nodeName) {
       if(this.useParmsGetFrom&&this.useParmsGetFrom.from&&this.useParmsGetFrom.from==="changenode"){/* 判断如果是从更换节点过来的，则点击后跳到更换节点质押页面 */
   if(nodeAddress==this.useParmsGetFrom.address){alert('不能选择和旧节点相同的地址质押'); return;}

@@ -8,32 +8,32 @@
         :key="index"
         @click="gotodetail(item.nodeId,item.address)"
       >
-        <div class="top-right-active no" v-if="item.nodeStatus==0">普通节点</div>
-        <div class="top-right-active" v-else>提案节点</div>
+        <div class="top-right-active no" v-if="item.nodeStatus==0">{{$t('components.homelistnode.valiednode')}}</div>
+        <div class="top-right-active" v-else>{{$t('components.homelistnode.effectnode')}}</div>
         <div class="top">
           <!-- <div class="left-circle"></div> -->
           <div class="name"><div class="bigtxt">{{item.nodeName}}</div><div class="spacewhite"></div></div>
           <div class="mid-money">
             <div class="txt">{{item.totalAmount/1000}}NOVA</div>
-            <div class="des">质押总额</div>
+            <div class="des">{{$t('components.homelistnode.zhiyatotalmoney')}}</div>
           </div>
           <div class="right-present">
             <div class="txt">{{(item.returnrate*100).toFixed(2)}}%</div>
-            <div class="des">预计年化收益</div>
+            <div class="des">{{$t('components.homelistnode.yujiyearmoney')}}</div>
           </div>
         </div>
         <div class="mid-line"></div>
         <div class="bottom">
           <div class="des">
-            <div class="txt">质押</div>
+            <div class="txt">{{$t('components.homelistnode.zhiya')}}</div>
             <div class="num">{{item.pledgeAmount/1000}}</div>
           </div>
           <div class="des">
-            <div class="txt">收益</div>
+            <div class="txt">{{$t('components.homelistnode.shouyi')}}</div>
             <div class="num">{{item.totalIncome/1000}}</div>
           </div>
           <div class="des">
-            <div class="txt">预计收益（天）</div>
+            <div class="txt">{{$t('components.homelistnode.moneyday')}}</div>
             <div class="num">+{{plainEveryDayMoney(item)}}</div>
           </div>
         </div>
