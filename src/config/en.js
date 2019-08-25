@@ -1,14 +1,27 @@
-module.exports = {
+module.exports={
+    changenodezy:{
+        canusemoney:'Available balance',//可用余额
+        total:'total',//全部
+        inputamount:'input amount',//输入数量
+        changenode:'Replacement of node pledge',//更&nbsp;换&nbsp;节&nbsp;点&nbsp;质&nbsp;押
+        note1:'Replacement Notes:',//更换节点说明：
+        note2:'Choose a new node to pledge your NOVA. The replacement time is 21 days. After 21 days, the new node will be replaced and the revenue will be generated.',//将您的NOVA选择一个新的节点进行质押。更换时间为21天，21天后更换至新的节点并开始产生收益。
+        numbernotzero:'amount noe empty',//输入数量不能为0
+        nogetaddress:'not get node address,please to back and again',//未取到列表节点地址，请返回重试
+        noauthtoken:'no success authorization ',//未授权成功
+        changenodealert:'Replacement of Node Pledge Successfully'//更换节点质押成功
+    },
     index: {
         total: 'total assets',
         balance: 'Available balance',
-        yesterdayIncome: "Yesterday's earnings",
+        yesterdayIncome: 'Yesterday earnings',
         totalIncome: 'Accumulated income',
         pendingAmount: 'Redemption',
         choosenode: 'Node Pledge',
         usenote: 'Note',
         problem: 'problem',
-        mynode: 'My pledge node'
+        mynode: 'My pledge node',
+        alertauth:'no success authorization,please close and goon again'
     },
     moneyrecord: {
         shoyyi: 'Profit',
@@ -22,17 +35,28 @@ module.exports = {
         moneyrecord: 'record',
         shuhui: 'Redeem',
         zhiya: 'pledge',
+        nearamount:'Recent transactions',
         changenodezy: 'Replace node',
-        shuhuiing: 'In redemption',
-        zhiyaing: 'In pledge',
+        shuhuiing: 'redemptioning',
+        changeing: 'Replacementing',
         packageing: 'Transactions are being packaged',
-        cancel: 'Redemption',
-        nearamount: 'Recent transactions',
+        cancelshuhui: 'Redemption',
+        cancelchange: 'cancel',
+        zhiyaing:'pledgeing',
+        zhiyafailed: 'pledge',
+        zhiyacancel: 'Withdrawal of pledge',
+        waiting: 'Transfer waiting',
         shuihuisuccess: 'Redemption Success',
-        zhiyasuccess: 'Pledge Successful',
         shuihuifailed: 'Redemption failure',
-        zhiyafailed: 'Failure of pledge',
-
+        shuhuicancel: 'Redemption and revocation',     
+        zhiyasuccess: 'Pledge Successful',
+         zhuanchu:'Turn out',
+         zhuanchuing:'In transit',
+         zhuanchusuccess:'Turn Out Success',
+         zhuanchufailed:'Turn Out Failure',
+         zhuanchucancel:'Revocation',
+         dadaloading:'Data loading',
+         nogetservicenode: 'Not fetched to server node',
     },
     nodeswiper: {
         effectnode: 'Effective Nodes',
@@ -77,13 +101,17 @@ module.exports = {
     },
     shuhui: {
         zhiyaed: 'Pledged',
-        total: 'whole',
+        total: 'total',
         atonceshuhui: 'Immediate redemption',
         normalshuhui: 'Ordinary redemption',
         shuhui: 'Redeem',
         note: 'Explain',
         note1: 'Ordinary redemption pledge needs to wait 7 days, and the pledge during redemption will not generate transactions.',
-        note2: 'Immediate redemption pledge is immediately available, with 10% of the total fee deducted and permanently destroyed.'
+        note2: 'Immediate redemption pledge is immediately available, with 10% of the total fee deducted and permanently destroyed.',
+        numbernotzero:'amount noe empty',//输入数量不能为0
+        nogetaddress:'not get node address,please to back and again',//未取到列表节点地址，请返回重试
+        noauthtoken:'no success authorization ',//未授权成功
+        changenodealert:'Redemption Success'
     },
     zhiya: {
         canusemoney: 'Available balance',
@@ -96,29 +124,39 @@ module.exports = {
         note4: 'The proceeds of pledge come from the reward and transaction procedure risk',
         note5: 'If the valid node misbehaves, it may be fined some pledged tokens, such as valid festival.',
         note6: 'Point double signature, often offline. In order to avoid risks, please carefully select qualified validation.',
-        note7: 'node'
+        note7: 'node',
+        numbernotzero:'amount noe empty',//输入数量不能为0
+        nogetaddress:'not get node address,please to back and again',//未取到列表节点地址，请返回重试
+        noauthtoken:'no success authorization ',//未授权成功
+        zhiyanodealert:'Pledge Successful'
     },
     components: {
         alert: {
             title: 'Please authorize Nova to use wallet links',
             cancel: 'cancel',
-            certain: 'confirm'
+            certain: 'confirm',
+            slowtext:'You will have ordinary redemption, and the redeemed NOVA will be transferred to your wallet in 21 days, and 1% of the total redemption will be deducted as a handling fee for destruction.',
+            atoncetext:'Are you sure you want to redeem it immediately? Immediate redemption will deduct 10% of the total amount of redemption as a fee, which will be permanently destroyed.',
+            changenodepledgetext1:'Are you certain ',
+            changenodepledgetext2:'NOVA，change to',
+            changenodepledgetext3:'node?，change node need to 21 days，No handling fee'
         },
         effectnode: {
             nodata: 'No data ~',
             zhiyatotalmoney: 'Total pledge',
             yujiyearmoney: ' Projected Annualized Income',
-            zhiya: 'pledge',
+            zhiya: 'My pledge',
             shouyi: 'Profit',
             moneyday: 'Expected earnings (days)',
-
+            cannotchoosesamenode:'Can not choose the same address pledge as the old node',
+            
         },
         homelistnode: {
             valiednode: 'Pending node',
             effectnode: 'Effective Nodes',
             zhiyatotalmoney: 'Total pledge',
             yujiyearmoney: ' Projected Annualized Income',
-            zhiya: 'pledge',
+            zhiya: 'My pledge',
             shouyi: 'Profit',
             moneyday: 'Expected earnings (days)',
         },
@@ -127,9 +165,10 @@ module.exports = {
             nomoney: 'No gains',
             zhiyatotalmoney: 'Total pledge',
             yujiyearmoney: ' Projected Annualized Income',
-            zhiya: 'pledge',
+            zhiya: 'My pledge',
             shouyi: 'Profit',
             moneyday: 'Expected earnings (days)',
+            cannotchoosesamenode:'Can not choose the same address pledge as the old node'
         }
     },
     language: {

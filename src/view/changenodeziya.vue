@@ -5,55 +5,67 @@
        {{$route.query.nodeName}}
     </div>
     <div class="balance">
-      <div class="canbalance">{{initDataObj.balance/1000}}NOVA</div>
-      <div class="inputbalance">可用余额</div>
+      <div class="canbalance">{{$route.query.pledgeAmount/1000}} NOVA</div>
+      <div class="inputbalance">{{$t('changenodezy.canusemoney')}}</div>
     </div>
     <div class="classinput">
       <div class="inputwrap">
-        <div class="total" @click="setAll()">全部</div>
-        <input class="inputcount" type="number" v-model="amount" placeholder="输入数量" />
+        <div class="total" @click="setAll()">{{$t('changenodezy.total')}}</div>
+        <input class="inputcount" type="number" v-model="amount" :placeholder="$t('changenodezy.inputamount')" />
       </div>
     </div>
     <!-- <div class="smtip">交易费：{{gasPrice}}ETH</div> -->
-    <div class="submit-btn" @click="get()">更&nbsp;换&nbsp;节&nbsp;点&nbsp;质&nbsp;押</div>
+    <div class="submit-btn" @click="submit()" v-html="$t('changenodezy.changenode')"></div>
     <div class="note">
-      <p>更换节点说明：</p>
-      <p>将您的NOVA选择一个新的节点进行质押。更换时间为21天，21天后更换至新的节点并开始产生收益。</p>
+      <p>{{$t('changenodezy.note1')}}</p>
+      <p>{{$t('changenodezy.note2')}}</p>
       <!-- <p>收益</p>
       <p>质押收益来自出块奖励和交易手续风险</p>
       <p>如果有效节点行为不端将可能会被罚没部分质押代币，比如有效节</p>
       <p>点双重签名，经常性离线。为了规避风险，请认真选择合格的验证</p>
       <p>节点</p> -->
     </div>
-    <loading v-if="show"></loading>
+        <Alert :content="alertcontent" @certain="certain"></Alert>
   </diV>
 </template>
 <script>
 
 
-import loading from "@/components/loading";
-import { changePledge ,personalAssest} from "@/config";
+import Alert from "@/components/alert";
+import { changePledge } from "@/config";
 export default {
-  components: {},
+  components: {
+    Alert
+  },
   data() {
     return {
-      initDataObj: {},
       amount: '' /* 用户输入的Nova数量，提交需要*1000 */,
       show: false,
-      gasPrice: ""
+      gasPrice: 0,
+       alertcontent:''
     };
   },
   methods: {
+     certain(data) {
+      console.log(data);
+      if (data) {
+        this.get();
+      }
+    },
+    submit() {
+        this.alertcontent=this.$t('components.alert.changenodepledgetext1')+this.amount+this.$t('components.alert.changenodepledgetext2')+this.$route.query.nodeName+this.$t('components.alert.changenodepledgetext3')
+       this.bus.$emit("alert", true);
+    },
     get() {
       this.show = true;
       this.amount=Number(this.amount); 
-      if (this.amount == 0) return alert("输入数量不能为0");
+      if (this.amount == 0) return alert(this.$t('changenodezy.numbernotzero'));
           if(!this.$route.query.newAddress||!this.$route.query.oldAddress){
-             alert("未取到列表节点地址，请返回重试");
+             alert(this.$t('changenodezy.nogetaddress'));
              return this.$router.back(-1);
       } 
       if(!this.imtokenAddress){
-             alert("未授权成功");
+             alert(this.$t('changenodezy.noauthtoken'));
              return this.$router.back(-1);
       } 
       //imToken.callAPI("native.showLoading", "loading...");
@@ -69,7 +81,7 @@ export default {
       changePledge(obj)
         .then(res => {
           if (res.data.success) {      
-            alert("更换节点质押成功");
+           alert(this.$t('changenodezy.changenodealert'));
             this.show = false;
             this.$router.back(-1);
           }
@@ -80,32 +92,12 @@ export default {
         });
     },
     setAll() {/* 质押全部 */
-      personalAssest(this.imtokenAddress).then(res => {
-        var res = res.data;
-        if (res.success) {
-          this.initDataObj = res.data;
-          this.amount =Number(res.data.balance) /1000;
-        }else{
-          Promise.reject(ret)
-        }
-      }).catch(err => {
-           imToken.callAPI("native.hideLoading");
-           alert(err)
-          this.show = false;
-        });
+          this.amount = this.$route.query.pledgeAmount/1000;
     },
-    initData() {
-      /* 初始的页面数据获取 */
-      personalAssest(this.imtokenAddress).then(res => {
-        var res = res.data;
-        if (res.success) {
-          this.initDataObj = res.data;
-        }
-      });
-    }
+
   },
   mounted() {
-    this.initData(); /* 数据初始化 */
+  
   }
 };
 </script>

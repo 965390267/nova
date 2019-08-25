@@ -1,16 +1,22 @@
 <template>
   <div class="alert" v-if="loading">
     <div class="alert-box">
-      <p class="alert-txt">请授权给nova使用钱包链接</p>
+      <p class="alert-txt">{{content}}</p>
       <div class="btn-wrap">
-        <div class="clsoe-btn close" @click="loading=false">取消</div>
-        <div class="clsoe-btn">确认</div>
+        <div class="clsoe-btn close" @click="loading=false">{{$t('components.alert.cancel')}}</div>
+        <div class="clsoe-btn" @click="ceratin()">{{$t('components.alert.certain')}}</div>
       </div>
     </div>
   </div>
 </template>
 <script>
+let self=this;
 export default {
+  props:{
+   content:{
+      type:String,
+   }
+  },
   data() {
     return {
       loading: false
@@ -18,11 +24,14 @@ export default {
   },
   created() {
     var that = this;
-    this.bus.$on("loading", function(data) {
-      console.log(data);
-
+    this.bus.$on("alert", function(data) {
       that.loading = !!data;
     });
+  },
+  methods:{
+    ceratin(){
+      this.$emit('certain',true)
+    }
   }
 };
 </script>
@@ -39,24 +48,26 @@ export default {
   background: rgba(0, 0, 0, 0.5);
   z-index: 999;
   .alert-box {
-    width: 70%;
+    display: flex;
+    flex-direction: column;
+    width: 86%;
     height: 30%;
-    //transform:translate(50%,50%);
     background: #fff;
     border-radius: 15px;
     .alert-txt {
-      text-align: center;
-      padding: 10px 0;
-      margin-top: 50px;
-      color: #122f4d;
-      font-size: 14px;
+         text-align: center;
+    padding: 0.2rem 0;
+    color: #122f4d;
+    font-size: 0.28rem;
+    height: 75%;
+    padding: 30px 15px 0 15px;
     }
     .btn-wrap {
       display: flex;
       justify-content: center;
-      margin-top: 40px;
+    
       .clsoe-btn {
-        width: 60px;
+        width: 70px;
         margin: 0 auto;
         background: #f08a40;
         color: #fff;

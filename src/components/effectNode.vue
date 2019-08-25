@@ -70,10 +70,13 @@ useParmsGetFrom:Object
     },
     gotodetail(nodeId, nodeAddress,nodeName) {
       if(this.useParmsGetFrom&&this.useParmsGetFrom.from&&this.useParmsGetFrom.from==="changenode"){/* 判断如果是从更换节点过来的，则点击后跳到更换节点质押页面 */
-    if(nodeAddress==this.useParmsGetFrom.address){alert('不能选择和旧节点相同的地址质押'); return;}
+    if(nodeAddress==this.useParmsGetFrom.address){alert(this.$t('components.effectnode.cannotchoosesamenode')); return;}
    this.$router.push({/* 到更换节点页 */
         path: "/changenodeziya",
-        query: { nodeId: nodeId, newAddress: nodeAddress,oldAddress:this.useParmsGetFrom.address , nodeName:nodeName }
+        query: { nodeId: nodeId, newAddress: nodeAddress,
+        oldAddress:this.useParmsGetFrom.address , nodeName:nodeName,
+        pledgeAmount:this.$route.query.pledgeAmount
+        }
       });
       }else{/* 到详情页 */
     this.$router.push({

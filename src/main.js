@@ -13,7 +13,9 @@ Vue.use(Button).use(TextField);
 
 import VueI18n from 'vue-i18n';
 Vue.use(VueI18n);
-const i18n = new VueI18n({
+
+
+let i18n = new VueI18n({
   locale: 'zh', //使用localStorage缓存到本地，当下次使用时可默认当前使用语言 localStorage.getItem('language') || 'en'
   messages: {
     'zh': require('@/config/zh'),
@@ -22,6 +24,13 @@ const i18n = new VueI18n({
 })
 
 Vue.config.productionTip = false
+
+let vm=  new Vue({
+  i18n,
+  router,
+  components: { App },
+  template: '<App/>'
+})
 if (!!window.imToken) {/* imtoken环境下 */
   if (window.ethereum) {
     window.web3 = new Web3(ethereum);
@@ -31,12 +40,7 @@ if (!!window.imToken) {/* imtoken环境下 */
       ethereum.enable().then((accounts) => {
         Vue.prototype.imtokenAddress = window.accounts = accounts[0];
         /* eslint-disable no-new */
-        new Vue({
-          el: '#app',
-          router,
-          components: { App },
-          template: '<App/>'
-        })
+        vm.$mount('#app')
       }).catch((err) => {
         alert('未成功授权,请退出重新授权')
       })
@@ -51,24 +55,14 @@ if (!!window.imToken) {/* imtoken环境下 */
     ethereum.enable().then((accounts) => {
       Vue.prototype.imtokenAddress = window.accounts = accounts[0];
       /* eslint-disable no-new */
-      new Vue({
-        el: '#app',
-        router,
-        components: { App },
-        template: '<App/>'
-      })
+      vm.$mount('#app')
     }).catch((err) => {
       alert('未成功授权,请退出重新授权')
     })
   } else {
     alert('未成功授权,请退出重新授权')
     /* eslint-disable no-new */
-    new Vue({
-      el: '#app',
-      router,
-      components: { App },
-      template: '<App/>'
-    })
+    vm.$mount('#app')
     alert('请在imtoken浏览器打开')
   }
 }
@@ -83,14 +77,7 @@ else {/* 浏览器环境下 */
   }
   Vue.prototype.imtokenAddress = '0x6E746901b6675a9AE97e3458D9F45d424bFCd908'
   /* eslint-disable no-new */
-  new Vue({
-    el: '#app',
-    i18n,
-    router,
-    components: { App },
-    template: '<App/>'
-  })
-
+  vm.$mount('#app')
 }
 
 

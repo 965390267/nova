@@ -2,16 +2,20 @@
   <diV class="ziya">
     <div class="avtor">
       <!-- <div class="circle"></div>nova wallet -->
-       {{$route.query.nodeName}}
+      {{$route.query.nodeName}}
     </div>
     <div class="ziyaed">
       <em>{{$t('shuhui.zhiyaed')}}</em>
-      <em class="txt"> {{$route.query.pledgeAmount/1000}} NOVA</em>
-     
+      <em class="txt">{{$route.query.pledgeAmount/1000}} NOVA</em>
     </div>
     <div class="balance">
       <div class="canbalance" @click="setAll()">{{$t('shuhui.total')}}</div>
-      <input class="inputbalance" type="number" v-model="amount" :placeholder="$t('shuhui.placeholder')" />
+      <input
+        class="inputbalance"
+        type="number"
+        v-model="amount"
+        :placeholder="$t('shuhui.placeholder')"
+      />
     </div>
 
     <!-- <div class="smtip">交易费：{{gasPrice}}ETH</div> -->
@@ -23,54 +27,68 @@
       <div class="left-txt">{{$t('shuhui.normalshuhui')}}</div>
       <div class="right"></div>
     </div>
-    <div class="submit-btn" @click="get()" v-html="$t('shuhui.shuhui')"></div>
+    <div class="submit-btn" @click="submit()" v-html="$t('shuhui.shuhui')"></div>
     <div class="note">
       <p>{{$t('shuhui.note')}}</p>
       <p>{{$t('shuhui.note1')}}</p>
-
     </div>
-    <loading v-if="show"></loading>
+    <Alert :content="alertcontent" @certain="certain"></Alert>
   </diV>
 </template>
 <script>
 import { getNodeRedeem, personalAssest } from "@/config";
-import loading from "@/components/loading";
+import Alert from "@/components/alert.vue";
 export default {
   components: {
-    loading
+    Alert
   },
   data() {
     return {
       index: 0,
       amount: "",
-      initDataObj: {},
       blance: 0,
       gasPrice: "",
-      show: false
+      show: false,
+      alertcontent:''
     };
   },
   methods: {
     choosetype(index) {
       this.index = index;
     },
+    certain(data) {
+      console.log(data);
+      if (data) {
+        this.get();
+      }
+    },
+    submit() {
+      if(this.index==0){
+       this.alertcontent=this.$t('components.alert.atoncetext')
+      }else{
+        this.alertcontent=this.$t('components.alert.slowtext')
+      }
+      this.bus.$emit("alert", true);
+    },
     get() {
       this.show = true;
-       this.amount=Number(this.amount);
-      imToken.callAPI("native.showLoading", "loading...");
-      if (this.amount == 0) return alert("输入数量不能为0");
-      if(!this.$route.query.address){
-             alert("未取到服务器节点地址");
-             return this.$router.back(-1);
-      } 
-      if(!this.imtokenAddress){
-             alert("未授权成功");
-             return this.$router.back(-1);
-      } 
+
+      // imToken.callAPI("native.showLoading", "loading...");
+      if (this.amount == 0) return alert(this.$t("shuhui.numbernotzero"));
+      this.amount = Number(this.amount);
+      if (!this.$route.query.address) {
+        alert(this.$t("shuhui.nogetaddress"));
+        return this.$router.back(-1);
+      }
+      if (!this.imtokenAddress) {
+        alert(this.$t("shuhui.noauthtoken"));
+        return this.$router.back(-1);
+      }
       // this.bus.$emit('loading',true)
       var obj = {
         fromAddress: this.$route.query.address, //服务器地址
         toAddress: this.imtokenAddress, //钱包地址
-        amount: this.amount*1000,
+        amount: this.amount * 1000,
         type: this.index
       };
       getNodeRedeem(obj)
@@ -78,16 +96,16 @@ export default {
           imToken.callAPI("native.hideLoading");
           if (res.data.success) {
             this.show = false;
-            alert("赎回成功");
+            alert(this.$t("shuhui.changenodealert"));
             this.$router.back(-1);
           } else {
-            Promise.reject(ret)
+            Promise.reject(ret);
             this.show = false;
           }
         })
         .catch(err => {
-           imToken.callAPI("native.hideLoading");
-           alert(err)
+          imToken.callAPI("native.hideLoading");
+          alert(err);
           this.show = false;
         });
     },
@@ -95,35 +113,34 @@ export default {
       // personalAssest(this.imtokenAddress).then(res => {
       //   var res = res.data;
       //   if (res.success) {
-          //this.balance = this.$route.query.nodeMessage.pledgeAmount
-          this.amount = this.$route.query.pledgeAmount/1000;
+      //this.balance = this.$route.query.nodeMessage.pledgeAmount
+      this.amount = this.$route.query.pledgeAmount / 1000;
       //   }
       // });
     },
     initData() {
       /* 初始的页面数据获取 */
-
       // personalAssest(this.imtokenAddress).then(res => {
       //   var res = res.data;
       //   if (res.success) {
       //     this.balance = res.data.pendingAmount
       //   }
       // });
-    //   var eth = new Eth(web3.currentProvider);
-// eth.getBalance(this.imtokenAddress)
-//                   .then((info)=>{
-//                      this.ETH =info/1000000000000000000;
-//                     alert(info/1000000000000000000);/* 1000000000000000000是eth的单位，和nova除以1000是一个道理 */
-//                   })
-//                   .catch(function(info){
-//                     alert(info);
-//                   });
-//        eth.estimateGas({
-//         to: this.$route.query.address,
-//         data: "0xb48b7e5bf6563b3e0a85055821a83deb8cfc12f6"
-//       }).then(res=>{
-// this.gasPrice =res
-//       })
+      //   var eth = new Eth(web3.currentProvider);
+      // eth.getBalance(this.imtokenAddress)
+      //                   .then((info)=>{
+      //                      this.ETH =info/1000000000000000000;
+      //                     alert(info/1000000000000000000);/* 1000000000000000000是eth的单位，和nova除以1000是一个道理 */
+      //                   })
+      //                   .catch(function(info){
+      //                     alert(info);
+      //                   });
+      //        eth.estimateGas({
+      //         to: this.$route.query.address,
+      //         data: "0xb48b7e5bf6563b3e0a85055821a83deb8cfc12f6"
+      //       }).then(res=>{
+      // this.gasPrice =res
+      //       })
     }
   },
   mounted() {
@@ -168,11 +185,11 @@ export default {
   em {
     font-size: 14px;
     color: #122f4d;
-    font-weight:400;
+    font-weight: 400;
     padding-right: 15px;
   }
-  .txt{
-    color: #979FA5;
+  .txt {
+    color: #979fa5;
   }
   font-size: 13px;
   color: #979fa5;
@@ -266,8 +283,8 @@ export default {
   font-size: 12px;
   text-align: left;
   padding: 2px 0;
-      line-height: 20px;
-          letter-spacing: 2px;
+  line-height: 20px;
+  letter-spacing: 2px;
 }
 </style>
 

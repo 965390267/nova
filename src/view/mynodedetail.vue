@@ -12,7 +12,7 @@
             <div class="present">{{$t('mynodedetail.yeargetmoney')}}</div>
           </div>
           <div class="txt">
-            <div class="total">{{nodeMessage.pledgeAmount/1000}}</div>
+            <div class="total">{{nodeMessage.totalAmount/1000}}</div>
             <div class="present">{{(nodeMessage.returnrate*100).toFixed(2)}}%</div>
           </div>
         </div>
@@ -34,12 +34,12 @@
           disabled
           color="rgba(240,113,64,1)"
           v-model="totalmoney"
-          :placeholder="nodeMessage.totalAmount/1000"
+          :placeholder="nodeMessage.pledgeAmount/1000"
         ></mu-text-field>
         <br />
       </div>
       <div class="btn-list">
-        <mu-button
+        <mu-button v-if='nodeMessage.totalAmount/1000>0'
           class="shuihui-btn"
           @click="shuihui(nodeMessage.address,nodeMessage.pledgeAmount,nodeMessage.nodeName)"
         >{{$t('mynodedetail.shuhui')}}</mu-button>
@@ -47,9 +47,9 @@
           class="zhiya-btn"
           @click="zhiya(nodeMessage.address,nodeMessage.pledgeAmount,nodeMessage.nodeName)"
         >{{$t('mynodedetail.zhiya')}}</mu-button>
-        <mu-button
+        <mu-button v-if='nodeMessage.totalAmount/1000>0'
           class="change-btn"
-          @click="changenode(nodeMessage.address)"
+          @click="changenode(nodeMessage.address,nodeMessage.pledgeAmount)"
         >{{$t('mynodedetail.changenodezy')}}</mu-button>
       </div>
     </div>
@@ -59,7 +59,9 @@
         <li v-for="(item,index) in recentTransactionsList" :key="index">
           <template v-if="item.status==0">
             <div class="title">
-              <div class="tit-left blodtxt">{{item.type==1?'赎回中':'质押中'}}</div>
+              <div class="tit-left blodtxt" v-if='item.type==0'>{{$t('mynodedetail.zhiyaing')}}</div>
+               <div class="tit-left blodtxt" v-else-if='item.type==1'>{{$t('mynodedetail.shuhuiing')}}</div>
+                <div class="tit-left blodtxt" v-else-if='item.type==3'>{{$t('mynodedetail.changeing')}}</div>
               <div class="tit-right">{{$t('mynodedetail.packageing')}}</div>
             </div>
             <div class="title">
@@ -68,8 +70,8 @@
               <div class="tit-right">{{item.amount/1000}} NOVA</div>
             </div>
             <div class="cancel-btn-wrap">
-              <mu-button class="cancel-btn" v-if='item.status==3'>取消更换</mu-button>
-              <mu-button class="cancel-btn">取消赎回</mu-button>
+              <mu-button class="cancel-btn" v-if='item.type==1' @click="cancelNode(item)">{{$t('mynodedetail.cancelshuhui')}}</mu-button>
+              <mu-button class="cancel-btn" v-else-if='item.type=3' @click="cancelNode(item)">{{$t('mynodedetail.cancelchange')}}</mu-button>
             </div>
           </template>
         </li>
@@ -86,11 +88,11 @@
             <div class="title">
               <div class="tit-left">{{$t('mynodedetail.zhiya')}}</div>
 
-              <div class="tit-right" v-if="item.status==0">质押中</div>
-              <div class="tit-right" v-else-if="item.status==1">{{$t('mynodedetail.zhiyasuccess')}}</div>
-              <div class="tit-right" v-else-if="item.status==2">质押失败</div>
-              <div class="tit-right" v-else-if="item.status==3">质押撤销</div>
-              <div class="tit-right" v-else>转账等待</div>
+              <!-- <div class="tit-right" v-if="item.status==0">{{$t('mynodedetail.zhiyaing')}}</div> -->
+              <div class="tit-right" v-if="item.status==1">{{$t('mynodedetail.zhiyasuccess')}}</div>
+              <div class="tit-right" v-else-if="item.status==2">{{$t('mynodedetail.zhiyafailed')}}</div>
+              <!-- <div class="tit-right" v-else-if="item.status==3">{{$t('mynodedetail.zhiyacancel')}}</div>
+              <div class="tit-right" v-else>{{$t('mynodedetail.waiting')}}</div> -->
             </div>
             <div class="content">
               <div class="tit-left">{{formatDateToYear(item.date)}}</div>
@@ -102,11 +104,11 @@
             <div class="title">
              <div class="tit-left">{{$t('mynodedetail.shuhui')}}</div>
 
-              <div class="tit-right" v-if="item.status==0">赎回中</div>
-              <div class="tit-right" v-else-if="item.status==1">赎回成功</div>
-              <div class="tit-right" v-else-if="item.status==2">赎回失败</div>
-              <div class="tit-right" v-else-if="item.status==3">赎回撤销</div>
-              <div class="tit-right" v-else>转账等待</div>
+              <!-- <div class="tit-right" v-if="item.status==0">{{$t('mynodedetail.shuhuiing')}}</div> -->
+              <div class="tit-right" v-if="item.status==1">{{$t('mynodedetail.shuihuisuccess')}}</div>
+              <div class="tit-right" v-else-if="item.status==2">{{$t('mynodedetail.shuihuifailed')}}</div>
+              <!-- <div class="tit-right" v-else-if="item.status==3">{{$t('mynodedetail.shuhuicancel')}}</div> -->
+              <!-- <div class="tit-right" v-else>{{$t('mynodedetail.waiting')}}</div> -->
             </div>
             <div class="content">
               <div class="tit-left">{{formatDateToYear(item.date)}}</div>
@@ -116,13 +118,13 @@
           </template>
           <template v-else-if="item.type==3">
             <div class="title">
-              <div class="tit-left">转出</div>
+              <div class="tit-left">{{$t('mynodedetail.zhuanchu')}}</div>
 
-              <div class="tit-right" v-if="item.status==0">转出中</div>
-              <div class="tit-right" v-else-if="item.status==1">转出成功</div>
-              <div class="tit-right" v-else-if="item.status==2">转出失败</div>
-              <div class="tit-right" v-else-if="item.status==3">转出撤销</div>
-              <div class="tit-right" v-else>转账等待</div>
+              <!-- <div class="tit-right" v-if="item.status==0">{{$t('mynodedetail.zhuanchuing')}}</div> -->
+              <div class="tit-right" v-if="item.status==1">{{$t('mynodedetail.zhuanchusuccess')}}</div>
+              <div class="tit-right" v-else-if="item.status==2">{{$t('mynodedetail.zhuanchufailed')}}</div>
+              <!-- <div class="tit-right" v-else-if="item.status==3">{{$t('mynodedetail.zhuanchucancel')}}</div> -->
+              <!-- <div class="tit-right" v-else>{{$t('mynodedetail.waiting')}}</div> -->
             </div>
             <div class="content">
               <div class="tit-left">{{formatDateToYear(item.date)}}</div>
@@ -144,7 +146,7 @@
 </template>
 
 <script>
-import { recentTransactions, myNodeDetail } from "@/config";
+import { recentTransactions, myNodeDetail,cancelNodeRedeem } from "@/config";
 export default {
   data() {
     return {
@@ -156,6 +158,7 @@ export default {
   },
   computed: {},
   methods: {
+
     formatDateToYear(date) {
       /* 格式化时间根据空格左边为年月日，右边为时分秒 */
 
@@ -208,7 +211,7 @@ export default {
         alert("未取到服务器节点");
       }
     },
-    changenode(address) {
+    changenode(address,pledgeAmount) {
       /* 更换节点质押 */
 
       if (!this.isLoad) return alert("数据加载中");
@@ -217,12 +220,20 @@ export default {
           path: "/nodeswiper",
           query: {
             address: address,
+            pledgeAmount:pledgeAmount,
             from: "changenode",
           }
         });
       } else {
         alert("未取到服务器节点");
       }
+    },
+    cancelNode(item){
+      cancelNodeRedeem().then(res=>{
+
+      }).catch(err=>{
+
+      })
     }
   },
   mounted() {
@@ -382,7 +393,7 @@ export default {
   }
   .btn-list {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     margin-top: 15px;
     .shuihui-btn {
       border: 1px solid rgba(240, 113, 64, 1);

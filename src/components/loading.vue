@@ -17,9 +17,9 @@ export default {
         },
         text:{
             type:String,
-            default:'加载中...'
+            default:'loading...'
         }
-    }
+    },
 }
 </script>
 <style lang='scss'>

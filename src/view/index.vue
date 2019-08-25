@@ -149,7 +149,7 @@ export default {
       imToken.callAPI("native.showLoading", "loading...");
     }
     if (!this.imtokenAddress) {
-      alert("未授权成功,请退出重新授权");
+      alert(this.$t('index.alertauth'));
     }
     personalAssest(this.imtokenAddress)
       .then(res => {

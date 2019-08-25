@@ -38,7 +38,7 @@ export default {
       initDataObj: {},
       amount: '' /* 用户输入的Nova数量，提交需要*1000 */,
       show: false,
-      gasPrice: ""
+      gasPrice: 0
     };
   },
   methods: {
@@ -48,13 +48,13 @@ export default {
       this.amount=Number(this.amount);
       console.log(this.amount);
       
-      if (this.amount == 0) return alert("输入数量不能为0");
+      if (this.amount == 0) return  alert(this.$t('zhiya.numbernotzero'));
           if(!this.$route.query.address){
-             alert("未取到服务器节点地址");
+            alert(this.$t('zhiya.nogetaddress'));
              return this.$router.back(-1);
       } 
       if(!this.imtokenAddress){
-             alert("未授权成功");
+              alert(this.$t('zhiya.noauthtoken'));
              return this.$router.back(-1);
       } 
       // this.bus.$emit('loading',true)
@@ -384,7 +384,7 @@ export default {
           // alert(JSON.stringify(res));
           if (res.data.success) {
            
-            alert("质押成功");
+            alert(this.$t('zhiya.zhiyanodealert'));
             this.show = false;
             this.$router.back(-1);
           }
@@ -429,7 +429,7 @@ export default {
   mounted() {
     this.initData(); /* 数据初始化 */
     getGas().then(res=>{
-      this.gasPrice=res.data.data.gas;
+      this.gasPrice=res.data.data.gas/1000000000000000000;
     })
   }
 };

@@ -18,7 +18,7 @@
         </div>
         <div class="bottom">
           <div class="time">{{item.createDate}}</div>
-          <div class="amount">{{item.pledgeAmount}}Nova</div>
+          <div class="amount">{{item.pledgeAmount/1000}}Nova</div>
         </div>
       </li>
       <!-- <li>
