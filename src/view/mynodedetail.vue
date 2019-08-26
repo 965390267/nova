@@ -87,15 +87,10 @@
             *@type   0(质押)  1(赎回)   2(手续费) 3(质押转换)
             @note 每一个type对应着所有的status，比如，质押有，转账中，转账完成，转账失败，转账撤销以及转账等待
           */-->
-          <template v-if="item.status==1"><!-- 成功的交易 -->
+          <template v-if="item.status==1&&item.type==0"><!-- 质押成功的交易 -->
             <div class="title">
-              <div class="tit-left" v-if="item.type==0">{{$t('mynodedetail.zhiya')}}</div>
-              <div class="tit-left" v-else-if="item.type==1">{{$t('mynodedetail.shuhui')}}</div>
-              <!-- <div class="tit-right" v-if="item.status==0">{{$t('mynodedetail.zhiyaing')}}</div> -->
-              <div class="tit-right" v-if="item.type==0">{{$t('mynodedetail.zhiyasuccess')}}</div>
-              <div class="tit-right" v-else-if="item.type==1">{{$t('mynodedetail.shuihuisuccess')}}</div>
-              <!-- <div class="tit-right" v-else-if="item.status==3">{{$t('mynodedetail.zhiyacancel')}}</div>
-              <div class="tit-right" v-else>{{$t('mynodedetail.waiting')}}</div> -->
+              <div class="tit-left" >{{$t('mynodedetail.zhiya')}}</div>     
+              <div class="tit-right">{{$t('mynodedetail.zhiyasuccess')}}</div>
             </div>
             <div class="content">
               <div class="tit-left">{{formatDateToYear(item.date)}}</div>
@@ -103,16 +98,10 @@
               <div class="tit-right">{{item.amount/1000}} NOVA</div>
             </div>
           </template>
-          <template v-else-if="item.status==2"><!-- 失败的交易 -->
+          <template v-else-if="item.status==2&&item.type==0"><!-- 质押失败的交易 -->
             <div class="title">
-            <div class="tit-left" v-if="item.type==0">{{$t('mynodedetail.zhiya')}}</div>
-              <div class="tit-left" v-else-if="item.type==1">{{$t('mynodedetail.shuhui')}}</div>
-
-              <!-- <div class="tit-right" v-if="item.status==0">{{$t('mynodedetail.shuhuiing')}}</div> -->
-              <div class="tit-right" v-if="item.type==0">{{$t('mynodedetail.zhiyafailed')}}</div>
-              <div class="tit-right" v-else-if="item.type==1">{{$t('mynodedetail.shuihuifailed')}}</div>
-              <!-- <div class="tit-right" v-else-if="item.status==3">{{$t('mynodedetail.shuhuicancel')}}</div> -->
-              <!-- <div class="tit-right" v-else>{{$t('mynodedetail.waiting')}}</div> -->
+            <div class="tit-left" >{{$t('mynodedetail.zhiya')}}</div>
+              <div class="tit-right" >{{$t('mynodedetail.zhiyafailed')}}</div>
             </div>
             <div class="content">
               <div class="tit-left">{{formatDateToYear(item.date)}}</div>
@@ -120,21 +109,28 @@
               <div class="tit-right">{{item.amount/1000}} NOVA</div>
             </div>
           </template>
-          <!-- <template v-else-if="item.type==3">
+           <template v-else-if="item.status==2&&item.type==1"><!-- 赎回失败的交易 -->
             <div class="title">
-              <div class="tit-left">{{$t('mynodedetail.zhuanchu')}}</div>
-
-         
-              <div class="tit-right" v-if="item.status==1">{{$t('mynodedetail.zhuanchusuccess')}}</div>
-              <div class="tit-right" v-else-if="item.status==2">{{$t('mynodedetail.zhuanchufailed')}}</div>
- 
+            <div class="tit-left" >{{$t('mynodedetail.shuhui')}}</div>
+              <div class="tit-right" >{{$t('mynodedetail.shuihuifailed')}}</div>
             </div>
             <div class="content">
               <div class="tit-left">{{formatDateToYear(item.date)}}</div>
               <div class="tit-time">{{formatDateToHour(item.date)}}</div>
               <div class="tit-right">{{item.amount/1000}} NOVA</div>
             </div>
-          </template> -->
+          </template>
+            <template v-else-if="item.status==1&&item.type==1"><!-- 赎回成功的交易 -->
+            <div class="title">
+            <div class="tit-left" >{{$t('mynodedetail.shuhui')}}</div>
+              <div class="tit-right" >{{$t('mynodedetail.shuihuisuccess')}}</div>
+            </div>
+            <div class="content">
+              <div class="tit-left">{{formatDateToYear(item.date)}}</div>
+              <div class="tit-time">{{formatDateToHour(item.date)}}</div>
+              <div class="tit-right">{{item.amount/1000}} NOVA</div>
+            </div>
+          </template>
         </li>
       </ul>
     </div>
