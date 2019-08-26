@@ -36,6 +36,7 @@ module.exports={
         shuhui: 'Redeem',
         zhiya: 'pledge',
         nearamount:'Recent transactions',
+        acounting:'Ongoing transactions',
         changenodezy: 'Replace node',
         shuhuiing: 'redemptioning',
         changeing: 'Replacementing',

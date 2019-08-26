@@ -7,14 +7,14 @@
       </div>
       <div class="bottom">
         <div class="time">{{date}}</div>
-        <div class="amount">{{totalAmount}}Nova</div>
+        <div class="amount">{{totalAmount/1000}}Nova</div>
       </div>
     </div>
     <ul class="recordlist">
       <li v-for="(item,index) in recordList" :key="index">
         <div class="top">
           <div class="shoyyi">{{$t('moneyrecord.shoyyi')}}</div>
-          <div class="jine">+{{item.incomeAmount}}</div>
+          <div class="jine">+{{item.incomeAmount/1000}}</div>
         </div>
         <div class="bottom">
           <div class="time">{{item.createDate}}</div>

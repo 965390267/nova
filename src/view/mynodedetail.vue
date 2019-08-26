@@ -38,6 +38,7 @@
         ></mu-text-field>
         <br />
       </div>
+      <!-- 赎回和质押更换节点按钮 -->
       <div class="btn-list">
         <mu-button v-if='nodeMessage.totalAmount/1000>0'
           class="shuihui-btn"
@@ -54,6 +55,7 @@
       </div>
     </div>
     <!-- 节点详情下的列表 -->
+     <h2 class="big-title" v-if='recentTransactionsListLength>0'>{{$t('mynodedetail.acounting')}}</h2>
     <div class="nodedetail_list">
       <ul class="shuhui">
         <li v-for="(item,index) in recentTransactionsList" :key="index">
@@ -65,12 +67,12 @@
               <div class="tit-right">{{$t('mynodedetail.packageing')}}</div>
             </div>
             <div class="title">
-              <div class="tit-left">{{item.date}}</div>
-              <div class="tit-mid">{{item.date}}</div>
+              <div class="tit-left">{{formatDateToYear(item.date)}}</div>
+              <div class="tit-mid">{{formatDateToHour(item.date)}}</div>
               <div class="tit-right">{{item.amount/1000}} NOVA</div>
             </div>
             <div class="cancel-btn-wrap">
-              <mu-button class="cancel-btn" v-if='item.type==1' @click="cancelNode(nodeMessage.address,item.transactionId)">{{$t('mynodedetail.cancelshuhui')}}</mu-button>
+              <mu-button class="cancel-btn" v-if='item.type==1&&item.status==4' @click="cancelNode(nodeMessage.address,item.transactionId)">{{$t('mynodedetail.cancelshuhui')}}</mu-button>
               <mu-button class="cancel-btn" v-else-if='item.type=3' @click="cancelNode(nodeMessage.address,item.transactionId)">{{$t('mynodedetail.cancelchange')}}</mu-button>
             </div>
           </template>
@@ -85,13 +87,13 @@
             *@type   0(质押)  1(赎回)   2(手续费) 3(质押转换)
             @note 每一个type对应着所有的status，比如，质押有，转账中，转账完成，转账失败，转账撤销以及转账等待
           */-->
-          <template v-if="item.type==0">
+          <template v-if="item.status==1"><!-- 成功的交易 -->
             <div class="title">
-              <div class="tit-left">{{$t('mynodedetail.zhiya')}}</div>
-
+              <div class="tit-left" v-if="item.type==0">{{$t('mynodedetail.zhiya')}}</div>
+              <div class="tit-left" v-else-if="item.type==1">{{$t('mynodedetail.shuhui')}}</div>
               <!-- <div class="tit-right" v-if="item.status==0">{{$t('mynodedetail.zhiyaing')}}</div> -->
-              <div class="tit-right" v-if="item.status==1">{{$t('mynodedetail.zhiyasuccess')}}</div>
-              <div class="tit-right" v-else-if="item.status==2">{{$t('mynodedetail.zhiyafailed')}}</div>
+              <div class="tit-right" v-if="item.type==0">{{$t('mynodedetail.zhiyasuccess')}}</div>
+              <div class="tit-right" v-else-if="item.type==1">{{$t('mynodedetail.shuihuisuccess')}}</div>
               <!-- <div class="tit-right" v-else-if="item.status==3">{{$t('mynodedetail.zhiyacancel')}}</div>
               <div class="tit-right" v-else>{{$t('mynodedetail.waiting')}}</div> -->
             </div>
@@ -101,13 +103,14 @@
               <div class="tit-right">{{item.amount/1000}} NOVA</div>
             </div>
           </template>
-          <template v-else-if="item.type==1">
+          <template v-else-if="item.status==2"><!-- 失败的交易 -->
             <div class="title">
-             <div class="tit-left">{{$t('mynodedetail.shuhui')}}</div>
+            <div class="tit-left" v-if="item.type==0">{{$t('mynodedetail.zhiya')}}</div>
+              <div class="tit-left" v-else-if="item.type==1">{{$t('mynodedetail.shuhui')}}</div>
 
               <!-- <div class="tit-right" v-if="item.status==0">{{$t('mynodedetail.shuhuiing')}}</div> -->
-              <div class="tit-right" v-if="item.status==1">{{$t('mynodedetail.shuihuisuccess')}}</div>
-              <div class="tit-right" v-else-if="item.status==2">{{$t('mynodedetail.shuihuifailed')}}</div>
+              <div class="tit-right" v-if="item.type==0">{{$t('mynodedetail.zhiyafailed')}}</div>
+              <div class="tit-right" v-else-if="item.type==1">{{$t('mynodedetail.shuihuifailed')}}</div>
               <!-- <div class="tit-right" v-else-if="item.status==3">{{$t('mynodedetail.shuhuicancel')}}</div> -->
               <!-- <div class="tit-right" v-else>{{$t('mynodedetail.waiting')}}</div> -->
             </div>
@@ -117,32 +120,25 @@
               <div class="tit-right">{{item.amount/1000}} NOVA</div>
             </div>
           </template>
-          <template v-else-if="item.type==3">
+          <!-- <template v-else-if="item.type==3">
             <div class="title">
               <div class="tit-left">{{$t('mynodedetail.zhuanchu')}}</div>
 
-              <!-- <div class="tit-right" v-if="item.status==0">{{$t('mynodedetail.zhuanchuing')}}</div> -->
+         
               <div class="tit-right" v-if="item.status==1">{{$t('mynodedetail.zhuanchusuccess')}}</div>
               <div class="tit-right" v-else-if="item.status==2">{{$t('mynodedetail.zhuanchufailed')}}</div>
-              <!-- <div class="tit-right" v-else-if="item.status==3">{{$t('mynodedetail.zhuanchucancel')}}</div> -->
-              <!-- <div class="tit-right" v-else>{{$t('mynodedetail.waiting')}}</div> -->
+ 
             </div>
             <div class="content">
               <div class="tit-left">{{formatDateToYear(item.date)}}</div>
               <div class="tit-time">{{formatDateToHour(item.date)}}</div>
               <div class="tit-right">{{item.amount/1000}} NOVA</div>
             </div>
-          </template>
+          </template> -->
         </li>
       </ul>
     </div>
-
-    <!-- 赎回和质押按钮 -->
-    <!-- <div class="btn-wrap">
-         <mu-button class="left-btn" @click="shuihui(nodeMessage.address,nodeMessage.pledgeAmount)">赎回</mu-button>
-
-        <mu-button class="right-btn" @click="zhiya(nodeMessage.address,nodeMessage.pledgeAmount)">质押</mu-button>
-    </div>-->
+    
   </div>
 </template>
 
@@ -157,7 +153,14 @@ export default {
       totalmoney: ""
     };
   },
-  computed: {},
+  computed: {
+    recentTransactionsListLength(){
+      let newArr=  this.recentTransactionsList.filter(item=>{
+         return item.status==4
+      })
+      return newArr.length;
+    }
+  },
   methods: {
 
     formatDateToYear(date) {
@@ -233,8 +236,13 @@ export default {
 
       let toAddress=this.imtokenAddress;
       cancelNodeRedeem({fromAddress,transactionId,toAddress}).then(res=>{
+        if(res.data.success){
          alert(this.$t('mynodedetail.canceled'));
          this.initData()
+        }else{
+          Promise.reject(res)
+        }
+
       }).catch(err=>{
         alert(this.$t('mynodedetail.canceled'));
       })
@@ -421,13 +429,14 @@ export default {
   }
 }
 .nodedetail_list {
-  margin-top: 35px;
+  margin-top: 10px;
 }
 //节点详情下的列表
 .shuhui {
+
   li {
     width: 90%;
-    margin: 20px auto;
+    margin: 0px auto 20px auto;
     background: rgba(199, 198, 197, 0.6);
     padding: 0 4px;
   }

@@ -36,6 +36,7 @@ module.exports = {
         shuhui: '赎回',
         zhiya: '质押',
         nearamount:'最近交易',
+        acounting:'进行中的交易',
         changenodezy: '更换节点质押',
         shuhuiing: '赎回中',
         changeing: '更换中',
