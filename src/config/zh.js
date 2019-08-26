@@ -57,6 +57,8 @@ module.exports = {
          zhuanchucancel:'转出撤销',
          dadaloading:'数据加载中',
          nogetservicenode: '未取到服务器节点',
+         canceled:'已取消',
+         cancelfailed:'未成功取消'
 
     },
     nodeswiper: {

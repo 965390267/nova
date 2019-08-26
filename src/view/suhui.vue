@@ -93,7 +93,7 @@ export default {
       };
       getNodeRedeem(obj)
         .then(res => {
-          imToken.callAPI("native.hideLoading");
+          // imToken.callAPI("native.hideLoading");
           if (res.data.success) {
             this.show = false;
             alert(this.$t("shuhui.changenodealert"));
@@ -104,7 +104,7 @@ export default {
           }
         })
         .catch(err => {
-          imToken.callAPI("native.hideLoading");
+          // imToken.callAPI("native.hideLoading");
           alert(err);
           this.show = false;
         });

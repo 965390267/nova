@@ -57,6 +57,8 @@ module.exports={
          zhuanchucancel:'Revocation',
          dadaloading:'Data loading',
          nogetservicenode: 'Not fetched to server node',
+         canceled:'canceled',
+         cancelfailed:'cancel failed'
     },
     nodeswiper: {
         effectnode: 'Effective Nodes',

@@ -57,7 +57,7 @@
     <div class="nodedetail_list">
       <ul class="shuhui">
         <li v-for="(item,index) in recentTransactionsList" :key="index">
-          <template v-if="item.status==0">
+          <template v-if="item.status==4">
             <div class="title">
               <div class="tit-left blodtxt" v-if='item.type==0'>{{$t('mynodedetail.zhiyaing')}}</div>
                <div class="tit-left blodtxt" v-else-if='item.type==1'>{{$t('mynodedetail.shuhuiing')}}</div>
@@ -70,10 +70,11 @@
               <div class="tit-right">{{item.amount/1000}} NOVA</div>
             </div>
             <div class="cancel-btn-wrap">
-              <mu-button class="cancel-btn" v-if='item.type==1' @click="cancelNode(item)">{{$t('mynodedetail.cancelshuhui')}}</mu-button>
-              <mu-button class="cancel-btn" v-else-if='item.type=3' @click="cancelNode(item)">{{$t('mynodedetail.cancelchange')}}</mu-button>
+              <mu-button class="cancel-btn" v-if='item.type==1' @click="cancelNode(nodeMessage.address,item.transactionId)">{{$t('mynodedetail.cancelshuhui')}}</mu-button>
+              <mu-button class="cancel-btn" v-else-if='item.type=3' @click="cancelNode(nodeMessage.address,item.transactionId)">{{$t('mynodedetail.cancelchange')}}</mu-button>
             </div>
           </template>
+
         </li>
       </ul>
       <h2 class="big-title">{{$t('mynodedetail.nearamount')}}</h2>
@@ -181,7 +182,7 @@ export default {
       /* 
 @{params} address节点地址
 */
-      if (!this.isLoad) return alert("数据加载中");
+      if (!this.isLoad) return  alert(this.$t('mynodedetail.dadaloading'));
       if (address) {
         this.$router.push({
           path: "/suhui",
@@ -192,12 +193,12 @@ export default {
           }
         });
       } else {
-        alert("未取到服务器节点");
+        alert(this.$t('mynodedetail.nogetservicenode'));
       }
     },
     zhiya(address, pledgeAmount, nodeName) {
       /* 节点质押 */
-      if (!this.isLoad) return alert("数据加载中");
+      if (!this.isLoad) return alert(this.$t('mynodedetail.dadaloading'));
       if (address) {
         this.$router.push({
           path: "/zhiya",
@@ -208,13 +209,13 @@ export default {
           }
         });
       } else {
-        alert("未取到服务器节点");
+        alert(this.$t('mynodedetail.nogetservicenode'));
       }
     },
     changenode(address,pledgeAmount) {
       /* 更换节点质押 */
 
-      if (!this.isLoad) return alert("数据加载中");
+      if (!this.isLoad) return alert(this.$t('mynodedetail.dadaloading'));
       if (address) {
         this.$router.push({
           path: "/nodeswiper",
@@ -225,18 +226,20 @@ export default {
           }
         });
       } else {
-        alert("未取到服务器节点");
+        alert(this.$t('mynodedetail.nogetservicenode'));
       }
     },
-    cancelNode(item){
-      cancelNodeRedeem().then(res=>{
+    cancelNode(fromAddress,transactionId){
 
+      let toAddress=this.imtokenAddress;
+      cancelNodeRedeem({fromAddress,transactionId,toAddress}).then(res=>{
+         alert(this.$t('mynodedetail.canceled'));
+         this.initData()
       }).catch(err=>{
-
+        alert(this.$t('mynodedetail.canceled'));
       })
-    }
-  },
-  mounted() {
+    },
+    initData(){
     if (window.ethereum) {
       imToken.callAPI("native.showLoading", "loading...");
     }
@@ -266,6 +269,10 @@ export default {
         }
       }
     );
+    }
+  },
+  mounted() {
+  this.initData()
   }
 };
 </script>
@@ -422,7 +429,9 @@ export default {
     width: 90%;
     margin: 20px auto;
     background: rgba(199, 198, 197, 0.6);
+    padding: 0 4px;
   }
+
   .title {
     display: flex;
     flex-direction: row;
@@ -435,6 +444,7 @@ export default {
   .cancel-btn-wrap {
     display: flex;
     justify-content: flex-end;
+    padding: 0 5px 6px 0;
     .cancel-btn {
       width: 95px;
       height: 22px;

@@ -44,7 +44,6 @@ export default {
   methods: {
     get() {
       this.show = true;
-    
       this.amount=Number(this.amount);
       console.log(this.amount);
       
