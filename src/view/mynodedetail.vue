@@ -58,12 +58,13 @@
      <h2 class="big-title" v-if='recentTransactionsListLength>0'>{{$t('mynodedetail.acounting')}}</h2>
     <div class="nodedetail_list">
       <ul class="shuhui">
-        <li v-for="(item,index) in recentTransactionsList" :key="index">
-          <template v-if="item.status==4">
+        <li v-for="(item,index) in recentTransactionsList" :key="index"  >
+          <template v-if="item.status==4||item.status==0">
             <div class="title">
               <div class="tit-left blodtxt" v-if='item.type==0'>{{$t('mynodedetail.zhiyaing')}}</div>
-               <div class="tit-left blodtxt" v-else-if='item.type==1'>{{$t('mynodedetail.shuhuiing')}}</div>
-                <div class="tit-left blodtxt" v-else-if='item.type==3'>{{$t('mynodedetail.changeing')}}</div>
+               <div class="tit-left blodtxt" v-if='item.type==1'>{{$t('mynodedetail.shuhuiing')}}</div>
+                <div class="tit-left blodtxt" v-if='item.type==3'>{{$t('mynodedetail.changeing')}}</div>
+                <div class="tit-left blodtxt" v-if='item.type==4'>{{$t('mynodedetail.onceshuhuiing')}}lll</div>
               <div class="tit-right">{{$t('mynodedetail.packageing')}}</div>
             </div>
             <div class="title">
@@ -73,10 +74,10 @@
             </div>
             <div class="cancel-btn-wrap">
               <mu-button class="cancel-btn" v-if='item.type==1&&item.status==4' @click="cancelNode(nodeMessage.address,item.transactionId)">{{$t('mynodedetail.cancelshuhui')}}</mu-button>
-              <mu-button class="cancel-btn" v-else-if='item.type=3' @click="cancelNode(nodeMessage.address,item.transactionId)">{{$t('mynodedetail.cancelchange')}}</mu-button>
+              <mu-button class="cancel-btn" v-if='item.type==3' @click="cancelNode(nodeMessage.address,item.transactionId)">{{$t('mynodedetail.cancelchange')}}</mu-button>
             </div>
           </template>
-
+      
         </li>
       </ul>
       <h2 class="big-title">{{$t('mynodedetail.nearamount')}}</h2>
@@ -151,10 +152,7 @@ export default {
   },
   computed: {
     recentTransactionsListLength(){
-      let newArr=  this.recentTransactionsList.filter(item=>{
-         return item.status==4
-      })
-      return newArr.length;
+    return  this.recentTransactionsList.filter(item=>item.status==4||item.status==0).length;
     }
   },
   methods: {
@@ -277,6 +275,7 @@ export default {
   },
   mounted() {
   this.initData()
+   
   }
 };
 </script>

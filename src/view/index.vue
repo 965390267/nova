@@ -374,9 +374,9 @@ export default {
 .card-choose-btn {
   display: flex;
   justify-content: flex-end;
-  padding: 20px 0 10px 0;
+  padding-bottom: 10px;
   .card-choose-sub-btn {
-    width: 120px;
+    width: 135px;
     height: 34px;
     font-size: 11px;
     line-height: 34px;
@@ -395,8 +395,8 @@ export default {
   flex-direction: row;
   .btn {
     position: relative;
-    width: 130px;
-    height: 55px;
+    width: 125px;
+    height: 50px;
     margin-top: 14px;
     background: #f08740;
 
