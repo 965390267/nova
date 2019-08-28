@@ -38,8 +38,12 @@ module.exports = {
         nearamount:'最近交易',
         acounting:'进行中的交易',
         changenodezy: '更换节点质押',
+        changenodezyfailed:'更换失败',
+        changenodezysuccess:'更换成功',
         shuhuiing: '普通赎回中',
-        onceshuhuiing:'立即赎回',
+        onceshuhuiing:'立即赎回中',
+        ordinaryshuhui: '普通赎回',
+        onceshuhui:'立即赎回',
         changeing: '更换中',
         packageing: '交易正在打包',
         cancelshuhui: '取消赎回',
@@ -60,7 +64,7 @@ module.exports = {
          dadaloading:'数据加载中',
          nogetservicenode: '未取到服务器节点',
          canceled:'已取消',
-         cancelfailed:'未成功取消'
+         cancelfailed:'取消失败'
 
     },
     nodeswiper: {

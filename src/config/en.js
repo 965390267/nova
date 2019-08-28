@@ -38,8 +38,12 @@ module.exports={
         nearamount:'Recent transactions',
         acounting:'Ongoing transactions',
         changenodezy: 'Replace node',
-        shuhuiing: 'ordinary redemptioning',
-        onceshuhuiing:'once  Redeem',
+        changenodezyfailed:'Replace failed',
+        changenodezysuccess:'Replace success',
+        shuhuiing: 'ordinary redemptioning',//'普通赎回中'
+        onceshuhuiing:'once  Redeeming',//立即赎回中
+        ordinaryshuhui: 'ordinary Redeem',
+        onceshuhui:'once  Redeem',
         changeing: 'Replacementing',
         packageing: 'Transactions are being packaged',
         cancelshuhui: 'Redemption',

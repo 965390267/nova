@@ -110,9 +110,9 @@
               <div class="tit-right">{{item.amount/1000}} NOVA</div>
             </div>
           </template>
-           <template v-else-if="item.status==2&&item.type==1"><!-- 赎回失败的交易 -->
+           <template v-else-if="item.status==2&&item.type==1"><!--普通 赎回失败的交易 -->
             <div class="title">
-            <div class="tit-left" >{{$t('mynodedetail.shuhui')}}</div>
+            <div class="tit-left" >{{$t('mynodedetail.ordinaryshuhui')}}</div>
               <div class="tit-right" >{{$t('mynodedetail.shuihuifailed')}}</div>
             </div>
             <div class="content">
@@ -121,10 +121,54 @@
               <div class="tit-right">{{item.amount/1000}} NOVA</div>
             </div>
           </template>
-            <template v-else-if="item.status==1&&item.type==1"><!-- 赎回成功的交易 -->
+            <template v-else-if="item.status==1&&item.type==1"><!--普通 赎回成功的交易 -->
             <div class="title">
-            <div class="tit-left" >{{$t('mynodedetail.shuhui')}}</div>
+            <div class="tit-left" >{{$t('mynodedetail.ordinaryshuhui')}}</div>
               <div class="tit-right" >{{$t('mynodedetail.shuihuisuccess')}}</div>
+            </div>
+            <div class="content">
+              <div class="tit-left">{{formatDateToYear(item.date)}}</div>
+              <div class="tit-time">{{formatDateToHour(item.date)}}</div>
+              <div class="tit-right">{{item.amount/1000}} NOVA</div>
+            </div>
+          </template>
+             <template v-else-if="item.status==2&&item.type==4"><!--立即 赎回失败的交易 -->
+            <div class="title">
+            <div class="tit-left" >{{$t('mynodedetail.onceshuhui')}}</div>
+              <div class="tit-right" >{{$t('mynodedetail.shuihuifailed')}}</div>
+            </div>
+            <div class="content">
+              <div class="tit-left">{{formatDateToYear(item.date)}}</div>
+              <div class="tit-time">{{formatDateToHour(item.date)}}</div>
+              <div class="tit-right">{{item.amount/1000}} NOVA</div>
+            </div>
+          </template>
+            <template v-else-if="item.status==1&&item.type==4"><!--立即 赎回成功的交易 -->
+            <div class="title">
+            <div class="tit-left" >{{$t('mynodedetail.onceshuhui')}}</div>
+              <div class="tit-right" >{{$t('mynodedetail.shuihuisuccess')}}</div>
+            </div>
+            <div class="content">
+              <div class="tit-left">{{formatDateToYear(item.date)}}</div>
+              <div class="tit-time">{{formatDateToHour(item.date)}}</div>
+              <div class="tit-right">{{item.amount/1000}} NOVA</div>
+            </div>
+          </template>
+           <template v-else-if="item.status==2&&item.type==3"><!-- 更换节点失败的交易 -->
+            <div class="title">
+            <div class="tit-left" >{{$t('mynodedetail.changenodezy')}}</div>
+              <div class="tit-right" >{{$t('mynodedetail.changenodezyfailed')}}</div>
+            </div>
+            <div class="content">
+              <div class="tit-left">{{formatDateToYear(item.date)}}</div>
+              <div class="tit-time">{{formatDateToHour(item.date)}}</div>
+              <div class="tit-right">{{item.amount/1000}} NOVA</div>
+            </div>
+          </template>
+            <template v-else-if="item.status==1&&item.type==3"><!--更换节点成功的交易 -->
+            <div class="title">
+            <div class="tit-left" >{{$t('mynodedetail.changenodezy')}}</div>
+              <div class="tit-right" >{{$t('mynodedetail.changenodezysuccess')}}</div>
             </div>
             <div class="content">
               <div class="tit-left">{{formatDateToYear(item.date)}}</div>
@@ -234,12 +278,13 @@ export default {
          alert(this.$t('mynodedetail.canceled'));
          this.initData()
         }else{
-          Promise.reject(res)
+        return  Promise.reject(res)
         }
 
-      }).catch(err=>{
-        alert(this.$t('mynodedetail.canceled'));
       })
+      // .catch(err=>{
+      //   alert(this.$t('mynodedetail.cancelfailed'));
+      // })
     },
     initData(){
     if (window.ethereum) {
@@ -253,7 +298,7 @@ export default {
         if (res.data.success) {
           this.isLoad = true;
           this.nodeMessage = res.data.data;
-          console.log(this.nodeMessage);
+      
         }
       })
       .catch(err => {
