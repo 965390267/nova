@@ -106,6 +106,7 @@ module.exports = {
     },
     shuhui: {
         zhiyaed: '已质押',
+        amountLimit:'输入不能大于您当前的Nova',
         total: '全部',
         placeholder: '输入数量',
         atonceshuhui: '立即赎回',
@@ -120,6 +121,7 @@ module.exports = {
     },
     zhiya: {
         canusemoney: '可用余额',
+        amountLimit:'输入不能大于您当前的Nova',
         total: '全部',
         placeholder: '输入数量',
         gasprice:'预计交易费：',

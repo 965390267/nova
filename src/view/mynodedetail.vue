@@ -40,7 +40,7 @@
       </div>
       <!-- 赎回和质押更换节点按钮 -->
       <div class="btn-list">
-        <mu-button v-if='nodeMessage.totalAmount/1000>0'
+        <mu-button v-if='nodeMessage.pledgeAmount/1000>0'
           class="shuihui-btn"
           @click="shuihui(nodeMessage.address,nodeMessage.pledgeAmount,nodeMessage.nodeName)"
         >{{$t('mynodedetail.shuhui')}}</mu-button>
@@ -48,7 +48,7 @@
           class="zhiya-btn"
           @click="zhiya(nodeMessage.address,nodeMessage.pledgeAmount,nodeMessage.nodeName)"
         >{{$t('mynodedetail.zhiya')}}</mu-button>
-        <mu-button v-if='nodeMessage.totalAmount/1000>0'
+        <mu-button v-if='nodeMessage.pledgeAmount/1000>0'
           class="change-btn"
           @click="changenode(nodeMessage.address,nodeMessage.pledgeAmount)"
         >{{$t('mynodedetail.changenodezy')}}</mu-button>
@@ -64,7 +64,7 @@
               <div class="tit-left blodtxt" v-if='item.type==0'>{{$t('mynodedetail.zhiyaing')}}</div>
                <div class="tit-left blodtxt" v-if='item.type==1'>{{$t('mynodedetail.shuhuiing')}}</div>
                 <div class="tit-left blodtxt" v-if='item.type==3'>{{$t('mynodedetail.changeing')}}</div>
-                <div class="tit-left blodtxt" v-if='item.type==4'>{{$t('mynodedetail.onceshuhuiing')}}lll</div>
+                <div class="tit-left blodtxt" v-if='item.type==4'>{{$t('mynodedetail.onceshuhuiing')}}</div>
               <div class="tit-right">{{$t('mynodedetail.packageing')}}</div>
             </div>
             <div class="title">
@@ -440,6 +440,7 @@ export default {
     .left-btn {
       width: 100px;
       height: 24px;
+      font-size: 12px;
       border: 1px solid rgba(112, 112, 112, 1);
       border-radius: 30px;
       color: #112e4b;

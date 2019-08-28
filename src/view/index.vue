@@ -1,12 +1,12 @@
 <template>
-  <div class="home">
+  <div class="home" @click="openSwitchLanguage($event)">
     <div class="top-card-wrap">
       <div class="top-card-bg">
-        <div class="switch-cn-en" @click="openLang($event)">
+        <div class="switch-cn-en" @click.stop="openLang($event)">
           {{zh}}
           <em class="arrow" :style="{ transform:'rotateZ('+deg+'deg)' }"></em>
         </div>
-        <div class="switch-wrap" @click="changeLang()" v-if="switchstate">
+        <div class="switch-wrap" @click.stop="changeLang()" v-if="switchstate">
           <div class="switch-wrap-blur1"></div>
           <div class="switch-wrap-blur2">{{en}}</div>
         </div>
@@ -67,7 +67,7 @@
       </mu-button>
     </div>
 
-    <h2 class="mynode">{{$t('index.mynode')}}</h2>
+    <h2 class="mynode" v-if='nodelistdata.length>0'>{{$t('index.mynode')}}</h2>
     <node-list :nodelistdata="nodelistdata"></node-list>
   </div>
 </template>
@@ -93,7 +93,7 @@ export default {
       totalAssets: "",
       totalIncome: "",
       yesterdayIncome: "",
-      nodelistdata: null,
+      nodelistdata: [],
       CNY: 0
     };
   },
@@ -104,6 +104,9 @@ export default {
   },
   beforeCreate() {},
   methods: {
+    openSwitchLanguage(e){
+      this.switchstate=false;
+    },
     openLang(e) {
       if (!this.switchstate) {
         this.deg = 180;

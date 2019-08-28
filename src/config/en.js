@@ -109,6 +109,7 @@ module.exports={
     },
     shuhui: {
         zhiyaed: 'Pledged',
+        amountLimit:'Input Not More Than Your Nova',
         total: 'total',
         atonceshuhui: 'Immediate redemption',
         normalshuhui: 'Ordinary redemption',
@@ -123,6 +124,7 @@ module.exports={
     },
     zhiya: {
         canusemoney: 'Available balance',
+        amountLimit:'Input Not More Than Your Nova',
         total: 'whole',
         placeholder: 'Input Quantity',
         zhiya: 'pledge',

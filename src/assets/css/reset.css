@@ -24,6 +24,7 @@ time, mark, audio, video {
   font-weight: normal;
   vertical-align: baseline; 
   user-select: none;
+  text-transform: capitalize;
 }
 
 /* HTML5 display-role reset for older browsers */

@@ -52,6 +52,13 @@ export default {
       alertcontent:''
     };
   },
+  watch:{
+    amount(val){
+      if(val>this.$route.query.pledgeAmount/1000){
+        return alert(this.$t('shuhui.amountLimit'))
+      }
+    }
+  },
   methods: {
     choosetype(index) {
       this.index = index;

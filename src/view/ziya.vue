@@ -41,11 +41,17 @@ export default {
       gasPrice: 0
     };
   },
+  watch:{
+    amount(val){
+      if(val>this.initDataObj.balance/1000){
+        return alert(this.$t('zhiya.amountLimit'))
+      }
+    }
+  },
   methods: {
     get() {
       this.show = true;
       this.amount=Number(this.amount);
-      console.log(this.amount);
       
       if (this.amount == 0) return  alert(this.$t('zhiya.numbernotzero'));
           if(!this.$route.query.address){
