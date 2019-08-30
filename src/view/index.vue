@@ -87,12 +87,12 @@ export default {
       en: "English",
       switchstate: false,
       nodeaddress: this.imtokenAddress,
-      balance: "",
+      balance: 0,
       ETH: 0,
-      pendingAmount: "",
-      totalAssets: "",
-      totalIncome: "",
-      yesterdayIncome: "",
+      pendingAmount: 0,
+      totalAssets: 0,
+      totalIncome: 0,
+      yesterdayIncome: 0,
       nodelistdata: [],
       CNY: 0
     };

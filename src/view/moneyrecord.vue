@@ -7,7 +7,7 @@
       </div>
       <div class="bottom">
         <div class="time">{{date}}</div>
-        <div class="amount">{{totalAmount/1000}}NOVA</div>
+        <div class="amount">{{totalIncome/1000}}NOVA</div>
       </div>
     </div>
     <ul class="recordlist">
@@ -32,7 +32,7 @@ export default {
       recordList: [],
       time: "",
       totalAmount: 0,
-      totalIncome: "",
+      totalIncome: 0,
       date: ""
     };
   },

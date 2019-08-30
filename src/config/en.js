@@ -94,7 +94,7 @@ module.exports={
         q10note:'If you want to transfer from Node A to Node B for staking, it will take 21 days after you start the transfer, and you cannot stop during the process. In the 21 days, there will be no profit, and the profit will only be available after it is transferred to Node B. '
     },
     rule: {
-        txt1: 'Nova Foundation’s vision is to build the long-term and substantial ecosystem for decentralized finance. NOVA, token of the Nova Incentive Protocol, will play the key role in the ecosystem. Thus, Nova Foundation decides to launch the Nova Staking Economy. ',
+        txt1: 'Nova Foundation’s vision is to build the long-term and substantial ecosystem for decentralized finance. NOVA, token of the Nova Incentive Protocol, will play the key role in the ecosystem. Thus, Nova  Foundation decides to launch the Nova Staking Economy. ',
         txt2: 'The detailed rules are as following:',
         txt3: 'Restrictions on Participation: Those who hold NOVA can stake their token to arbitrary node, and become NOVA node participator. So far, there is no requirement for the staked amount. ',
         txt4: 'Staked amount limitation: no limitation. ',
