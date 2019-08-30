@@ -53,7 +53,7 @@ useParmsGetFrom:Object
 },
   data() {
     return {
-      listdata: []
+      listdata: [{}]
     };
   },
   watch: {
@@ -80,6 +80,10 @@ useParmsGetFrom:Object
       }
   
     }
+  },
+  mounted(){
+    console.log(this.listdata.length);
+    
   }
 };
 </script>

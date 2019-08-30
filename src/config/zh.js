@@ -28,10 +28,10 @@ module.exports = {
         jine: '累计收益'
     },
     mynodedetail: {
-        zyje: '节点质押金额',
+        zyje: '节点质押数量',
         yeargetmoney: '预计年化收益',
         nodespeak: '节点宣言',
-        myziyaje:'我的质押金额',
+        myziyaje:'我的质押数量',
         moneyrecord: '收益记录',
         shuhui: '赎回',
         zhiya: '质押',
@@ -113,7 +113,7 @@ module.exports = {
         normalshuhui: '普通赎回',
         shuhui: '赎&nbsp;&nbsp;&nbsp;&nbsp;回',
         note: '赎回说明：',
-        note1: '普通赎回：需要等待21天后，赎回将转入到您的钱包地址，同时赎回期间的质押不产生收益，并将扣除1%的手续费销毁。立即赎回：赎回质押可立即到达您的钱包地址，但同时扣除总额10%的手续费并永久销毁。',
+        note1: '普通赎回：赎回到账时间为T＋21天，赎回的NOVA将转入到您的钱包地址，同时赎回期间的质押不产生收益，并将扣除1%的手续费销毁。立即赎回：赎回质押可立即到达您的钱包地址，但同时扣除总额10%的手续费并永久销毁。',
         numbernotzero:'输入数量不能为0',
         nogetaddress:'未取到列表节点地址，请返回重试',
         noauthtoken:'未授权成功',
@@ -127,7 +127,7 @@ module.exports = {
         gasprice:'预计交易费：',
         zhiya: '质&nbsp;&nbsp;&nbsp;&nbsp;押',
         note1: '质押说明:',
-        note2: '将您的NOVA选择一个节点进行质押。在质押期间，可以享受质押带来的收益，也可以进行赎回，立即赎回需要扣取10%的手续费，普通赎回质押需要等待21天后转入钱包。',
+        note2: '将您的NOVA选择一个节点进行质押。在质押期间，可以享受质押带来的收益，也可以进行赎回，立即赎回需要扣取10%的手续费，普通赎回质押需要等待T+21天后转入钱包。',
         numbernotzero:'输入数量不能为0',
         nogetaddress:'未取到列表节点地址，请返回重试',
         noauthtoken:'未授权成功',
@@ -138,11 +138,11 @@ module.exports = {
             title: '请授权给nova使用钱包链接',
             cancel: '取消',
             certain: '确认',
-            slowtext:'您将要进行普通赎回，赎回的NOVA将在21天后转入您的钱包内，将扣除赎回总额的1%作为手续费进行销毁。',
+            slowtext:'您将要进行普通赎回，赎回的NOVA将在T+21天后转入您的钱包内，将扣除赎回总额的1%作为手续费进行销毁。',
             atoncetext:'您确定要立即赎回吗？立即赎回将扣除赎回总额的10%作为手续费，手续费将永久销毁。',
             changenodepledgetext1:'您确定将',
             changenodepledgetext2:'NOVA，转至',
-            changenodepledgetext3:'节点吗，更换节点需21天，无手续费'
+            changenodepledgetext3:'节点吗，更换节点需T+21天，无手续费'
         },
         effectnode: {
             nodata: '暂无数据~',

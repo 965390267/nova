@@ -8,7 +8,7 @@
             {{nodeMessage.nodeName}}
           </div>
           <div class="title">
-            <div class="total">{{$t('mynodedetail.zyje')}} (nova)</div>
+            <div class="total">{{$t('mynodedetail.zyje')}} (NOVA)</div>
             <div class="present">{{$t('mynodedetail.yeargetmoney')}}</div>
           </div>
           <div class="txt">
@@ -26,7 +26,7 @@
     <div class="nodedetail-mid">
       <div class="nodedetail-mid-note">
         <div class="leftnot"> {{$t('mynodedetail.myziyaje')}}(NOVA)</div>
-        <mu-button  class="left-btn" :to='{path:"/moneyrecord",query:{nodeId:$route.query.nodeId,nodeAddress:imtokenAddress}}'>{{$t('mynodedetail.moneyrecord')}}</mu-button>
+        <mu-button  v-if='nodeMessage.pledgeAmount/1000>0'  class="left-btn" :to='{path:"/moneyrecord",query:{nodeId:$route.query.nodeId,nodeAddress:imtokenAddress}}'>{{$t('mynodedetail.moneyrecord')}}</mu-button>
       </div>
       <div>
         <mu-text-field
@@ -44,7 +44,11 @@
           class="shuihui-btn"
           @click="shuihui(nodeMessage.address,nodeMessage.pledgeAmount,nodeMessage.nodeName)"
         >{{$t('mynodedetail.shuhui')}}</mu-button>
-        <mu-button
+        <mu-button  v-if='nodeMessage.pledgeAmount/1000<=0'
+          class="zhiya-btn fullwidth"
+          @click="zhiya(nodeMessage.address,nodeMessage.pledgeAmount,nodeMessage.nodeName)"
+        >{{$t('mynodedetail.zhiya')}}</mu-button>
+         <mu-button  v-else
           class="zhiya-btn"
           @click="zhiya(nodeMessage.address,nodeMessage.pledgeAmount,nodeMessage.nodeName)"
         >{{$t('mynodedetail.zhiya')}}</mu-button>
@@ -80,7 +84,7 @@
       
         </li>
       </ul>
-      <h2 class="big-title">{{$t('mynodedetail.nearamount')}}</h2>
+      <h2 class="big-title" v-if='recentTransactionsList.length>0'>{{$t('mynodedetail.nearamount')}}</h2>
       <ul class="latest">
         <li v-for="(item,index) in recentTransactionsList" :key="index">
           <!-- /* 
@@ -466,6 +470,10 @@ export default {
       );
       color: #fdf9f4;
       border-radius: 6px;
+    }
+    .fullwidth{
+      width: 85%;
+      letter-spacing: 10px;
     }
   }
 }

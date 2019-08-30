@@ -28,10 +28,10 @@ module.exports={
         jine: 'accumulatedIncome'
     },
     mynodedetail: {
-        zyje: 'The amount of my pledge',
+        zyje: 'Number of node pledge',
         yeargetmoney: 'Projected Annualized Income',
         nodespeak: 'Node Declaration',
-        myziyaje:'my node pledge',
+        myziyaje:'Number of my  pledge',
         moneyrecord: 'record',
         shuhui: 'Redeem',
         zhiya: 'pledge',
@@ -111,12 +111,12 @@ module.exports={
         zhiyaed: 'Pledged',
         amountLimit:'Input Not More Than Your Nova',
         total: 'total',
+        placeholder: 'Input Quantity',
         atonceshuhui: 'Immediate redemption',
         normalshuhui: 'Ordinary redemption',
         shuhui: 'Redeem',
         note: 'Explain',
-        note1: 'Ordinary redemption pledge needs to wait 7 days, and the pledge during redemption will not generate transactions.',
-        note2: 'Immediate redemption pledge is immediately available, with 10% of the total fee deducted and permanently destroyed.',
+        note1: "Ordinary redemption: The redemption time is T+21 days. The redeemed NOVA will be transferred to your wallet address. At the same time, the pledge during the redemption will not generate revenue, and the 1% deduction fee will be destroyed. Immediate Redemption: Redemption pledge can reach your wallet address immediately, but at the same time deduct 10% of the total fee and destroy it permanently.",
         numbernotzero:'amount noe empty',//输入数量不能为0
         nogetaddress:'not get node address,please to back and again',//未取到列表节点地址，请返回重试
         noauthtoken:'no success authorization ',//未授权成功
@@ -127,16 +127,12 @@ module.exports={
         amountLimit:'Input Not More Than Your Nova',
         total: 'whole',
         placeholder: 'Input Quantity',
+        gasprice:'Expected transaction costs:',
         zhiya: 'pledge',
         note1: 'pledge',
-        note2: 'The pledge of NOVA to the valid node can be redeemed at any time, but the redemption pledge needs to wait 7 days.',
-        note3: 'Profit',
-        note4: 'The proceeds of pledge come from the reward and transaction procedure risk',
-        note5: 'If the valid node misbehaves, it may be fined some pledged tokens, such as valid festival.',
-        note6: 'Point double signature, often offline. In order to avoid risks, please carefully select qualified validation.',
-        note7: 'node',
-        numbernotzero:'amount noe empty',//输入数量不能为0
-        nogetaddress:'not get node address,please to back and again',//未取到列表节点地址，请返回重试
+        note2:'Choose a node to pledge your NOVA. During the pledge period, you can enjoy the benefits of the pledge, you can also redeem it. The immediate redemption needs to deduct 10% of the handling fee, and the ordinary redemption pledge needs to wait for T+21 days to transfer to your wallet.',
+        numbernotzero:'amount not empty',//输入数量不能为0
+        nogetaddress:'not get node address,please to back and try',//未取到列表节点地址，请返回重试
         noauthtoken:'no success authorization ',//未授权成功
         zhiyanodealert:'Pledge Successful'
     },
@@ -145,11 +141,11 @@ module.exports={
             title: 'Please authorize Nova to use wallet links',
             cancel: 'cancel',
             certain: 'confirm',
-            slowtext:'You will have ordinary redemption, and the redeemed NOVA will be transferred to your wallet in 21 days, and 1% of the total redemption will be deducted as a handling fee for destruction.',
+            slowtext:'You will have ordinary redemption, and the redeemed NOVA will be transferred to your wallet in T+21 days, and 1% of the total redemption will be deducted as a handling fee for destruction.',
             atoncetext:'Are you sure you want to redeem it immediately? Immediate redemption will deduct 10% of the total amount of redemption as a fee, which will be permanently destroyed.',
             changenodepledgetext1:'Are you certain ',
             changenodepledgetext2:'NOVA，change to',
-            changenodepledgetext3:'node?，change node need to 21 days，No handling fee'
+            changenodepledgetext3:'node?，change node need to T+21 days，No handling fee'
         },
         effectnode: {
             nodata: 'No data ~',

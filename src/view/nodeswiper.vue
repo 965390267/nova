@@ -39,7 +39,7 @@ export default {
     return {
       active: 0,
       mySwiper:null,
-      nodelistdata:null
+      nodelistdata:[]
     };
   },
   created() {

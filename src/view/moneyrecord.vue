@@ -7,7 +7,7 @@
       </div>
       <div class="bottom">
         <div class="time">{{date}}</div>
-        <div class="amount">{{totalAmount/1000}}Nova</div>
+        <div class="amount">{{totalAmount/1000}}NOVA</div>
       </div>
     </div>
     <ul class="recordlist">
@@ -18,19 +18,9 @@
         </div>
         <div class="bottom">
           <div class="time">{{item.createDate}}</div>
-          <div class="amount">{{item.pledgeAmount/1000}}Nova</div>
+          <div class="amount">{{item.pledgeAmount/1000}}NOVA</div>
         </div>
       </li>
-      <!-- <li>
-        <div class="top">
-          <div class="shoyyi">收益</div>
-          <div class="jine">+6564.05</div>
-        </div>
-        <div class="bottom">
-          <div class="time">2019-02-01</div>
-          <div class="amount">4854564848Nova</div>
-        </div>
-      </li>-->
     </ul>
   </div>
 </template>
@@ -41,7 +31,7 @@ export default {
     return {
       recordList: [],
       time: "",
-      totalAmount: "",
+      totalAmount: 0,
       totalIncome: "",
       date: ""
     };
@@ -54,16 +44,18 @@ export default {
         (date.getMonth() + 1 < 10
           ? "0" + (date.getMonth() + 1)
           : date.getMonth() + 1) + "-";
-   let   D = date.getDate() + " ";
+    let   D = date.getDate() + " ";
       this.date = Y + M + D;
     }
   },
   mounted() {
     let { nodeId, nodeAddress } = this.$route.query;
     myIncomeRecode(nodeId, nodeAddress).then(res => {
+        if(res.data.success){
       this.recordList = res.data.data.incomeRecodes;
       this.totalAmount = res.data.data.totalAmount;
       this.totalIncome = res.data.data.totalIncome;
+        }
     });
     this.getYearMonthDay();
   }

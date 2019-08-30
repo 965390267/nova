@@ -35,7 +35,9 @@ export default {
   components: {},
   data() {
     return {
-      initDataObj: {},
+      initDataObj: {
+        balance:0
+      },
       amount: '' /* 用户输入的Nova数量，提交需要*1000 */,
       show: false,
       gasPrice: 0
@@ -270,7 +272,7 @@ export default {
       } else {
         alert("No currentProvider for web3");
       }
-      function transferNova(b, c, d, e, f, g) {
+      function transferNova(b, c, d, e, f, g,h) {
         var h = new Eth(b);
         h.accounts().then(function(accounts) {
            imToken.callAPI("native.hideLoading");
@@ -287,7 +289,7 @@ export default {
               g(String(a));
             })
             .catch(function(a) {
-              g(String(a));
+              h(String(a));
             });
         });
       }
@@ -363,6 +365,8 @@ export default {
         hash => {
           imToken.callAPI("native.hideLoading");
           this.pay(hash);
+        },err=>{
+           alert(String(err))
         }
       );
       // 查询Nova余额触发这个 function balanceOfNova(provider, novaAbi, queryAddress, novaAddress, callBackBalance)

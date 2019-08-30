@@ -78,9 +78,9 @@ export default {
 .left-question {
   display: inline-block;
   position: relative;
-
   height: 45px;
   line-height: 45px;
+  padding-left: 4px;
   box-shadow: 0 0 16px 0 #f08a40;
   margin-left: 35px;
   margin-top: 40px;
