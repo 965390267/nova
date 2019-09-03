@@ -11,10 +11,10 @@
     <div class="light-swiper">
   <div class="swiper-wrap">
     <div class="swipe-item">
-       <effect-node-list :useParmsGetFrom='$route.query' :nodelistdata='nodelistdata'></effect-node-list>
+       <effect-node-list v-show='isShowListItem' :useParmsGetFrom='$route.query' :nodelistdata='nodelistdata'></effect-node-list>
     </div>
     <div class="swipe-item">
-       <invalid-node-list :useParmsGetFrom='$route.query' :nodelistdata='nodelistdata'></invalid-node-list>
+       <invalid-node-list v-show='isShowListItem' :useParmsGetFrom='$route.query' :nodelistdata='nodelistdata'></invalid-node-list>
     </div>
 
   </div>
@@ -32,14 +32,15 @@ export default {
   components: {
     effectNodeList,
     invalidNodeList,
-
   },
 
   data() {
     return {
       active: 0,
       mySwiper:null,
-      nodelistdata:[]
+      nodelistdata:[],
+      isShowListItem:false
+
     };
   },
   created() {
@@ -70,7 +71,10 @@ export default {
     });
         nodeList(this.imtokenAddress).then(res=>{/* 提案节点和普通节点列表数据 */
        if(res.data.success){
-         this.nodelistdata=res.data.data
+         this.nodelistdata=res.data.data;
+         this.isShowListItem=true;
+       }else{
+         this.isShowListItem=true;
        }
        })
         imToken.callAPI('native.hideLoading');

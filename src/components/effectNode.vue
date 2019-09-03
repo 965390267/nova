@@ -56,7 +56,7 @@ useParmsGetFrom:Object
 },
   data() {
     return {
-      listdata: [{}]
+      listdata: []
     };
   },
   watch: {

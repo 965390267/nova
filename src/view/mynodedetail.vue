@@ -192,10 +192,10 @@ import { recentTransactions, myNodeDetail,cancelNodeRedeem } from "@/config";
 export default {
   data() {
     return {
-      nodeMessage: { pledgeAmount: "", returnrate: "", nodeName: "" },
+      nodeMessage: { pledgeAmount: 0, returnrate: 0, nodeName: 'node',declaration:'***' },
       recentTransactionsList: [],
       isLoad: false,
-      totalmoney: ""
+      totalmoney: 0
     };
   },
   computed: {
@@ -322,7 +322,7 @@ export default {
     );
     }
   },
-  mounted() {
+  created() {
   this.initData()
    
   }
@@ -334,6 +334,9 @@ export default {
 @import "@/assets/scss/colors.scss";
 @import "@/assets/scss/mixins.scss";
 @import "@/assets/scss/common.scss";
+[v-cloak] {
+    display: none;
+}
 .nodedetail {
   height: 100%;
   background: #fdf9f4;
