@@ -27,7 +27,7 @@
       <div class="left-txt">{{$t('shuhui.normalshuhui')}}</div>
       <div class="right"></div>
     </div>
-    <div class="submit-btn" @click="submit()" v-html="$t('shuhui.shuhui')"></div>
+    <mu-button class="submit-btn" @click="submit()" v-html="$t('shuhui.shuhui')"></mu-button>
     <div class="note">
       <p>{{$t('shuhui.note')}}</p>
       <p>{{$t('shuhui.note1')}}</p>
@@ -49,13 +49,15 @@ export default {
       blance: 0,
       gasPrice: "",
       show: false,
-      alertcontent:''
+      alertcontent:'',
+      lockSubmit:true
     };
   },
   watch:{
     amount(val){
       if(val>this.$route.query.pledgeAmount/1000){
-        return alert(this.$t('shuhui.amountLimit'))
+        this.amount=Number(val.toString().substring(0,val.toString().length-1));
+        return   imToken.callAPI('native.toastInfo', this.$t('shuhui.amountLimit'))
       }
     }
   },
@@ -80,7 +82,7 @@ export default {
     get() {
       this.show = true;
 
-      // imToken.callAPI("native.showLoading", "loading...");
+       imToken.callAPI("native.showLoading", "loading...");
       if (this.amount == 0) return alert(this.$t("shuhui.numbernotzero"));
       this.amount = Number(this.amount);
       if (!this.$route.query.address) {
@@ -98,9 +100,12 @@ export default {
         amount: this.amount * 1000,
         type: this.index
       };
-      getNodeRedeem(obj)
+      if(this.lockSubmit){
+        this.lockSubmit=false;
+       getNodeRedeem(obj)
         .then(res => {
-          // imToken.callAPI("native.hideLoading");
+          this.lockSubmit=true
+           imToken.callAPI("native.hideLoading");
           if (res.data.success) {
             this.show = false;
             alert(this.$t("shuhui.changenodealert"));
@@ -111,10 +116,13 @@ export default {
           }
         })
         .catch(err => {
-          // imToken.callAPI("native.hideLoading");
+          this.lockSubmit=true
+           imToken.callAPI("native.hideLoading");
           alert(err);
           this.show = false;
         });
+      }
+     
     },
     setAll() {
       // personalAssest(this.imtokenAddress).then(res => {
@@ -272,6 +280,7 @@ export default {
   color: #f08a40;
 }
 .submit-btn {
+  display: block;
   width: 90%;
   height: 36px;
   margin: 0 auto;

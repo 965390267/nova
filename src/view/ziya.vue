@@ -11,11 +11,16 @@
     <div class="classinput">
       <div class="inputwrap">
         <div class="total" @click="setAll()">{{$t('zhiya.total')}}</div>
-        <input class="inputcount" type="number" v-model="amount" :placeholder="$t('zhiya.placeholder')" />
+        <input
+          class="inputcount"
+          type="number"
+          v-model="amount"
+          :placeholder="$t('zhiya.placeholder')"
+        />
       </div>
     </div>
     <div class="smtip">{{$t('zhiya.gasprice')}}{{gasPrice.toFixed(7)}}ETH</div>
-    <div class="submit-btn" @click="get()" v-html="$t('zhiya.zhiya')"></div>
+    <mu-button class="submit-btn" @click="get()" v-html="$t('zhiya.zhiya')"></mu-button>
     <div class="note">
       <p>{{$t('zhiya.note1')}}</p>
       <p>{{$t('zhiya.note2')}}</p>
@@ -23,47 +28,54 @@
       <p>质押收益来自出块奖励和交易手续风险</p>
       <p>如果有效节点行为不端将可能会被罚没部分质押代币，比如有效节</p>
       <p>点双重签名，经常性离线。为了规避风险，请认真选择合格的验证</p>
-      <p>节点</p> -->
+      <p>节点</p>-->
     </div>
     <loading v-if="show"></loading>
   </diV>
 </template>
 <script>
 import loading from "@/components/loading";
-import { getNodePledge, personalAssest,getGas } from "@/config";
+import { getNodePledge, personalAssest, getGas } from "@/config";
 export default {
   components: {},
   data() {
     return {
       initDataObj: {
-        balance:0
+        balance: 0
       },
-      amount: '' /* 用户输入的Nova数量，提交需要*1000 */,
+      amount: "" /* 用户输入的Nova数量，提交需要*1000 */,
       show: false,
-      gasPrice: 0
+      gasPrice: 0,
+      lockSubmit: true
     };
   },
-  watch:{
-    amount(val){
-      if(val>this.initDataObj.balance/1000){
-        return alert(this.$t('zhiya.amountLimit'))
+  watch: {
+    amount(val) {
+      if (val > this.initDataObj.balance / 1000) {
+        this.amount = Number(
+          val.toString().substring(0, val.toString().length - 1)
+        );
+        return imToken.callAPI(
+          "native.toastInfo",
+          this.$t("shuhui.amountLimit")
+        );
       }
     }
   },
   methods: {
     get() {
       this.show = true;
-      this.amount=Number(this.amount);
-      
-      if (this.amount == 0) return  alert(this.$t('zhiya.numbernotzero'));
-          if(!this.$route.query.address){
-            alert(this.$t('zhiya.nogetaddress'));
-             return this.$router.back(-1);
-      } 
-      if(!this.imtokenAddress){
-              alert(this.$t('zhiya.noauthtoken'));
-             return this.$router.back(-1);
-      } 
+      this.amount = Number(this.amount);
+
+      if (this.amount == 0) return alert(this.$t("zhiya.numbernotzero"));
+      if (!this.$route.query.address) {
+        alert(this.$t("zhiya.nogetaddress"));
+        return this.$router.back(-1);
+      }
+      if (!this.imtokenAddress) {
+        alert(this.$t("zhiya.noauthtoken"));
+        return this.$router.back(-1);
+      }
       // this.bus.$emit('loading',true)
       imToken.callAPI("native.showLoading", "loading...");
       var abi = [
@@ -272,10 +284,10 @@ export default {
       } else {
         alert("No currentProvider for web3");
       }
-      function transferNova(b, c, d, e, f, g,h) {
+      function transferNova(b, c, d, e, f, g, h) {
         var h = new Eth(b);
         h.accounts().then(function(accounts) {
-           imToken.callAPI("native.hideLoading");
+          imToken.callAPI("native.hideLoading");
           const Nova = h.contract(c, {
             from: accounts[0]
           });
@@ -285,7 +297,6 @@ export default {
               from: web3.eth.accounts[0]
             })
             .then(function(a) {
-              
               g(String(a));
             })
             .catch(function(a) {
@@ -347,7 +358,6 @@ export default {
         });
       }
 
-    
       //授权 授权按钮触发这个
       // approveNova(web3.currentProvider, abi, '0xb48b7e5bf6563b3e0a85055821a83deb8cfc12f6', (res)=>{
       // alert(res)
@@ -355,20 +365,33 @@ export default {
       // })
       // 20000000是20Nova，要乘6个0
       // 质押 质押按钮触发这个 function transferNova(provider, novaAbi, toAddress, amountOfNova, gasPrice, novaAddress, callBackTransfer)
-
-   transferNova(
-        web3.currentProvider,
-        abi,
-        this.$route.query.address,
-        Number(this.amount)  * 1000,
-        "0xb48b7e5bf6563b3e0a85055821a83deb8cfc12f6",
-        hash => {
+      if (this.lockSubmit) {
+        this.lockSubmit = false;
+        transferNova(
+          web3.currentProvider,
+          abi,
+          this.$route.query.address,
+          Number(this.amount) * 1000,
+          "0xb48b7e5bf6563b3e0a85055821a83deb8cfc12f6",
+          hash => {
+           
+            this.lockSubmit = true;
+            imToken.callAPI("native.hideLoading");
+            this.pay(hash);
+          },
+          err => {
+           
+            imToken.callAPI("native.hideLoading");
+            this.lockSubmit = true;
+            alert(err);
+          }
+        );
+      }
+    let timer=  setTimeout(()=>{
+       timer=null;
+        this.lockSubmit = true;
           imToken.callAPI("native.hideLoading");
-          this.pay(hash);
-        },err=>{
-           alert(String(err))
-        }
-      );
+      },2000)
       // 查询Nova余额触发这个 function balanceOfNova(provider, novaAbi, queryAddress, novaAddress, callBackBalance)
       // balanceOfNova(
       //   web3.currentProvider,
@@ -392,29 +415,30 @@ export default {
         .then(res => {
           // alert(JSON.stringify(res));
           if (res.data.success) {
-           
-            alert(this.$t('zhiya.zhiyanodealert'));
+            alert(this.$t("zhiya.zhiyanodealert"));
             this.show = false;
             this.$router.back(-1);
           }
         })
         .catch(err => {
-          alert(err)
+          alert(err);
           this.show = false;
         });
     },
     setAll() {
-      personalAssest(this.imtokenAddress).then(res => {
-        var res = res.data;
-        if (res.success) {
-          this.initDataObj = res.data;
-          this.amount =Number(res.data.balance) /1000;
-        }else{
-          Promise.reject(ret)
-        }
-      }).catch(err => {
-           imToken.callAPI("native.hideLoading");
-           alert(err)
+      personalAssest(this.imtokenAddress)
+        .then(res => {
+          var res = res.data;
+          if (res.success) {
+            this.initDataObj = res.data;
+            this.amount = Number(res.data.balance) / 1000;
+          } else {
+            Promise.reject(ret);
+          }
+        })
+        .catch(err => {
+          imToken.callAPI("native.hideLoading");
+          alert(err);
           this.show = false;
         });
     },
@@ -426,20 +450,20 @@ export default {
           this.initDataObj = res.data;
         }
       });
-//        var eth = new Eth(web3.currentProvider);
-//       eth.estimateGas({
-//         to: this.$route.query.address,
-//         data: "0xb48b7e5bf6563b3e0a85055821a83deb8cfc12f6"
-//       }).then(res=>{
-// this.gasPrice =res
-//       })
+      //        var eth = new Eth(web3.currentProvider);
+      //       eth.estimateGas({
+      //         to: this.$route.query.address,
+      //         data: "0xb48b7e5bf6563b3e0a85055821a83deb8cfc12f6"
+      //       }).then(res=>{
+      // this.gasPrice =res
+      //       })
     }
   },
   mounted() {
     this.initData(); /* 数据初始化 */
-    getGas().then(res=>{
-      this.gasPrice=res.data.data.gas/1000000000000000000;
-    })
+    getGas().then(res => {
+      this.gasPrice = res.data.data.gas / 1000000000000000000;
+    });
   }
 };
 </script>
@@ -481,7 +505,7 @@ export default {
   .canbalance {
     position: absolute;
     right: 15px;
-   
+
     color: #f08a40;
     font-size: 13px;
   }
@@ -494,7 +518,7 @@ export default {
     background: transparent;
     outline: none;
     border-radius: 8px;
-    color: #B3B7BA;
+    color: #b3b7ba;
     font-size: 13px;
   }
 }
@@ -504,7 +528,7 @@ export default {
   .total {
     position: absolute;
     right: 0;
-     height: 40px;
+    height: 40px;
     line-height: 40px;
     width: 50px;
     text-align: center;
@@ -537,6 +561,7 @@ export default {
   color: #979fa5;
 }
 .submit-btn {
+  display: block;
   width: 90%;
   height: 36px;
   margin: 0 auto;
@@ -555,8 +580,8 @@ export default {
   font-size: 12px;
   text-align: left;
   padding: 2px 0;
-     line-height: 20px;
-         letter-spacing: 2px;
+  line-height: 20px;
+  letter-spacing: 2px;
 }
 </style>
 
