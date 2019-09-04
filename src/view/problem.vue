@@ -43,6 +43,16 @@
     <div class="right-question-wrap">
       <div class="right-question">{{$t('problem.q8note')}}</div>
     </div>
+
+      <div class="left-question">9.{{$t('problem.q9')}}</div>
+    <div class="right-question-wrap">
+      <div class="right-question">{{$t('problem.q9note')}}</div>
+    </div>
+
+      <div class="left-question">10.{{$t('problem.q10')}}</div>
+    <div class="right-question-wrap">
+      <div class="right-question">{{$t('problem.q10note')}}</div>
+    </div>
   </div>
 </template>
 
@@ -85,9 +95,8 @@ export default {
   margin-left: 35px;
   margin-top: 40px;
   background: #f08a40;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: bold;
-
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -126,7 +135,7 @@ export default {
     padding: 15px 20px;
     border-radius: 15px;
     line-height: 28px;
-    letter-spacing: 2px;
+    letter-spacing:1px;
     text-align: justify;
   }
   .right-question::after {

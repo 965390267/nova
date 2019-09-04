@@ -17,7 +17,7 @@
           <div class="jine">+{{item.incomeAmount/1000}}</div>
         </div>
         <div class="bottom">
-          <div class="time">{{item.createDate}}</div>
+          <div class="time">{{formatDateToYear(item.createDate)}}</div>
           <div class="amount">{{item.pledgeAmount/1000}}NOVA</div>
         </div>
       </li>
@@ -37,6 +37,15 @@ export default {
     };
   },
   methods: {
+    formatDateToYear(date) {
+      /* 格式化时间根据空格左边为年月日，右边为时分秒 */
+
+      try {
+        return date.split(" ")[0];
+      } catch (error) {
+        return date;
+      }
+    },
     getYearMonthDay() {
       var date = new Date();
     let  Y = date.getFullYear() + "-";

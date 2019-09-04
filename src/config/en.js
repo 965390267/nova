@@ -130,7 +130,7 @@ module.exports={
         gasprice:'Expected transaction costs:',
         zhiya: 'pledge',
         note1: 'pledge',
-        note2:'Choose a node to pledge your NOVA. During the pledge period, you can enjoy the benefits of the pledge, you can also redeem it. The immediate redemption needs to deduct 10% of the handling fee, and the ordinary redemption pledge needs to wait for T+21 days to transfer to your wallet.',
+        note2:'Choose a node to pledge your NOVA. During the pledge period, you can enjoy the benefits of the pledge, you can also redeem it. The immediate redemption needs to deduct 10% of the fee. The ordinary redemption needs to deduct 1% of the fee. The ordinary redemption pledge needs to wait for T+21 days to transfer to the wallet.',
         numbernotzero:'amount not empty',//输入数量不能为0
         nogetaddress:'not get node address,please to back and try',//未取到列表节点地址，请返回重试
         noauthtoken:'no success authorization ',//未授权成功

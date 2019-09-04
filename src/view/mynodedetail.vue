@@ -192,10 +192,10 @@ import { recentTransactions, myNodeDetail,cancelNodeRedeem } from "@/config";
 export default {
   data() {
     return {
-      nodeMessage: { pledgeAmount: 0, returnrate: 0, nodeName: 'node',declaration:'***' },
+      nodeMessage: { pledgeAmount: ' ', returnrate: ' ', nodeName: ' ',declaration:' ' },
       recentTransactionsList: [],
       isLoad: false,
-      totalmoney: 0
+      totalmoney: ''
     };
   },
   computed: {
@@ -303,6 +303,8 @@ export default {
           this.isLoad = true;
           this.nodeMessage = res.data.data;
       
+        }else{
+        return  Promise.reject(res)
         }
       })
       .catch(err => {
@@ -317,6 +319,8 @@ export default {
         }
         if (res.data.success) {
           this.recentTransactionsList = res.data.data;
+        }else{
+        return  Promise.reject(res)
         }
       }
     );

@@ -24,7 +24,7 @@
         </div>
         <div class="toal-money">{{ $t('index.total')}}</div>
         <div class="money">{{totalAssets}} NOVA</div>
-        <div class="rmb">￥{{(totalAssets*CNY).toFixed(6)}}</div>
+        <div class="rmb">￥≈{{(totalAssets*CNY).toFixed(6)}}</div>
         <!-- 暂时去掉，后续开发 -->
         <div class="card-mid">
           <div class="rest des">
@@ -87,14 +87,14 @@ export default {
       en: "English",
       switchstate: false,
       nodeaddress: this.imtokenAddress,
-      balance: 0,
+      balance: '',
       ETH: 0,
-      pendingAmount: 0,
-      totalAssets: 0,
-      totalIncome: 0,
-      yesterdayIncome: 0,
+      pendingAmount: '',
+      totalAssets: '',
+      totalIncome: '',
+      yesterdayIncome: '',
       nodelistdata: [],
-      CNY: 0
+      CNY: ''
     };
   },
   computed: {

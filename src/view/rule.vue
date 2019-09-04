@@ -33,7 +33,7 @@ export default {
     width: 76%;
     margin: 0 auto;
     padding: 25px;
-    font-size: 18px;
+    font-size: 16px;
     border-radius: 15px;
     background: #fdf9f4;
     color: #122f4d;
@@ -56,12 +56,14 @@ export default {
     width: 76%;
     margin: 25px auto;
     padding: 25px;
-    font-size: 18px;
+    font-size: 14px;
     border-radius: 15px;
     background: #fdf9f4;
     color: #122f4d;
     border: 1px solid #f08a40;
     counter-increment: index;
+    text-align: justify;
+    letter-spacing:1px;
     box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.4);
   }
   .sm-card::before {
