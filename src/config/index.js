@@ -3,7 +3,7 @@ import axios from 'axios'
 // export const baseurl='http://106.15.52.35:8080/' 
 
 
-   axios.defaults.baseURL ="https://106.15.52.35:443/"
+   axios.defaults.baseURL ="https://39.97.184.19:443/"
 if (env() == 'production') {
   axios.defaults.baseURL = 'https://106.15.52.35:443/';/* 7-12-10-14更改 */
 }
