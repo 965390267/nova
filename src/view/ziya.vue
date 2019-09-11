@@ -407,7 +407,7 @@ export default {
     pay(hash) {
       var obj = {
         fromAddress: this.imtokenAddress, //转入方是自己的地址
-        toAddress: this.$route.query.address, //转入方
+        nodeId: this.$route.query.nodeId, //转入方
         amount: Number(this.amount) * 1000,
         txnHash: hash
       };

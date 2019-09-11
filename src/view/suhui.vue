@@ -95,7 +95,7 @@ export default {
       }
       // this.bus.$emit('loading',true)
       var obj = {
-        fromAddress: this.$route.query.address, //服务器地址
+        nodeId: this.$route.query.nodeId, //服务器地址
         toAddress: this.imtokenAddress, //钱包地址
         amount: this.amount * 1000,
         type: this.index

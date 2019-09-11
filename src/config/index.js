@@ -5,7 +5,7 @@ import axios from 'axios'
 
    axios.defaults.baseURL ="https://39.97.184.19:443/"
 if (env() == 'production') {
-  axios.defaults.baseURL = 'https://106.15.52.35:443/';/* 7-12-10-14更改 */
+  axios.defaults.baseURL = 'https://39.97.184.19:443/';/* 7-12-10-14更改 */
 }
 function env() {
   if (process.env.NODE_ENV === "development") return "development";   //开发环境
@@ -55,7 +55,7 @@ axios.interceptors.response.use(function (response) {
 });
 /** 
  * @request {POST}
- * @param {fromAddress}
+ * @param {nodeId}
  * @param {toAddress}
  *  @param {amount}
  *  @param {type}
@@ -69,7 +69,7 @@ export function getNodeRedeem(data) {
 /** 
 * @request {POST}
 * @param {fromAddress}
-* @param {toAddress}
+* @param {nodeId}
 *  @param {amount}
 *  @param {txnHash}
 * //质押接口
@@ -100,10 +100,11 @@ export function nodeList(address) {
 /** 
 * @request {GET}
 * @param {address}
+@param {nodeId}
 * //最近交易接口
 */
-export function recentTransactions(userAddress, nodeAddress) {
-  return axios(`api/recentTransactions?userAddress=${userAddress}&nodeAddress=${nodeAddress}`);
+export function recentTransactions(userAddress, nodeId) {
+  return axios(`api/recentTransactions?userAddress=${userAddress}&nodeId=${nodeId}`);
 }
 
 
@@ -142,7 +143,7 @@ export function myIncomeRecode(nodeId, address) {
 * @request {POST}
 * @param {body}
 * {
-*  "fromAddress":"0xe48c9960Cc10d0d7f6ba83Ffea5c49A8363a78d5",
+*  "nodeId":"22",
 "toAddress":"0x6E746901b6675a9AE97e3458D9F45d424bFCd908",
 "transactionId":"384"
 * }
@@ -182,7 +183,7 @@ export function getGas() {
 * @param {body}
 * {
   "userAddress":"0x6E746901b6675a9AE97e3458D9F45d424bFCd908",
-  "oldAddress":"0xe48c9960Cc10d0d7f6ba83Ffea5c49A8363a78d5",
+  "oldNodeId":"22",
   "newAddress":"0x6788bfcA39E1cb26C9aF9b71b9F28c78Ae58160B",
   "amount":"10000"
 }

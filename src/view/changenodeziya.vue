@@ -74,7 +74,7 @@ export default {
     pay() {
       var obj = {
         userAddress: this.imtokenAddress, //转入方是自己的地址
-        oldAddress: this.$route.query.oldAddress, //原来的老地址
+        oldNodeId: this.$route.query.nodeId, //原来的老地址{更换为nodeId字段}
         newAddress:this.$route.query.newAddress,//更换节点后的新地址
         amount: Number(this.amount) * 1000,
       };

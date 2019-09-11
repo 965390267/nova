@@ -229,12 +229,14 @@ export default {
 */
       if (!this.isLoad) return  alert(this.$t('mynodedetail.dadaloading'));
       if (address) {
+         let nodeId=this.$route.query.nodeId;
         this.$router.push({
           path: "/suhui",
           query: {
             address: address,
             pledgeAmount: pledgeAmount,
-            nodeName: nodeName
+            nodeName: nodeName,
+            nodeId:nodeId
           }
         });
       } else {
@@ -243,6 +245,7 @@ export default {
     },
     zhiya(address, pledgeAmount, nodeName) {
       /* 节点质押 */
+      let nodeId=this.$route.query.nodeId;
       if (!this.isLoad) return alert(this.$t('mynodedetail.dadaloading'));
       if (address) {
         this.$router.push({
@@ -250,7 +253,8 @@ export default {
           query: {
             address: address,
             pledgeAmount: pledgeAmount,
-            nodeName: nodeName
+            nodeName: nodeName,
+            nodeId:nodeId
           }
         });
       } else {
@@ -262,6 +266,7 @@ export default {
 
       if (!this.isLoad) return alert(this.$t('mynodedetail.dadaloading'));
       if (address) {
+        
         this.$router.push({
           path: "/nodeswiper",
           query: {
@@ -275,9 +280,9 @@ export default {
       }
     },
     cancelNode(fromAddress,transactionId){
-
+ let nodeId=this.$route.query.nodeId;
       let toAddress=this.imtokenAddress;
-      cancelNodeRedeem({fromAddress,transactionId,toAddress}).then(res=>{
+      cancelNodeRedeem({nodeId,transactionId,toAddress}).then(res=>{
         if(res.data.success){
          alert(this.$t('mynodedetail.canceled'));
          this.initData()
@@ -312,7 +317,7 @@ export default {
           imToken.callAPI("native.hideLoading");
         }
       });
-    recentTransactions(this.imtokenAddress, this.$route.query.nodeAddress).then(
+    recentTransactions(this.imtokenAddress, this.$route.query.nodeId).then(
       res => {
         if (window.ethereum) {
           imToken.callAPI("native.hideLoading");
