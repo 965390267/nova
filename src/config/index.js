@@ -184,7 +184,7 @@ export function getGas() {
 * {
   "userAddress":"0x6E746901b6675a9AE97e3458D9F45d424bFCd908",
   "oldNodeId":"22",
-  "newAddress":"0x6788bfcA39E1cb26C9aF9b71b9F28c78Ae58160B",
+  "newNodeId":"23",
   "amount":"10000"
 }
 * //质押转换

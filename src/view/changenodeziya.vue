@@ -60,7 +60,7 @@ export default {
       this.show = true;
       this.amount=Number(this.amount); 
       if (this.amount == 0) return alert(this.$t('changenodezy.numbernotzero'));
-          if(!this.$route.query.newAddress||!this.$route.query.oldAddress){
+          if(!this.$route.query.nodeId||!this.$route.query.oldNodeId){
              alert(this.$t('changenodezy.nogetaddress'));
              return this.$router.back(-1);
       } 
@@ -74,8 +74,8 @@ export default {
     pay() {
       var obj = {
         userAddress: this.imtokenAddress, //转入方是自己的地址
-        oldNodeId: this.$route.query.nodeId, //原来的老地址{更换为nodeId字段}
-        newAddress:this.$route.query.newAddress,//更换节点后的新地址
+        oldNodeId: this.$route.query.oldNodeId, //原来的老地址{更换为nodeId字段}
+        newNodeId:this.$route.query.nodeId,//更换节点后的新地址
         amount: Number(this.amount) * 1000,
       };
       changePledge(obj)

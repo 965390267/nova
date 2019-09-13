@@ -42,7 +42,7 @@
       <div class="btn-list">
         <mu-button v-if='nodeMessage.pledgeAmount/1000>0'
           class="shuihui-btn"
-          @click="shuihui(nodeMessage.address,nodeMessage.pledgeAmount,nodeMessage.nodeName)"
+          @click="shuihui(nodeMessage.pledgeAmount,nodeMessage.nodeName)"
         >{{$t('mynodedetail.shuhui')}}</mu-button>
         <mu-button  v-if='nodeMessage.pledgeAmount/1000<=0'
           class="zhiya-btn fullwidth"
@@ -54,7 +54,7 @@
         >{{$t('mynodedetail.zhiya')}}</mu-button>
         <mu-button v-if='nodeMessage.pledgeAmount/1000>0'
           class="change-btn"
-          @click="changenode(nodeMessage.address,nodeMessage.pledgeAmount)"
+          @click="changenode(nodeMessage.pledgeAmount)"
         >{{$t('mynodedetail.changenodezy')}}</mu-button>
       </div>
     </div>
@@ -84,12 +84,13 @@
       
         </li>
       </ul>
+      <!-- 最近交易 -->
       <h2 class="big-title" v-if='recentTransactionsList.length>0'>{{$t('mynodedetail.nearamount')}}</h2>
       <ul class="latest">
         <li v-for="(item,index) in recentTransactionsList" :key="index">
           <!-- /* 
             *@status 0(转账中) 1(转账完成) 2(转账失败) 3(转账撤销) 4(转账等待)
-            *@type   0(质押)  1(赎回)   2(手续费) 3(质押转换)
+            *@type   0(质押)  1(普通赎回)   2(手续费) 3(质押转换_赎回) 4(立即赎回) 5(质押转换_质押)
             @note 每一个type对应着所有的status，比如，质押有，转账中，转账完成，转账失败，转账撤销以及转账等待
           */-->
           <template v-if="item.status==1&&item.type==0"><!-- 质押成功的交易 -->
@@ -222,18 +223,17 @@ export default {
         return date;
       }
     },
-    shuihui(address, pledgeAmount, nodeName) {
+    shuihui( pledgeAmount, nodeName) {
       /* 赎回 */
       /* 
 @{params} address节点地址
 */
       if (!this.isLoad) return  alert(this.$t('mynodedetail.dadaloading'));
-      if (address) {
-         let nodeId=this.$route.query.nodeId;
+               let nodeId=this.$route.query.nodeId;
+      if (nodeId) {
         this.$router.push({
           path: "/suhui",
           query: {
-            address: address,
             pledgeAmount: pledgeAmount,
             nodeName: nodeName,
             nodeId:nodeId
@@ -247,7 +247,7 @@ export default {
       /* 节点质押 */
       let nodeId=this.$route.query.nodeId;
       if (!this.isLoad) return alert(this.$t('mynodedetail.dadaloading'));
-      if (address) {
+      if (nodeId) {
         this.$router.push({
           path: "/zhiya",
           query: {
@@ -261,16 +261,15 @@ export default {
         alert(this.$t('mynodedetail.nogetservicenode'));
       }
     },
-    changenode(address,pledgeAmount) {
+    changenode(pledgeAmount) {
       /* 更换节点质押 */
-
       if (!this.isLoad) return alert(this.$t('mynodedetail.dadaloading'));
-      if (address) {
-        
+     let nodeId=this.$route.query.nodeId;
+     if (nodeId) {      
         this.$router.push({
           path: "/nodeswiper",
           query: {
-            address: address,
+            oldNodeId:nodeId,
             pledgeAmount:pledgeAmount,
             from: "changenode",
           }

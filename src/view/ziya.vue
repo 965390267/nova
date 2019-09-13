@@ -68,7 +68,7 @@ export default {
       this.amount = Number(this.amount);
 
       if (this.amount == 0) return alert(this.$t("zhiya.numbernotzero"));
-      if (!this.$route.query.address) {
+      if (!this.$route.query.nodeId) {/* 地址必须存在 */
         alert(this.$t("zhiya.nogetaddress"));
         return this.$router.back(-1);
       }

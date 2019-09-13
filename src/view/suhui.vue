@@ -85,7 +85,7 @@ export default {
        imToken.callAPI("native.showLoading", "loading...");
       if (this.amount == 0) return alert(this.$t("shuhui.numbernotzero"));
       this.amount = Number(this.amount);
-      if (!this.$route.query.address) {
+      if (!this.$route.query.nodeId) {
         alert(this.$t("shuhui.nogetaddress"));
         return this.$router.back(-1);
       }
