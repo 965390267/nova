@@ -24,8 +24,10 @@ module.exports = {
         alertauth:'未授权成功,请退出重新授权'
     },
     moneyrecord: {
+        totalmoney:'总金额',
         shoyyi: '收益',
-        jine: '累计收益'
+        jine: '累计收益',
+        mypledgeAmount:'我的质押数量'
     },
     mynodedetail: {
         zyje: '节点质押数量',
@@ -64,8 +66,10 @@ module.exports = {
          dadaloading:'数据加载中',
          nogetservicenode: '未取到服务器节点',
          canceled:'已取消',
-         cancelfailed:'取消失败'
-
+         cancelfailed:'取消失败',
+         changenodeshuhui:'赎回',
+         changenodeshuhuifailed:'赎回失败',
+         changenodeshuhuisuccess:'赎回成功'
     },
     nodeswiper: {
         effectnode: '提案节点',

@@ -81,8 +81,9 @@ export default {
     },
     get() {
       this.show = true;
-
+ if (window.ethereum) {
        imToken.callAPI("native.showLoading", "loading...");
+ }
       if (this.amount == 0) return alert(this.$t("shuhui.numbernotzero"));
       this.amount = Number(this.amount);
       if (!this.$route.query.nodeId) {
@@ -105,7 +106,9 @@ export default {
        getNodeRedeem(obj)
         .then(res => {
           this.lockSubmit=true
+           if (window.ethereum) {
            imToken.callAPI("native.hideLoading");
+           }
           if (res.data.success) {
             this.show = false;
             alert(this.$t("shuhui.changenodealert"));

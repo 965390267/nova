@@ -91,6 +91,7 @@ export default {
   height: 45px;
   line-height: 45px;
   padding-left: 4px;
+  padding-right: 14px;
   box-shadow: 0 0 16px 0 #f08a40;
   margin-left: 35px;
   margin-top: 40px;
@@ -99,6 +100,7 @@ export default {
   font-weight: bold;
   text-overflow: ellipsis;
   white-space: nowrap;
+  border-radius: 0 6px 6px 0;
 }
 .left-question::before {
   content: "";

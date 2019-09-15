@@ -2,11 +2,11 @@
   <div class="recorddetail">
     <div class="totalmoney">
       <div class="top">
-        <div class="shoyyi">{{$t('moneyrecord.shoyyi')}}</div>
+        <div class="shoyyi">{{$t('moneyrecord.totalmoney')}}</div>
         <div class="jine">{{$t('moneyrecord.jine')}}</div>
       </div>
       <div class="bottom">
-        <div class="time">{{date}}</div>
+        <div class="time">{{totalAmount/1000}}NOVA</div>
         <div class="amount">{{totalIncome/1000}}NOVA</div>
       </div>
     </div>

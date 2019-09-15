@@ -139,7 +139,12 @@ export default {
   },
   mounted() {
     let language = localStorage.getItem("language");
-    if (language == "中文") {
+    console.log();
+    if(!language && typeof(language)!="undefined" && language!=0){
+   this.$i18n.locale = "zh"; //改变当前语言
+    }else{
+     
+         if (language == "中文"||language) {
       this.zh = "中文";
       this.en = "English";
       this.$i18n.locale = "zh"; //改变当前语言
@@ -148,6 +153,8 @@ export default {
       this.en = "中文";
       this.$i18n.locale = "en"; //改变当前语言
     }
+    }
+   
     if (window.ethereum) {
       imToken.callAPI("native.showLoading", "loading...");
     }

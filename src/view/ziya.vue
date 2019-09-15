@@ -376,12 +376,15 @@ export default {
           hash => {
            
             this.lockSubmit = true;
+             if (window.ethereum) {
             imToken.callAPI("native.hideLoading");
+             }
             this.pay(hash);
           },
           err => {
-           
+            if (window.ethereum) {
             imToken.callAPI("native.hideLoading");
+            }
             this.lockSubmit = true;
             alert(err);
           }
@@ -390,7 +393,9 @@ export default {
     let timer=  setTimeout(()=>{
        timer=null;
         this.lockSubmit = true;
+         if (window.ethereum) {
           imToken.callAPI("native.hideLoading");
+         }
       },2000)
       // 查询Nova余额触发这个 function balanceOfNova(provider, novaAbi, queryAddress, novaAddress, callBackBalance)
       // balanceOfNova(
@@ -437,7 +442,9 @@ export default {
           }
         })
         .catch(err => {
+           if (window.ethereum) {
           imToken.callAPI("native.hideLoading");
+           }
           alert(err);
           this.show = false;
         });

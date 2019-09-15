@@ -24,8 +24,10 @@ module.exports={
         alertauth:'no success authorization,please close and goon again'
     },
     moneyrecord: {
-        shoyyi: 'Profit',
-        jine: 'accumulatedIncome'
+        totalmoney:'Total sum',
+        shoyyi: 'total money',
+        jine: 'accumulatedIncome',
+        mypledgeAmount:'my pledge amount'
     },
     mynodedetail: {
         zyje: 'Number of node pledge',
@@ -37,7 +39,7 @@ module.exports={
         zhiya: 'pledge',
         nearamount:'Recent transactions',
         acounting:'Ongoing transactions',
-        changenodezy: 'Replace node',
+        changenodezy: 'Replace node pledge',
         changenodezyfailed:'Replace failed',
         changenodezysuccess:'Replace success',
         shuhuiing: 'ordinary redemptioning',//'普通赎回中'
@@ -64,7 +66,10 @@ module.exports={
          dadaloading:'Data loading',
          nogetservicenode: 'Not fetched to server node',
          canceled:'canceled',
-         cancelfailed:'cancel failed'
+         cancelfailed:'cancel failed',
+         changenodeshuhui:'Pledge',
+         changenodeshuhuifailed:'Pledge failed',
+         changenodeshuhuisuccess:'Pledge success'
     },
     nodeswiper: {
         effectnode: 'Effective Nodes',

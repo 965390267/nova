@@ -26,7 +26,7 @@
     <div class="nodedetail-mid">
       <div class="nodedetail-mid-note">
         <div class="leftnot"> {{$t('mynodedetail.myziyaje')}}(NOVA)</div>
-        <mu-button  v-if='nodeMessage.pledgeAmount/1000>0'  class="left-btn" :to='{path:"/moneyrecord",query:{nodeId:$route.query.nodeId,nodeAddress:imtokenAddress}}'>{{$t('mynodedetail.moneyrecord')}}</mu-button>
+        <mu-button  v-if='nodeMessage.pledgeAmount/1000>0'  class="left-btn" :to='{path:"/moneyrecord",query:{nodeId:$route.query.nodeId,nodeAddress:imtokenAddress,pledgeAmount:nodeMessage.pledgeAmount/1000}}'>{{$t('mynodedetail.moneyrecord')}}</mu-button>
       </div>
       <div>
         <mu-text-field
@@ -69,6 +69,7 @@
                <div class="tit-left blodtxt" v-if='item.type==1'>{{$t('mynodedetail.shuhuiing')}}</div>
                 <div class="tit-left blodtxt" v-if='item.type==3'>{{$t('mynodedetail.changeing')}}</div>
                 <div class="tit-left blodtxt" v-if='item.type==4'>{{$t('mynodedetail.onceshuhuiing')}}</div>
+                 <div class="tit-left blodtxt" v-if='item.type==5'>{{$t('mynodedetail.zhiyaing')}}</div>
               <div class="tit-right">{{$t('mynodedetail.packageing')}}</div>
             </div>
             <div class="title">
@@ -89,9 +90,9 @@
       <ul class="latest">
         <li v-for="(item,index) in recentTransactionsList" :key="index">
           <!-- /* 
-            *@status 0(转账中) 1(转账完成) 2(转账失败) 3(转账撤销) 4(转账等待)
-            *@type   0(质押)  1(普通赎回)   2(手续费) 3(质押转换_赎回) 4(立即赎回) 5(质押转换_质押)
-            @note 每一个type对应着所有的status，比如，质押有，转账中，转账完成，转账失败，转账撤销以及转账等待
+            *@  { status} 0(转账中) 1(转账完成) 2(转账失败) 3(转账撤销) 4(转账等待)
+            *@ type   0(质押)  1(普通赎回)   2(手续费) 3(质押转换_赎回) 4(立即赎回) 5(质押转换_质押)
+            @ note 每一个type对应着所有的status，比如，质押有，转账中，转账完成，转账失败，转账撤销以及转账等待,转换其实是两个步骤，例如1节点到2节点，在1节点是先赎回，然后质押到2节点
           */-->
           <template v-if="item.status==1&&item.type==0"><!-- 质押成功的交易 -->
             <div class="title">
@@ -159,7 +160,7 @@
               <div class="tit-right">{{item.amount/1000}} NOVA</div>
             </div>
           </template>
-           <template v-else-if="item.status==2&&item.type==3"><!-- 更换节点失败的交易 -->
+           <template v-else-if="item.status==2&&item.type==3"><!-- 更换节点失败的交易 质押转换_赎回-->
             <div class="title">
             <div class="tit-left" >{{$t('mynodedetail.changenodezy')}}</div>
               <div class="tit-right" >{{$t('mynodedetail.changenodezyfailed')}}</div>
@@ -170,9 +171,31 @@
               <div class="tit-right">{{item.amount/1000}} NOVA</div>
             </div>
           </template>
-            <template v-else-if="item.status==1&&item.type==3"><!--更换节点成功的交易 -->
+            <template v-else-if="item.status==1&&item.type==3"><!--更换节点成功的交易 质押转换_赎回-->
             <div class="title">
             <div class="tit-left" >{{$t('mynodedetail.changenodezy')}}</div>
+              <div class="tit-right" >{{$t('mynodedetail.changenodezysuccess')}}</div>
+            </div>
+            <div class="content">
+              <div class="tit-left">{{formatDateToYear(item.date)}}</div>
+              <div class="tit-time">{{formatDateToHour(item.date)}}</div>
+              <div class="tit-right">{{item.amount/1000}} NOVA</div>
+            </div>
+          </template>
+          <template v-else-if="item.status==2&&item.type==5"><!-- 更换节点失败的交易 -->
+            <div class="title">
+            <div class="tit-left" >{{$t('mynodedetail.zhiya')}}</div>
+              <div class="tit-right" >{{$t('mynodedetail.changenodezyfailed')}}</div>
+            </div>
+            <div class="content">
+              <div class="tit-left">{{formatDateToYear(item.date)}}</div>
+              <div class="tit-time">{{formatDateToHour(item.date)}}</div>
+              <div class="tit-right">{{item.amount/1000}} NOVA</div>
+            </div>
+          </template>
+            <template v-else-if="item.status==1&&item.type==5"><!--更换节点成功的交易 -->
+            <div class="title">
+            <div class="tit-left" >{{$t('mynodedetail.zhiya')}}</div>
               <div class="tit-right" >{{$t('mynodedetail.changenodezysuccess')}}</div>
             </div>
             <div class="content">
