@@ -28,11 +28,12 @@ axios.interceptors.request.use((config) => {
 // 添加响应拦截器
 axios.interceptors.response.use(function (response) {
   // 对响应数据做点什么
-  !response.data.success&&alert(response.data.msg)
+  !response.data&&!response.data.success&&alert(response.data.msg)
   return response;
 }, function (error) {
   // 对响应错误做点什么
   if (error && error.response) {
+    alert(error.response.data.msg)
     // switch (err.response.status) {
     //   case 400:
     //       console.log('错误请求')
