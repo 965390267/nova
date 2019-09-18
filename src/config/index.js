@@ -3,9 +3,11 @@ import axios from 'axios'
 // export const baseurl='http://106.15.52.35:8080/' 
 
 
-   axios.defaults.baseURL ="https://39.97.184.19:443/"
+  //  axios.defaults.baseURL ="https://39.97.184.19:443/"
+  axios.defaults.baseURL = "https://novastaking.com/"
 if (env() == 'production') {
-  axios.defaults.baseURL = 'https://39.97.184.19:443/';/* 7-12-10-14更改 */
+  // axios.defaults.baseURL = 'https://39.97.184.19:443/';/* 7-12-10-14更改 */
+  axios.defaults.baseURL = "https://novastaking.com/"
 }
 function env() {
   if (process.env.NODE_ENV === "development") return "development";   //开发环境
