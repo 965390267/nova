@@ -22,7 +22,7 @@
               <div class="des">{{$t('components.effectnode.zhiyatotalmoney')}}</div>
             </div>
             <div class="right-present">
-              <div class="txt">{{(item.returnrate*100).toFixed(2)}}%</div>
+              <div class="txt">{{(item.returnrate*100).toFixed(4)}}%</div>
               <div class="des">{{$t('components.effectnode.yujiyearmoney')}}</div>
             </div>
           </div>
