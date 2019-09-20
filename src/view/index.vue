@@ -306,12 +306,14 @@ export default {
     color: $main-text-color;
   }
   .money {
+    height: 32px;
     text-align: center;
     padding-top: 5px;
     font-size: 18px;
     color: $orange-text-color;
   }
   .rmb {
+    height: 30px;
     text-align: center;
     padding-top: 10px; /*no*/
     font-size: 11px;
@@ -334,6 +336,7 @@ export default {
         text-align: center;
       }
       .num {
+        height: 31px;
         padding-top: 10px; /*no*/
         text-align: center;
         font-size: 11px;

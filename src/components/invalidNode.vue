@@ -19,7 +19,7 @@
               <div class="des">{{$t('components.invalidnode.zhiyatotalmoney')}}</div>
             </div>
             <div class="right-present">
-              <div class="txt">{{(item.returnrate*100).toFixed(4)}}%</div>
+              <div class="txt">{{(item.returnrate*100).toFixed(2)}}%</div>
               <div class="des">{{$t('components.invalidnode.yujiyearmoney')}}</div>
             </div>
           </div>

@@ -219,7 +219,7 @@ export default {
       nodeMessage: { pledgeAmount: ' ', returnrate: ' ', nodeName: ' ',declaration:' ' },
       recentTransactionsList: [],
       isLoad: false,
-      totalmoney: ''
+      totalmoney: '',
     };
   },
   computed: {
@@ -398,6 +398,7 @@ export default {
       align-items: center;
       padding: 5px 0 0 10px;
       font-size: 23px;
+      height: 40px;
       color: #122f4d;
       .circle {
         width: 45px;
@@ -456,6 +457,8 @@ export default {
   margin-top: 30px;
   p {
     font-size: 14px;
+    line-height: 14px;
+    height: 14px;
     color: #000;
     padding: 4px 0;
     margin-bottom: 20px;

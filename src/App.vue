@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <!-- <img src="./assets/logo.png"> -->
-    <router-view/>
+    <router-view  v-cloak/>
    
   </div>
 </template>
@@ -23,6 +23,9 @@ export default {
 </script>
 
 <style>
+[v-cloak]{
+  display: none;
+}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
