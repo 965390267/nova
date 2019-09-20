@@ -87,7 +87,6 @@ export default {
           }
         })
         .catch(err => {
-          alert(err)
           this.show = false;
         });
     },

@@ -176,7 +176,7 @@ export default {
         }
       })
       .catch(err => {
-        alert(err);
+
         if (window.ethereum) {
           imToken.callAPI("native.hideLoading");
         }
@@ -192,7 +192,6 @@ export default {
         }
       })
       .catch(err => {
-        alert(err);
         if (window.ethereum) {
           imToken.callAPI("native.hideLoading");
         }

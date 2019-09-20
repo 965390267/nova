@@ -121,7 +121,6 @@ export default {
         .catch(err => {
           this.lockSubmit=true
            imToken.callAPI("native.hideLoading");
-          alert(err);
           this.show = false;
         });
       }

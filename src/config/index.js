@@ -1,14 +1,15 @@
 import axios from 'axios'
 
 // export const baseurl='http://106.15.52.35:8080/' 
-
-
   //  axios.defaults.baseURL ="https://39.97.184.19:443/"
-  axios.defaults.baseURL = "https://novastaking.com/"
 if (env() == 'production') {
   // axios.defaults.baseURL = 'https://39.97.184.19:443/';/* 7-12-10-14更改 */
-  axios.defaults.baseURL = "https://novastaking.com/"
+  axios.defaults.baseURL = location.origin+'/'
+  //"https://www.novastaking.com/"
+}else{
+  axios.defaults.baseURL = location.origin+'/'
 }
+// axios.defaults.timeout = 10000;
 function env() {
   if (process.env.NODE_ENV === "development") return "development";   //开发环境
   if (window.location.href.includes('192.168')) return 'test';        //测试环境，"192.168"根据实际情况而定
@@ -18,43 +19,54 @@ function env() {
 // 添加请求拦截器
 axios.interceptors.request.use((config) => {
   // 在发送请求之前做些什么
-
-  // if(!this.imtokenAddress)alert('未成功授权');
   return config;
 }, function (error) {
   // 对请求错误做些什么
-  // alert(error)
+  console.log(error);
   return Promise.reject(error);
 });
 
 // 添加响应拦截器
 axios.interceptors.response.use(function (response) {
   // 对响应数据做点什么
-  !response.data&&!response.data.success&&alert(response.data.msg)
+  console.log(response);
+  const res = response.data
+  if (!res.success) {
+    alert(res.msg||'请求出错，正在修复中')
+  }
+
   return response;
 }, function (error) {
   // 对响应错误做点什么
+  console.log(error);
+  
   if (error && error.response) {
-    alert(error.response.data.msg)
-    // switch (err.response.status) {
-    //   case 400:
-    //       console.log('错误请求')
-    //     break;
-    //   case 401:
-    //       console.log('未授权，请重新登录')
-    //     break;
-    //   case 403:
-    //     console.log('拒绝访问')
-    //     break;
-    //   case 404:
-    //     console.log('请求错误,未找到该资源')
-    //     break;
-    //   case 405:
-    //     console.log('请求方法未允许')
-    //     break;
-    //   }
+    // alert(error.response.data.msg)
+console.log(error.response);
+
+    switch (error.response.status) {
+      case 400:
+        alert('错误请求')
+        break;
+      case 401:
+        alert('未授权，请重新登录')
+        break;
+      case 403:
+        alert('拒绝访问')
+        break;
+      case 404:
+          alert('出错啦，网络未响应，稍后再试')
+        break;
+      case 405:
+          alert('请求方法未允许')
+        break;
+        case 500:
+          alert('出错啦，服务器维修中')
+          break;
+         default: alert('出错啦，专业人员正在修复中')
+      }
   }
-  return Promise.reject(error.response);
+  return Promise.reject(error);
 });
 /** 
  * @request {POST}

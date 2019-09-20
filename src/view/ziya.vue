@@ -386,7 +386,6 @@ export default {
             imToken.callAPI("native.hideLoading");
             }
             this.lockSubmit = true;
-            alert(err);
           }
         );
       }
@@ -426,7 +425,7 @@ export default {
           }
         })
         .catch(err => {
-          alert(err);
+
           this.show = false;
         });
     },
@@ -445,7 +444,6 @@ export default {
            if (window.ethereum) {
           imToken.callAPI("native.hideLoading");
            }
-          alert(err);
           this.show = false;
         });
     },
