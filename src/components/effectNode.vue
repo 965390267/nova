@@ -38,7 +38,7 @@
             </div>
             <div class="des">
               <div class="txt">{{$t('components.effectnode.moneyday')}}</div>
-              <div class="num">+{{plainEveryDayMoney(item)}}</div>
+              <div class="num">+{{item.todayincome/1000}}</div>
             </div>
           </div>
         </li>

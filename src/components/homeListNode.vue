@@ -34,7 +34,7 @@
           </div>
           <div class="des">
             <div class="txt">{{$t('components.homelistnode.moneyday')}}</div>
-            <div class="num">+{{plainEveryDayMoney(item)}}</div>
+            <div class="num">+{{item.todayincome/1000}}</div>
           </div>
         </div>
       </li>
@@ -54,9 +54,9 @@ export default {
     
   },
   methods: {
-      plainEveryDayMoney(item) {
-      return (((item.pledgeAmount / 1000) * item.returnrate) / 365).toFixed(3);
-    },
+    //   plainEveryDayMoney(item) {
+    //   return (((item.pledgeAmount / 1000) * item.returnrate) / 365).toFixed(3);
+    // },
     gotodetail(nodeId, nodeAddress) {
       this.$router.push({
         path: "/mynodedetail",
