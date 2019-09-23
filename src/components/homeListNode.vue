@@ -118,7 +118,7 @@ export default {
         display: flex;
         flex-direction: row;
         align-items: center;
-        padding: 5px 0 5px 10px;
+        padding: 5px 0 5px 0;
         // .left-circle {
         //   width: 30px;
         //   height: 30px;
@@ -126,11 +126,13 @@ export default {
         //   border-radius: 50%;
         // }
         .name {
+          flex: 1;
           padding-top: 7px;
           padding-left: 6px;
           font-size: 18px;
           font-weight:400;
           color: $main-text-color;
+          text-align: center;
           .spacewhite{
             height: 20px;
           }

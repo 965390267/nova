@@ -67,6 +67,7 @@ if (!!window.imToken) {/* imtoken环境下 */
   }
 }
 else {/* 浏览器环境下 */
+
   if (env() != 'production') {
     Vue.prototype.imtokenAddress = '0x9861C181Be9413bF8f445d4AeEbc9DcF71D8eA03'
   }

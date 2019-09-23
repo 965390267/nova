@@ -159,7 +159,7 @@ useParmsGetFrom:Object
         flex-direction: row;
         align-items: stretch;
         // margin-top: 20px;
-        padding: 2px 0 5px 10px;
+        padding: 2px 0 5px 0;
         .left-circle {
           width: 30px;
           height: 30px;
@@ -167,6 +167,8 @@ useParmsGetFrom:Object
           border-radius: 50%;
         }
         .name {
+          flex: 1;
+          text-align: center;
           padding-top: 7px;
           font-size: 18px;
           font-weight: 400;

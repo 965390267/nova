@@ -8,6 +8,7 @@ if (env() == 'production') {
   //"https://www.novastaking.com/"
 }else{
   axios.defaults.baseURL = location.origin+'/'
+
 }
 // axios.defaults.timeout = 10000;
 function env() {

@@ -158,7 +158,7 @@ useParmsGetFrom:Object/* query参数 */
         flex-direction: row;
         align-items: stretch;
         margin-top: 20px;
-        padding: 5px 0 5px 10px;
+        padding: 5px 0 5px 0;
         .left-circle {
           width: 30px;
           height: 30px;
@@ -166,10 +166,12 @@ useParmsGetFrom:Object/* query参数 */
           border-radius: 50%;
         }
         .name {
+          flex: 1;
           padding-top: 7px;
           font-size: 18px;
           font-weight: 400;
           color: $main-text-color;
+          text-align: center;
         }
         .mid-money,
         .right-present {
@@ -189,6 +191,7 @@ useParmsGetFrom:Object/* query参数 */
           }
         }
         .right-present {
+          flex: 1;
           padding-top: 7px;
           text-align: center;
           .txt {
